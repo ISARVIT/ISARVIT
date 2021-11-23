@@ -1,0 +1,46 @@
+{
+    "questions": [
+      {
+        "isRequired": true,
+        "name": "identifier",
+        "title": "Patient identifier",
+        "type": "text"
+      },
+      {
+        "isRequired": true,
+        "name": "patient_first_name",
+        "title": "First name",
+        "type": "text"
+      },
+      {
+        "isRequired": true,
+        "name": "patient_name",
+        "title": "Surname",
+        "type": "text"
+      },
+      {
+        "isRequired": true,
+        "name": "patient_birth",
+        "title": "Date of birth",
+        "type": "text"
+      },
+      {
+        "choices": ["CT scan", "Ultrasonography", "Radiography AND US"],
+        "name": "exam_type",
+        "title": "Exam type",
+        "type": "dropdown"
+      },
+      {
+        "choices": ["No", "IV", "IV late phase", "Urinary tract injection", "NA"],
+        "name": "exam_indication",
+        "title": "Enhanced contrast agent",
+        "type": "dropdown"
+      },
+      {
+        "choices": ["Low dose", "Standard dose", "NA"],
+        "name": "condition_contrast",
+        "title": "Acute phase / clinical crisis at the time of the exam",
+        "type": "dropdown"
+      }
+    ]
+}
