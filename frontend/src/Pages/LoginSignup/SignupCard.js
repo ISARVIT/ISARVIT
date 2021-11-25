@@ -23,6 +23,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import { green } from '@material-ui/core/colors';
 
 
 export default function Signup(){
@@ -38,8 +39,20 @@ export default function Signup(){
     const changeUsername = (event) => {
         setUser({...user, username: event.target.value});
     };
+    const changeFirstname = (event) => {
+        setUser({...user, firstname: event.target.value});
+    };
+    const changeLastname = (event) => {
+        setUser({...user, lastname: event.target.value});
+    };
+    const changeEmail = (event) => {
+        setUser({...user, email: event.target.value});
+    };
     const changePassword = (event) => {
         setUser({...user, password: event.target.value});
+    };
+    const changeCheckPassword = (event) => {
+        setUser({...user, checkPassword: event.target.value});
     };
     function changeVisibility(state){
         setUser({...user, showPassword: state});
@@ -52,7 +65,10 @@ export default function Signup(){
                             Signup
                         </Typography>
                         <div style={{maxWidth:'15rem'}}>
+                            <TextField fullWidth label="First name" value={user.firstname} onChange={changeFirstname} />
+                            <TextField fullWidth label="Last name" value={user.lastname} onChange={changeLastname} />
                             <TextField fullWidth label="Username" value={user.username} onChange={changeUsername} />
+                            <TextField fullWidth label="Mail" value={user.email} onChange={changeEmail} />
                             <FormControl fullWidth>
                                 <InputLabel>Password</InputLabel>
                                 <Input
@@ -69,6 +85,14 @@ export default function Signup(){
                                             </IconButton>
                                         </InputAdornment>
                                     }
+                                />
+                            </FormControl>
+                            <FormControl fullWidth /*style={{color:user.checkPassword===user.password&user.checkPassword!==''? "green":null}}*/ error={user.checkPassword!==user.password&user.checkPassword!==''}>
+                                <InputLabel>Check password</InputLabel>
+                                <Input
+                                    type={'password'}
+                                    value={user.checkPassword}
+                                    onChange={changeCheckPassword}  
                                 />
                             </FormControl>
                         </div>
