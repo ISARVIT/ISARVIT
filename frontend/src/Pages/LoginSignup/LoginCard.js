@@ -147,29 +147,12 @@ export default function Login(){
         }
     }
     return (
-        <div>
-            <CssBaseline />
-            <div style={{display: 'flex', flexGrow: 1, textAlign: 'start'}}>
-                <AppBar position="relative" style={{backgroundColor: 'teal'}}>
-                    <Toolbar>
-                    <ViewListIcon className={classes.icon} />
-                    <Typography variant="h6" color="inherit" noWrap className={classes.title}>
-                        ISARVIT
-                    </Typography>
-                    </Toolbar>
-                </AppBar>
-            </div>
-            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                <Alert onClose={handleClose} severity="error">
-                    Wrong username or password!
-                </Alert>
-            </Snackbar>
-            <div style={{paddingTop: '10rem'}}>
             <Grid
                 container
                 direction="column"
                 justifyContent="center"
                 alignItems="center"
+                style={{marginTop: '10rem'}}
                 >
                 <Card className={classes.root}>
                     <CardContent>
@@ -208,7 +191,5 @@ export default function Login(){
                     </CardActions>
                 </Card>
             </Grid>
-            </div>
-        </div>
     )
 }

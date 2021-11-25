@@ -29,6 +29,7 @@
         "name": "exam_type",
         "title": "Exam type",
         "type": "dropdown"
+
       },
       {
         "choices": ["No", "IV", "IV late phase", "Urinary tract injection", "NA"],
