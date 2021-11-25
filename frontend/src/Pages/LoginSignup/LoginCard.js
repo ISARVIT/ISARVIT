@@ -147,45 +147,39 @@ export default function Login(){
         }
     }
     return (
-            <Grid
-                container
-                direction="column"
-                justifyContent="center"
-                alignItems="center"
-                style={{marginTop: '10rem'}}
-                >
+            <Grid item>
                 <Card className={classes.root}>
                     <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
                         Login
                     </Typography>
                     <div style={{maxWidth:'15rem'}}>
-                    <TextField id="standard-name" fullWidth label="Username" value={name1} onChange={handleChange1} />
-                    <FormControl fullWidth>
-                    <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
-                    <Input
-                        id="standard-adornment-password"
-                        type={showPassword ? 'text' : 'password'}
-                        value={name2}
-                        onChange={handleChange2}
-                        endAdornment={
-                        <InputAdornment position="end">
-                            <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={() => setShow(true)}
-                            onMouseDown={() => setShow(false)}
-                            >
-                            {showPassword ? <Visibility /> : <VisibilityOff />}
-                            </IconButton>
-                        </InputAdornment>
-                        }
-                    />
-                    </FormControl>
+                        <TextField id="standard-name" fullWidth label="Username" value={name1} onChange={handleChange1} />
+                        <FormControl fullWidth>
+                        <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
+                        <Input
+                            id="standard-adornment-password"
+                            type={showPassword ? 'text' : 'password'}
+                            value={name2}
+                            onChange={handleChange2}
+                            endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                aria-label="toggle password visibility" 
+                                onClick={() => setShow(true)}
+                                onMouseDown={() => setShow(false)}
+                                >
+                                {showPassword ? <Visibility /> : <VisibilityOff />}
+                                </IconButton>
+                            </InputAdornment>
+                            }
+                        />
+                        </FormControl>
                     
                     </div>
                     </CardContent>
                     <CardActions>
-                        <Button size="small" color="primary" onClick={connect}>
+                        <Button disabled={name1==='' || name2===''} size="small" color="primary" onClick={connect}>
                         Connect
                         </Button>
                     </CardActions>
