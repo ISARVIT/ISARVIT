@@ -2,12 +2,18 @@
     "questions": [
       {
         "isRequired": true,
+<<<<<<< HEAD
         "name": "name",
         "title": "How do you feel?",
+=======
+        "name": "identifier",
+        "title": "Patient identifier",
+>>>>>>> bd399c501ab415d746c8f7f408f86386e9c92bae
         "type": "text"
       },
       {
         "isRequired": true,
+<<<<<<< HEAD
         "name": "text-feeling",
         "title": "Type any number!",
         "type": "text",
@@ -65,6 +71,41 @@
         "name": "global-warming",
         "title": "How important is global warming?",
         "type": "rating"
+=======
+        "name": "patient_first_name",
+        "title": "First name",
+        "type": "text"
+      },
+      {
+        "isRequired": true,
+        "name": "patient_name",
+        "title": "Surname",
+        "type": "text"
+      },
+      {
+        "isRequired": true,
+        "name": "patient_birth",
+        "title": "Date of birth",
+        "type": "text"
+      },
+      {
+        "choices": ["CT scan", "Ultrasonography", "Radiography AND US"],
+        "name": "exam_type",
+        "title": "Exam type",
+        "type": "dropdown"
+      },
+      {
+        "choices": ["No", "IV", "IV late phase", "Urinary tract injection", "NA"],
+        "name": "exam_indication",
+        "title": "Enhanced contrast agent",
+        "type": "dropdown"
+      },
+      {
+        "choices": ["Low dose", "Standard dose", "NA"],
+        "name": "condition_contrast",
+        "title": "Acute phase / clinical crisis at the time of the exam",
+        "type": "dropdown"
+>>>>>>> bd399c501ab415d746c8f7f408f86386e9c92bae
       }
     ]
 }

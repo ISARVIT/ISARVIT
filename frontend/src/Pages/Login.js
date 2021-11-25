@@ -139,7 +139,11 @@ export default function Login(){
         setOpen(false);
       };
     const connect = () => {
+<<<<<<< HEAD
         if(name1 == 'user' && name2 == '123'){
+=======
+        if(name1 == 'andreis' && name2 == '123456'){
+>>>>>>> bd399c501ab415d746c8f7f408f86386e9c92bae
             navigate("/user");
         }
         else{
