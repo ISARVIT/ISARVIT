@@ -1,0 +1,16 @@
+{"identifier": "Djfa86caeZEd7", "patient_first_name": "Mathieu", "patient_name": "PERROT", "patient_birth": "1999-02-11", "exam_type": "US", "exam_date_time" : "2021-06-08T11:00:00", "physician": "Pierre", "exam_indication": "Other", "device_model": "Scanner 1000TMIN", "device_date": "1987-11-17", "condition_low_dose": "NA", "condition_derivation": "No", "condition_fever": "Yes", "condition_acute": "Yes", "condition_contrast": "No", "condition_radiation": 0, "abnormal_liver": "Yes", "abnormal_adrenals": "Yes", "abnormal_pancreas": "Yes", "abnormal_spleen": "Yes", "abnormal_ovaries": "Yes", "abnormal_lymphnode": "Yes", "infiltration_gallbladder": "Yes", "infiltration_appendix": "Yes", "infiltration_sigmoid": "Yes", "pneumoperitoneum": "Yes", "intraperitoneal_effusion": "No", "urinary_tract_duplication": "No", "renal_transplant": "Left", "bladder_lithiasis": "No", "pelvic_phlebolith": "No", "lithiasis_n": 1,  
+"lithiasis_result": [
+{"lithiasis_id1": "GFSDf5s4fdg", 
+"evolution1": "Stable", 
+"lateralisation1": "Right upper pole", 
+"location1": "Proximal ureter", 
+"coralliform1": "No", 
+"size1": 176, 
+"density1": 1235, 
+"uvj_distance1": 21, 
+"infiltration1": "Yes", 
+"obstruction1": "Major calyces dilatation", 
+"nephrography1": "Non measurable", 
+"fornix_rupture1": "Unknown", 
+"comment1":"Au bord du décès"}],
+"findings": "Abnormal compatible with clinical description", "further_imaging": "No", "further_imaging_type": "None", "further_physician": "Further physician opinion advised", "further_physician_type": "Docteur"}
