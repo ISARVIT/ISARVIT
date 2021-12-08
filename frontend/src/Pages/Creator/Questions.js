@@ -5,8 +5,6 @@ import TextField from '@material-ui/core/TextField';
 
 import Questions from './Questions.js';
 
-var parse = require('html-react-parser');
-
 
 
 export default function Text(props){
