@@ -1,0 +1,3 @@
+int jsonToPDF (json donnees) {
+  //retourner le pdf
+  return 0}
