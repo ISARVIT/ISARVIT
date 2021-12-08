@@ -35,8 +35,8 @@ import MuiAlert from '@material-ui/lab/Alert';
 import Survey from "material-survey/components/Survey"
 import html2canvas from 'html2canvas';
 
-import urinaryPNG from "./../Source/urinary1.PNG";
-import qrcodePNG from "./../Source/qrcode1.PNG";
+import urinaryPNG from "./../../Source/urinary1.PNG";
+import qrcodePNG from "./../../Source/qrcode1.PNG";
 
 const { jsPDF } = require("jspdf"); // will automatically load the node version
 
@@ -128,7 +128,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-const forms = require('./../Source/urinary.json')
+const forms = require('../../Source/urinary.json')
 
 export default function Login(){
     const classes = useStyles();
