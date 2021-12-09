@@ -25,7 +25,6 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { green } from '@material-ui/core/colors';
 
-
 export default function Text(props){
     const example = {
         list: [
@@ -53,17 +52,17 @@ export default function Text(props){
         }
     };
     return (
-        <Grid item>
-                    <Card>
+        <Grid item xs>
+                    <Card style={{height: '100%'}}>
                         <CardContent>
                             <Typography gutterBottom variant="h5" component="h2">
                                 CR
                             </Typography>
-                            <div style={{maxWidth:'15rem'}}>
-                                <TextField label="Write down your text here" onChange={changeText} onKeyUp={checkWord} />
+                            <div style={{height: '100%'}}>
+                                <TextField fullWidth fullHeight label="Write down your text here" onChange={changeText} onKeyUp={checkWord} />
                             </div>
                         </CardContent>
                     </Card>
-                </Grid>
+            </Grid>
     )
 }

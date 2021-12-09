@@ -46,8 +46,8 @@ export default function Text(props){
         setField({...field, value: event.target.value});
     };
     return(
-        <Grid item>
-                    <Card>
+        <Grid item xs>
+                    <Card style={{height: '100%'}}>
                         <CardContent>
                             <Typography gutterBottom variant="h5" component="h2">
                                 Add a new field

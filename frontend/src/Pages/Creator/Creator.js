@@ -13,10 +13,14 @@ export default function Creator(){
     });
     const sendProps = {info, setInfo};
     return (
-        <Grid container direction="row" justifyContent="flex-start" alignItems="flex-start">
-            <Forms {...sendProps} />
-            <AddField {...sendProps} />
-            <Text {...sendProps}/>
+        <Grid container direction="row" grid-auto-rows='1fr'>
+            <Grid container direction="column" justifyContent="space-around" alignItems="space-around" spacing={3} style={{padding: '2rem'}} xs>
+                <AddField {...sendProps} />
+                <AddField {...sendProps} />
+            </Grid>
+            <Grid container direction="column" justifyContent="space-around" alignItems="space-around" spacing={3} style={{padding: '2rem'}} xs>
+                <Text {...sendProps}/>
+            </Grid>
         </Grid>
     )
 }

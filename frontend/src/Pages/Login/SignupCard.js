@@ -25,7 +25,6 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { green } from '@material-ui/core/colors';
 
-
 export default function Signup(){
     const [user, setUser] = React.useState({
         'firstname': '',
@@ -57,6 +56,9 @@ export default function Signup(){
     function changeVisibility(state){
         setUser({...user, showPassword: state});
     };
+    const connect = () => {
+        alert("Connected!")
+    }
     return (
             <Grid item>
                 <Card>
@@ -97,6 +99,11 @@ export default function Signup(){
                             </FormControl>
                         </div>
                     </CardContent>
+                    <CardActions>
+                        <Button disabled={user.firstname==='' || user.lastname==='' || user.username==='' || user.email===''|| user.password==='' || user.password!==user.checkPassword} size="small" color="primary" onClick={connect}>
+                        Connect
+                        </Button>
+                    </CardActions>
                 </Card>
             </Grid>
     )
