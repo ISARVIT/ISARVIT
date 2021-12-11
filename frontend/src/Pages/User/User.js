@@ -23,6 +23,8 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import TextField from '@material-ui/core/TextField';
 import AcUnitIcon from '@material-ui/icons/AcUnit';
 import IconButton from '@material-ui/core/IconButton';
+import StarOutlineIcon from '@material-ui/icons/StarOutline';
+import StarIcon from '@material-ui/icons/Star';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Input from '@material-ui/core/Input';
@@ -126,19 +128,19 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-  function createData(name, calories, fat) {
-    return { name, calories, fat};
+  function createData(name, calories, fat, fav) {
+    return { name, calories, fat, fav};
   }
   
-  const exams = [
-    createData('Urinary Scan', 'Urinary', true),
-    createData('Test Exam 1', 'Pulmonary', false),
-    createData('Test Exam 2', 'Pulmonary', false),
-  ];
 export default function UserOptions(){
     const classes = useStyles();
     let navigate = useNavigate();
     const [showPassword, setShow] = React.useState(false);
+    const [exams, setExams] = React.useState([
+      {"name":"Urinary Scan","calories":"Urinary","fat":true,"fav":false},
+      {"name":"Test Exam 1","calories":"Pulmonary","fat":false,"fav":false},
+      {"name":"Test Exam 2","calories":"Pulmonary","fat":false,"fav":false}
+    ])
     const [name1, setName1] = React.useState('');
     const handleChange1 = (event) => {
         setName1(event.target.value);
@@ -149,7 +151,13 @@ export default function UserOptions(){
     };
     const next= () => {
       navigate("/forms");
-    }
+    };
+    function addfav(i){
+      let newExams = exams;
+      newExams[i].fav = true
+      setExams(newExams);
+    };
+    React.useEffect(() => console.log("hey"),[exams]);
     return (
         <div>
             <CssBaseline />
@@ -191,10 +199,11 @@ export default function UserOptions(){
             <TableCell><b>Report</b></TableCell>
             <TableCell align="right"><b>System</b></TableCell>
             <TableCell align="right"><b>Actions</b></TableCell>
+            <TableCell align="right"><b>Favorite</b></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {exams.map((row) => (
+          {exams.map((row, i) => (
             <TableRow key={row.name}>
               <TableCell component="th" scope="row">{row.name}</TableCell>
               <TableCell align="right">{row.calories}</TableCell>
@@ -207,13 +216,25 @@ export default function UserOptions(){
                         onClick={next}
                     >
                         <ArrowForwardIosIcon />
-                    </IconButton></TableCell>
+              </IconButton></TableCell>
+              <TableCell align='right'>
+                <IconButton
+                        aria-label="favorite exams"
+                        aria-controls="menu-appbar"
+                        aria-haspopup="true"
+                        color="inherit"
+                        onClick={() => addfav(i)}
+                    >
+                {row.fav ? <StarIcon/> : <StarOutlineIcon />}
+                </IconButton></TableCell>
+                    
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
                 </Card>
+                {JSON.stringify(exams)}
             </Grid>
             </div>
         </div>
