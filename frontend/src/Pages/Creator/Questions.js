@@ -5,6 +5,8 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 
 import JoditEditor from "jodit-react";
+import Questions from './Questions.js';
+
 
 
 export default function Text(props){
