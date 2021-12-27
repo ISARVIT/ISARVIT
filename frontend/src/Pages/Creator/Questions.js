@@ -29,15 +29,15 @@ export default function Text(props){
                 name: 'Var',
                 iconURL: 'http://xdsoft.net/jodit/logo.png',
                 list: [
-                    {value: 'Conclusion', color:'#800000', text: 'Le patient est malade'},
-                    {value: 'Resultat', color:'#008000', text: 'Presence de lesions diverses'},
+                    {value: 'Name', color:'#800000', text: 'Le patient est malade'},
+                    {value: 'ID', color:'#008000', text: 'Presence de lesions diverses'},
                 ],
                 exec: function(editor, t, {control}) {
                     // const node = document.createElement("med-var");
                     // node.innerHTML = 'oi'
                     
                     let data = control.args[0];
-                    editor.s.insertHTML('<span style="color: red; border-radius: 5px; padding: 2px; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;">asd</span>')
+                    editor.s.insertHTML('<span style="color: red; border: thin solid red; border-radius: 1px; padding: 2px; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;">'+data.value+'</span>')
                     // editor.s.insertHTML(node)
                     // editor.s.insertHTML('<med-var style="border:thin solid '+data.color+'; border-radius: 5px; color:'+data.color+'; padding:2px; cursor: pointer;">'+data.value+'</med-var>');
                 },

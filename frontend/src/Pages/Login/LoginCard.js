@@ -1,192 +1,69 @@
-import React from 'react';
-
-import { useNavigate, Link } from "react-router-dom";
-import clsx from 'clsx';
-
-
-import AppBar from '@material-ui/core/AppBar';
+import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import ViewListIcon from '@material-ui/icons/ViewList';
-import Paper from '@material-ui/core/Paper';
-import Hidden from '@material-ui/core/Hidden';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import TextField from '@material-ui/core/TextField';
-import AcUnitIcon from '@material-ui/icons/AcUnit';
-import IconButton from '@material-ui/core/IconButton';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import FormControl from '@material-ui/core/FormControl';
-import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
 import MuiAlert from '@material-ui/lab/Alert';
-
-function Alert(props) {
-    return <MuiAlert elevation={6} variant="filled" {...props} />;
-  }
-
-const useStyles = makeStyles((theme) => ({
-    icon: {
-      marginRight: theme.spacing(1),
-    },
-    card: {
-      display: 'flex',
-    },
-    cardDetails: {
-      flex: 1,
-    },
-    cardMedia: {
-      width: 160,
-    },
-    heroContent: {
-      backgroundColor: theme.palette.background.paper,
-      padding: theme.spacing(8, 0, 6),
-    },
-    heroButtons: {
-      marginTop: theme.spacing(4),
-    },margin: {
-        margin: theme.spacing(1),
-      },
-      withoutLabel: {
-        marginTop: theme.spacing(3),
-      },
-      textField: {
-        width: '25ch',
-      },
-    
-    footer: {
-      backgroundColor: '#DAE0E2',
-      padding: theme.spacing(2),
-      position: 'relative',
-      bottom: 0,
-      right: 0,
-      left: 0
-    },
-    mainFeaturedPost: {
-      position: 'relative',
-      backgroundColor: theme.palette.grey[800],
-      color: theme.palette.common.white,
-      marginBottom: theme.spacing(4),
-      backgroundImage: 'url(https://images.pexels.com/photos/998641/pexels-photo-998641.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940)',
-      backgroundSize: 'cover',
-      backgroundRepeat: 'no-repeat',
-      backgroundPosition: 'center',
-    },
-    overlay: {
-      position: 'absolute',
-      top: 0,
-      bottom: 0,
-      right: 0,
-      left: 0,
-      backgroundColor: 'rgba(0,0,0,.3)',
-    },
-    mainFeaturedPostContent: {
-      position: 'relative',
-      padding: theme.spacing(3),
-      [theme.breakpoints.up('md')]: {
-        padding: theme.spacing(6),
-        paddingRight: 0,
-      },
-    },
-    buttons : {
-      '& > *': {
-        margin: theme.spacing(1),
-      },
-    },
-    buttongg: {
-      backgroundColor: 'teal'
-    },
-    root: {
-      flexGrow: 1,
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-    title: {
-      flexGrow: 1,
-    },
-  }));
+import React from 'react';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 export default function Login(props){
-    const classes = useStyles();
-    let navigate = useNavigate();
-    const [showPassword, setShow] = React.useState(false);
-    const [name1, setName1] = React.useState('');
-    const handleChange1 = (event) => {
-        setName1(event.target.value);
-    };
-    const [name2, setName2] = React.useState('');
-    const handleChange2 = (event) => {
-        setName2(event.target.value);
-    };
-    const [open, setOpen] = React.useState(false);
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-          return;
-        }
-    
-        setOpen(false);
-      };
-    const connect = () => {
-        if(name1 == 'andreis' && name2 == '123456'){
-          alert("hey")
-        }
-        else{
-            setOpen(true);
-        }
-    }
-    return (
-            <Grid item>
-                <Card className={classes.root}>
-                    <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                        Login
-                    </Typography>
-                    <div style={{maxWidth:'15rem'}}>
-                        <TextField id="standard-name" fullWidth label="Username" value={name1} onChange={handleChange1} />
-                        <FormControl fullWidth>
-                        <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
-                        <Input
-                            id="standard-adornment-password"
-                            type={showPassword ? 'text' : 'password'}
-                            value={name2}
-                            onChange={handleChange2}
-                            endAdornment={
-                            <InputAdornment position="end">
-                                <IconButton
-                                aria-label="toggle password visibility" 
-                                onClick={() => setShow(true)}
-                                onMouseDown={() => setShow(false)}
-                                >
-                                {showPassword ? <Visibility /> : <VisibilityOff />}
-                                </IconButton>
-                            </InputAdornment>
-                            }
-                        />
-                        </FormControl>
-                    
-                    </div>
-                    </CardContent>
-                    <CardActions>
-                        <Button disabled={name1==='' || name2===''} size="small" color="primary" onClick={connect}>
-                        Connect
-                        </Button>
-                        <Button onClick={props.setControl(props.control+1)}>
-                        Connect2
-                        </Button>
-                    </CardActions>
-                </Card>
-            </Grid>
-    )
+  const [user, setUser] = React.useState({
+    show: false,
+    username: '',
+    password: '',
+  })
+  const changeUsername = (event) => {
+    setUser({...user, username: event.target.value});
+  };
+  const changePassword = (event) => {
+    setUser({...user, password: event.target.value});
+  };
+  const connect = () => {
+    axios.get('/user?')
+    .then(function (response) {
+      alert("Sucess");
+      props.setControl({...props.control, login: response})
+    })
+    .catch(function (error) {
+      alert("Error connecting to API, continuing with token 123")
+      props.setControl({...props.control, login: 123, view: 'user'})
+    })
+  }
+  return (
+    <Card>
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="h2">
+          Login
+        </Typography>
+        <TextField id="standard-name" fullWidth label="Username" value={user.username} onChange={changeUsername} />
+        <FormControl fullWidth>
+          <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
+          <Input type={user.show ? 'text' : 'password'} value={user.password} onChange={changePassword}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton onClick={() => setUser({...user, show: true})} onMouseDown={() => setUser({...user, show: false})}>
+                  {user.show ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+        </FormControl>
+      </CardContent>
+      <CardActions>
+          <Button disabled={user.username === '' || user.password === ''} size="small" color="primary" onClick={connect}>
+            Connect
+          </Button>
+      </CardActions>
+      {/* <MuiAlert elevation={6} variant="filled" {...props} />; */}
+    </Card>
+  )
 }

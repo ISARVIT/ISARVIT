@@ -1,57 +1,63 @@
 import React from 'react';
-
-import { useNavigate, Link } from "react-router-dom";
-import clsx from 'clsx';
-
-
-import AppBar from '@material-ui/core/AppBar';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import ButtonBase from '@material-ui/core/ButtonBase';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import ViewListIcon from '@material-ui/icons/ViewList';
-import Paper from '@material-ui/core/Paper';
-import Hidden from '@material-ui/core/Hidden';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import TextField from '@material-ui/core/TextField';
-import AcUnitIcon from '@material-ui/icons/AcUnit';
-import IconButton from '@material-ui/core/IconButton';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import FormControl from '@material-ui/core/FormControl';
-import Snackbar from '@material-ui/core/Snackbar';
 
 const useStyles = makeStyles((theme) => ({
-    title: {
-        flexGrow: 1,
-    },
+    toolbar: {
+        borderBottom: `1px solid ${theme.palette.divider}`,
+    }
 }));
 
-export default function Navbar(props){
+export default function TitleToolbar({control, setControl, setView}) {
     const classes = useStyles();
+    const [openHelp, setOpenHelp] = React.useState(false);
+    function loginButton(){
+        if(!control.login)
+            return <Button variant="outlined" onClick={()=>setView('login')}>Login</Button>
+        else
+            return <Button variant="outlined" startIcon={<AccountCircleIcon />}>$NAME</Button>
+    }
+    function formButton(){
+        if(control.login)
+            return <Button variant="outlined" onClick={()=>setView('forms')}>Forms</Button>
+    }
     return(
-        <div>
-            <CssBaseline />
-            <div style={{display: 'flex', flexGrow: 1, textAlign: 'start'}}>
-                <AppBar position="relative" style={{backgroundColor: 'teal'}}>
-                    <Toolbar>
-                    <ViewListIcon className={classes.icon} />
-                    <Typography variant="h6" color="inherit" noWrap className={classes.title}>
-                        ISARVIT {props.control.view}
-                    </Typography>
-                    </Toolbar>
-                </AppBar>
-            </div>
-        </div>
+        <Toolbar className={classes.toolbar}>
+            <Grid container direction="row" justifyContent="space-between" alignItems="center" spacing={1}>
+                <Grid item>
+                    <Button size="small" onClick={() => {setOpenHelp(true)}}>About | Help</Button>
+                    <Dialog open={openHelp} onClose={() => {setOpenHelp(false)}}>
+                        <DialogTitle>ISARVIT</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus maximus quam dapibus massa viverra, sed convallis dolor bibendum. Morbi ornare eros vel orci porttitor, sit amet molestie nisl varius. Curabitur velit dolor, egestas quis ex eu, commodo mattis eros. In tortor magna, vulputate maximus convallis sit amet, suscipit in mauris. Praesent tempor eleifend enim ut convallis. Nam vehicula est vitae turpis fringilla vestibulum a lacinia sem. Fusce varius vulputate metus, malesuada sollicitudin arcu pulvinar id. Nam eleifend ornare erat, eu lacinia nibh iaculis ac. Donec sollicitudin risus in orci lacinia accumsan. Proin vulputate dictum viverra.
+                                Feito com ❤️ pelo Andreis.
+                            </DialogContentText>
+                        </DialogContent>
+                    </Dialog>
+                </Grid>
+                <Grid item style={{}}>
+                    <ButtonBase className={classes.toolbarTitle} onClick={()=>setView('landing')}>
+                        <Typography component="h2" variant="h5" align="center" noWrap style={{textDecoration: 'underline', padding: '1rem'}}>
+                            ISARVIT
+                        </Typography>
+                    </ButtonBase>
+                </Grid>
+                <Grid item>
+                    {formButton()}
+                    {' '}
+                    {loginButton()}
+                </Grid>
+            </Grid>
+        </Toolbar>
     )
 }

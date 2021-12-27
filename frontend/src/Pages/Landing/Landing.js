@@ -106,7 +106,7 @@ const useStyles = makeStyles((theme) => ({
 
 const cards = [];
 
-export default function LangingPage() {
+export default function LangingPage(props) {
   const classes = useStyles();
   return (
     <div>
@@ -132,7 +132,7 @@ export default function LangingPage() {
                     Create forms for medical CRs
                   </Typography>
                   <div className={classes.buttons}>
-                    <Button variant="contained" color="primary" className={classes.buttongg}>
+                    <Button variant="contained" color="primary" className={classes.buttongg} onClick={()=>props.setControl({...props.control, view: 'login'})}>
                       Login
                     </Button>
                   </div>
@@ -207,17 +207,6 @@ export default function LangingPage() {
         </div>
       </main>
       
-      
-      <footer className={classes.footer} style={{}}>
-        <Typography variant="h6" align="center" gutterBottom>
-          Velocity Forms <small>(An Open source clone of google forms)</small>
-        </Typography>
-        <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-         No Copyright issue. This project is A
-       Feel free to use anything that you find helpful, Give credit if you want.
-        </Typography>
-        <Copyright />
-      </footer>
     </div>
   );
 }

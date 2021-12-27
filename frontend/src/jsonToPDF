@@ -1,4 +1,0 @@
-int jsonToPDF (json donnees) {
-  //retourner le pdf
-  //pas de panique c'est pas fini
-  return 0}
