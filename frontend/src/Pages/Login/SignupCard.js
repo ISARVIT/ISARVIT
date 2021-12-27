@@ -101,7 +101,7 @@ export default function Signup(){
                     </CardContent>
                     <CardActions>
                         <Button disabled={user.firstname==='' || user.lastname==='' || user.username==='' || user.email===''|| user.password==='' || user.password!==user.checkPassword} size="small" color="primary" onClick={connect}>
-                        Connect
+                        Singup
                         </Button>
                     </CardActions>
                 </Card>

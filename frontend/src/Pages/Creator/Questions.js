@@ -7,7 +7,16 @@ import TextField from '@material-ui/core/TextField';
 import JoditEditor from "jodit-react";
 import Questions from './Questions.js';
 
-
+// class MedVar extends HTMLElement {
+//     constructor() {
+//         super();
+//         this.style = "border-radius: 5px; padding:2px; cursor: pointer;"
+//         this.addEventListener('click', e => {
+//             alert("hey!")
+//         });
+//     }
+// }
+// customElements.define('med-var', MedVar);
 
 export default function Text(props){
 	const editor = React.useRef(null)
@@ -19,14 +28,18 @@ export default function Text(props){
             {
                 name: 'Var',
                 iconURL: 'http://xdsoft.net/jodit/logo.png',
-                list: {
-                    double:'Variable 1',
-                    single:'Variable 2',
-                    none:'Variable 3'
-                },
+                list: [
+                    {value: 'Conclusion', color:'#800000', text: 'Le patient est malade'},
+                    {value: 'Resultat', color:'#008000', text: 'Presence de lesions diverses'},
+                ],
                 exec: function(editor, t, {control}) {
-                    console.log(control.args);
-                    editor.s.insertHTML('<span>['+control.args+']</span>');
+                    // const node = document.createElement("med-var");
+                    // node.innerHTML = 'oi'
+                    
+                    let data = control.args[0];
+                    editor.s.insertHTML('<span style="color: red; border-radius: 5px; padding: 2px; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;">asd</span>')
+                    // editor.s.insertHTML(node)
+                    // editor.s.insertHTML('<med-var style="border:thin solid '+data.color+'; border-radius: 5px; color:'+data.color+'; padding:2px; cursor: pointer;">'+data.value+'</med-var>');
                 },
                 template: (editor, key, value) => {
                     return '<span>'+value+'</span>';

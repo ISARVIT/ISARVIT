@@ -118,7 +118,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export default function Login(){
+export default function Login(props){
     const classes = useStyles();
     let navigate = useNavigate();
     const [showPassword, setShow] = React.useState(false);
@@ -140,7 +140,7 @@ export default function Login(){
       };
     const connect = () => {
         if(name1 == 'andreis' && name2 == '123456'){
-            navigate("/user");
+          alert("hey")
         }
         else{
             setOpen(true);
@@ -181,6 +181,9 @@ export default function Login(){
                     <CardActions>
                         <Button disabled={name1==='' || name2===''} size="small" color="primary" onClick={connect}>
                         Connect
+                        </Button>
+                        <Button onClick={props.setControl(props.control+1)}>
+                        Connect2
                         </Button>
                     </CardActions>
                 </Card>

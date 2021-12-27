@@ -16,6 +16,17 @@ body {
   font-family: 'Segoe UI','Microsoft Sans Serif',sans-serif;
 }
 
+.asd {
+  color: 'red';
+  border-radius: '5px';
+  padding: '2px';
+  cursor: 'pointer';
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;          /* Likely future */  
+}
+
 header:before, header:after {
   content: " ";
   display: table;

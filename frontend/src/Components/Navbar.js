@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Navbar(){
+export default function Navbar(props){
     const classes = useStyles();
     return(
         <div>
@@ -47,7 +47,7 @@ export default function Navbar(){
                     <Toolbar>
                     <ViewListIcon className={classes.icon} />
                     <Typography variant="h6" color="inherit" noWrap className={classes.title}>
-                        ISARVIT
+                        ISARVIT {props.control.view}
                     </Typography>
                     </Toolbar>
                 </AppBar>

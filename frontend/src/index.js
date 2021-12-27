@@ -1,4 +1,3 @@
-import {HashRouter, Routes, Route} from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import React from 'react';
 
@@ -11,15 +10,26 @@ import User from './Pages/User/User.js';
 import Form from './Pages/Form/Form.js';
 import Creator from './Pages/Creator/Creator.js';
 
-ReactDOM.render(
-  <HashRouter>
-    <Navbar />
-    <Routes>
-      <Route path='/' element={<Landing />} />
-      <Route path='/login' element={<Login />} />
-      <Route path='/user' element={<User />} />
-      <Route path='/forms' element={<Form />} />
-      <Route path='/creator' element={<Creator />} />
-    </Routes>
-  </HashRouter>
-  ,document.getElementById('root'));
+export default function Control(){
+    const [control, setControl] = React.useState({
+        view: 'landing',
+    });
+    const sendControl = {control,setControl}
+    function returnView(){
+        switch(control.view){
+            case 'landing': return <Landing {...sendControl}/>
+            case 'login':   return <Login {...sendControl}/>
+            case 'user':    return <User {...sendControl}/>
+            case 'forms':   return <Form {...sendControl}/>
+            case 'creator': return <Creator {...sendControl}/>
+        }
+    }
+    return(
+        <>
+            <Navbar {...sendControl}/>
+            {returnView()}
+        </>
+    )
+}
+
+ReactDOM.render(<Control />,document.getElementById('root'));

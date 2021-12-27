@@ -1,8 +1,5 @@
 import React from 'react';
 
-import { useNavigate, Link } from "react-router-dom";
-
-
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -110,27 +107,10 @@ const useStyles = makeStyles((theme) => ({
 const cards = [];
 
 export default function LangingPage() {
-
-
   const classes = useStyles();
-  let history = useNavigate();
-
-
   return (
     <div>
       <CssBaseline />
-      <div style={{display: 'flex', flexGrow: 1, textAlign: 'start'}}>
-        <AppBar position="relative" style={{backgroundColor: 'teal'}}>
-          <Toolbar>
-            <ViewListIcon className={classes.icon} />
-            <Typography variant="h6" color="inherit" noWrap className={classes.title}>
-              ISARVIT
-            </Typography>
-            <Button component={Link} to="/login" variant="contained" className={classes.buttonnav}>Login</Button>
-          
-          </Toolbar>
-        </AppBar>
-      </div>
 
       <main style={{textAlign: 'start'}}>
         <div>
@@ -152,7 +132,7 @@ export default function LangingPage() {
                     Create forms for medical CRs
                   </Typography>
                   <div className={classes.buttons}>
-                    <Button variant="contained" color="primary" className={classes.buttongg}  component={Link} to="/login">
+                    <Button variant="contained" color="primary" className={classes.buttongg}>
                       Login
                     </Button>
                   </div>
