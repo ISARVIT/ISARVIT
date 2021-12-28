@@ -17,7 +17,11 @@ import { createExample } from './Source/example.js';
 
 
 export default function Control(){
-  const [alert, setAlert] = React.useState(false);
+  const [alert, setAlert] = React.useState({
+    open: false,
+    text: "",
+    severity: "success"
+  });
   const [control, setControl] = React.useState({
     view: 'landing',
     login: 0,
@@ -34,23 +38,23 @@ export default function Control(){
       case 'user':    return <User {...sendControl}/>
       case 'forms':   return <Form {...sendControl}/>
       case 'creator': return <Creator {...sendControl}/>
+      default: return <Landing {...sendControl}/>
     }
   }
-  function Alert(props){
-    return(
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <MuiAlert elevation={6} variant="filled" severity="success">
-          asdl
-        </MuiAlert>
-      </Snackbar>
-    )
+  const closeAlert = () => {
+    setAlert({...alert, open: false});
   }
-  const sendControl = {control, setControl, setView, example, setExample}
+  const sendControl = {control, setControl, setView, example, setExample, setAlert}
   return(
     <>
       <CssBaseline />
       <Navbar {...sendControl}/>
       {returnView()}
+      <Snackbar open={alert.open} autoHideDuration={1000} onClose={closeAlert}>
+        <MuiAlert elevation={6} variant="filled" severity={alert.severity}>
+          {alert.text}
+        </MuiAlert>
+      </Snackbar>
     </>
   )
 }

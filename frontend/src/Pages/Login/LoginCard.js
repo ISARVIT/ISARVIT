@@ -8,7 +8,6 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
-import MuiAlert from '@material-ui/lab/Alert';
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -34,8 +33,8 @@ export default function Login(props){
       props.setControl({...props.control, login: response})
     })
     .catch(function (error) {
-      alert("Error connecting to API, continuing with token 123")
       props.setControl({...props.control, login: 123, view: 'user'})
+      props.setAlert({open: true, text: "Error in login", severity: "error"})
     })
   }
   return (
@@ -63,7 +62,6 @@ export default function Login(props){
             Connect
           </Button>
       </CardActions>
-      {/* <MuiAlert elevation={6} variant="filled" {...props} />; */}
     </Card>
   )
 }

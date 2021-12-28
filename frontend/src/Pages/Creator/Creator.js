@@ -5,10 +5,6 @@ import Button from '@material-ui/core/Button';
 
 import FormBuilder from 'react-form-creator'
 
-
-import Forms from './Forms.js';
-import AddField from './AddField.js';
-import Text from './Text.js';
 import Questions from './Questions.js';
 
 export default function Creator(props){
