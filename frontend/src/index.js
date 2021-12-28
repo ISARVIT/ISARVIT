@@ -13,7 +13,7 @@ import User from './Pages/User/User.js';
 import Form from './Pages/Form/Form.js';
 import Creator from './Pages/Creator/Creator.js';
 
-import { createExample } from './Source/example.js';
+import { dbExample } from './Source/example.js';
 
 
 export default function Control(){
@@ -24,10 +24,10 @@ export default function Control(){
   });
   const [control, setControl] = React.useState({
     view: 'landing',
-    login: 0,
+    user: null,
     admin: true,
   });
-  const [example, setExample] = React.useState(createExample());
+  const [example, setExample] = React.useState(dbExample());
   function setView(newView){
     setControl({...control, view: newView})
   }

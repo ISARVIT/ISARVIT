@@ -17,18 +17,18 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function TitleToolbar({control, setControl, setView}) {
+export default function TitleToolbar(props) {
     const classes = useStyles();
     const [openHelp, setOpenHelp] = React.useState(false);
     function loginButton(){
-        if(!control.login)
-            return <Button variant="outlined" onClick={()=>setView('login')}>Login</Button>
+        if(!props.control.login)
+            return <Button variant="outlined" onClick={()=>props.setView('login')}>Login</Button>
         else
-            return <Button variant="outlined" startIcon={<AccountCircleIcon />}>$NAME</Button>
+            return <Button variant="outlined" startIcon={<AccountCircleIcon />}>{props.control.login.username}</Button>
     }
     function formButton(){
-        if(control.login)
-            return <Button variant="outlined" onClick={()=>setView('forms')}>Forms</Button>
+        if(props.control.login)
+            return <Button variant="outlined" onClick={()=>props.setView('forms')}>Forms</Button>
     }
     return(
         <Toolbar className={classes.toolbar}>
@@ -46,7 +46,7 @@ export default function TitleToolbar({control, setControl, setView}) {
                     </Dialog>
                 </Grid>
                 <Grid item style={{}}>
-                    <ButtonBase className={classes.toolbarTitle} onClick={()=>setView('landing')}>
+                    <ButtonBase className={classes.toolbarTitle} onClick={()=>props.setView('landing')}>
                         <Typography component="h2" variant="h5" align="center" noWrap style={{textDecoration: 'underline', padding: '1rem'}}>
                             ISARVIT
                         </Typography>

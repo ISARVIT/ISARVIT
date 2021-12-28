@@ -1,26 +1,20 @@
-import React from 'react';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import React from 'react';
 
 import UserTable from './UserTable.js'
+import UserCard from './UserCard.js'
 
 export default function User(props){
-  const [adminTable, setAdminTable] = React.useState(0);
-
-  const changeAdminTable = (event, newValue) => {
-    setAdminTable(newValue)
-  }
   return (
-    <Grid container direction="column" justifyContent="center" alignItems="center" style={{marginTop: '2rem'}}>
-      {/* <Grid item>
-        <Tabs value={adminTable} onChange={changeAdminTable} indicatorColor="primary" textColor="primary">
-          <Tab label="All"/>
-          <Tab label="Drafts"/>
-          <Tab label="Published"/>
-        </Tabs>
-      </Grid> */}
+    <Grid container direction="column" justifyContent="center" alignItems="center" xs={12} spacing={2} style={{marginTop: '2rem', }}>
+      <UserCard {...props}/>
       <UserTable {...props}/>
+      <Grid item={true} xs={12}>
+        <Button variant="contained" size="large" color="secondary">
+          Create Form
+        </Button>
+      </Grid>
     </Grid>
   )
 }

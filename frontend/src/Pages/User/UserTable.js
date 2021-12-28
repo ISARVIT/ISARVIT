@@ -94,6 +94,14 @@ export default function UserTable(props){
     }
     props.setExample({...props.example, rows: newRows})
   }
+  function textTab(){
+    switch(table.tab){
+      case 1: return 'Favorite'
+      case 2: return 'Recent'
+      case 3: return 'My'
+      default: return 'All'
+    }
+  }
   function selectRows(){
     let rows = []
     if(table.tab===1){
@@ -105,16 +113,20 @@ export default function UserTable(props){
     else if(table.tab===2){
       rows = []
     }
+    else if(table.tab===2){
+      rows = []
+    }
     else{
       rows = table.rows
     }
     if(table.search!==''){
       rows = rows.filter(function(row){
-        let field = row.field.toString().toLowerCase()
-        let search = table.search.toString().toLowerCase()
-        let sub = field.includes(search)
-        console.log(field,search,sub)
-        return sub
+        for(let i=0;i<table.columns.length;i++){
+          if(table.selectedColumns[i] && row[table.columns[i].id].toString().toLowerCase().includes(table.search.toLowerCase())){
+            return true
+          }
+        }
+        return false
       })
     }
     return rows
@@ -122,17 +134,18 @@ export default function UserTable(props){
   return (
     <Grid item container direction="column" justifyContent="center" alignItems="center">
       <Grid item>
-        <Tabs value={table.tab} onChange={changeTab} indicatorColor="primary" textColor="primary">
+        <Tabs value={table.tab} onChange={changeTab} indicatorColor={table.tab===3?"secondary":"primary"} textColor={table.tab===3?"secondary":"primary"}>
           <Tab label="All"/>
           <Tab label={"Favorites ("+table.favorites+")"}/>
           <Tab label="Recent"/>
+          <Tab label="My Forms"/>
         </Tabs>
       </Grid>
       <Grid item>
         <Paper>
           <Toolbar>
             <Typography variant="h6" id="tableTitle" style={{flex: '1 1 100%'}}>
-              {!table.tab?"All":table.tab===1?"Favorite":"Recent"} Forms
+              {textTab()} Forms {table.search!==''?'(Searching)':null}
             </Typography>
             <Tooltip title="Search">
             <TextField onChange={changeSearch} InputProps={{startAdornment:(<InputAdornment position="start"><SearchIcon /></InputAdornment>)}} placeholder="Search" variant="outlined"/>
