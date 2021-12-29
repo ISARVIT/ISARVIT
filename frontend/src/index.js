@@ -3,6 +3,7 @@ import React from 'react';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import MuiAlert from '@material-ui/lab/Alert';
+import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 import Snackbar from '@material-ui/core/Snackbar';
 import './Source/index.css';
 
@@ -15,6 +16,13 @@ import Creator from './Pages/Creator/Creator.js';
 
 import { dbExample } from './Source/example.js';
 
+const themeLight = createTheme({
+  palette: {
+      background: {
+          default: "#ffff"
+      },
+  }
+});
 
 export default function Control(){
   const [alert, setAlert] = React.useState({open: false, text: "", severity: "success"});
@@ -38,7 +46,7 @@ export default function Control(){
   }
   const sendControl = {control, setControl, setView, example, setExample, setAlert}
   return(
-    <>
+    <MuiThemeProvider theme={themeLight}>
       <CssBaseline />
       <Navbar {...sendControl}/>
       {returnView()}
@@ -47,7 +55,7 @@ export default function Control(){
           {alert.text}
         </MuiAlert>
       </Snackbar>
-    </>
+    </MuiThemeProvider>
   )
 }
 

@@ -19,14 +19,26 @@ export default function Creator(props){
     setCard(1);
   }
   return (
-    <Grid container direction="row">
-      <Stepper activeStep={activeStep} alternativeLabel>
-        {steps.map((label) => (
-        <Step key={label}>
-          <StepLabel>{label}</StepLabel>
-        </Step>
-        ))}
-      </Stepper>
+    <Grid container direction="column" justifyContent="center" alignItems="center" xs={12} spacing={2} style={{marginTop: '2rem', }}>
+      <Grid item xs={4} style={{width: '100%'}}>
+        <Stepper activeStep={card} alternativeLabel>
+          <Step>
+            <StepLabel>Create Questions</StepLabel>
+          </Step>
+          <Step>
+            <StepLabel>Create Variables</StepLabel>
+          </Step>
+          <Step>
+            <StepLabel>Connect Variables</StepLabel>
+          </Step>
+          <Step>
+            <StepLabel>Create Template</StepLabel>
+          </Step>
+          <Step>
+            <StepLabel>Publish</StepLabel>
+          </Step>
+        </Stepper>
+      </Grid>
         {card===0?
             <Grid container direction="column" justifyContent="center" alignItems="center" spacing={3} style={{padding: '2rem'}}>
                 <Grid item>
