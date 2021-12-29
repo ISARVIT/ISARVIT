@@ -17,16 +17,8 @@ import { dbExample } from './Source/example.js';
 
 
 export default function Control(){
-  const [alert, setAlert] = React.useState({
-    open: false,
-    text: "",
-    severity: "success"
-  });
-  const [control, setControl] = React.useState({
-    view: 'landing',
-    user: null,
-    admin: true,
-  });
+  const [alert, setAlert] = React.useState({open: false, text: "", severity: "success"});
+  const [control, setControl] = React.useState({view: 'landing', user: null});
   const [example, setExample] = React.useState(dbExample());
   function setView(newView){
     setControl({...control, view: newView})

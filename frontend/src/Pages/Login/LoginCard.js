@@ -37,7 +37,7 @@ export default function Login(props){
     //   props.setAlert({open: true, text: "Error in login", severity: "error"})
     // })
     if(user.username in props.example.users && props.example.users[user.username].password === user.password)
-      props.setControl({...props.control, login: props.example.users[user.username], view: 'user'})
+      props.setControl({...props.control, user: props.example.users[user.username], view: 'user'})
   }
 
   return (

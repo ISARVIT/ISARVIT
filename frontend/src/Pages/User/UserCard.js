@@ -36,8 +36,8 @@ export default function UserCard(props){
   }
   function getChipLabel(chip){
     switch(chip.type){
-      case 'favorites': return props.control.login.favorites.length + ' Favorites'
-      case 'created': return props.control.login.created.length + ' Created'
+      case 'favorites': return props.control.user.favorites.length + ' Favorites'
+      case 'created': return props.control.user.created.length + ' Created'
       default: return chip.label
     }
   }
@@ -52,22 +52,22 @@ export default function UserCard(props){
         <Grid xs={12} container direction="column" justifyContent="flex-start" alignItems="stretch">
           <Grid xs={12} spacing={2} item container direction="row" justifyContent="flex-start" alignItems="stretch" className={classes.toolbar}>
             <Grid item xs={2}>
-              <Avatar variant="rounded" alt="Avatar" src={props.control.login.avatar} style={{width:'100%',height:'100%'}}/>
+              <Avatar variant="rounded" alt="Avatar" src={props.control.user.avatar} style={{width:'100%',height:'100%'}}/>
             </Grid>
             <Grid item xs={8}>
               <Typography variant="h4">
-                {props.control.login.firstname} {props.control.login.lastname}
+                {props.control.user.firstname} {props.control.user.lastname}
               </Typography>
               <Typography variant="subtitle1">
-                {props.control.login.description}
+                {props.control.user.description}
               </Typography>
             </Grid>
             <Grid item xs={2}>
               <Typography variant="overline" component="h1" className={classes.admin}>
-                {props.control.login.admin?'Admin':'User'}
+                {props.control.user.admin?'Admin':'User'}
               </Typography>
               <Typography variant="caption" component="h1">
-                Joined in {props.control.login.joined}
+                Joined in {props.control.user.joined}
               </Typography>
               <Typography variant="caption" component="h1">
                 Last seen {'today'}
@@ -75,7 +75,7 @@ export default function UserCard(props){
             </Grid>
           </Grid>
           <Grid item xs={12} style={{paddingTop:'1rem'}}>
-            {props.control.login.chips.map((chip) => (
+            {props.control.user.chips.map((chip) => (
                <Chip key={chip.label} icon={getChipIcon(chip)} variant="outlined" label={getChipLabel(chip)} color={getChipColor(chip)}/>
             ))}
           </Grid>

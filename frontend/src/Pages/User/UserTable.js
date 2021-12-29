@@ -1,6 +1,5 @@
 import axios from 'axios';
 import Checkbox from '@material-ui/core/Checkbox';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import Grid from '@material-ui/core/Grid';
@@ -28,6 +27,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 
+import FormCard from './FormCard.js';
 
 export default function UserTable(props){
   const [table, setTable] = React.useState({
@@ -37,7 +37,6 @@ export default function UserTable(props){
     defaultColumns: [],
     anchorSelect: null,
     tab: 0,
-    favorites: 0,
     search: '',
     page: 0,
     perPage: 5,
@@ -61,9 +60,6 @@ export default function UserTable(props){
     }
     return true;
   }
-  function showCard(row){
-    return null
-  }
   React.useEffect(() => {
     const fetchData = async () => {
       axios.get('/forms')
@@ -83,16 +79,25 @@ export default function UserTable(props){
         props.setAlert({open: true, text: "Error in fetching rows", severity: "error"})
       })
     }
+    const fetchUser = async () => {
+      props.setControl({...props.control, user: props.example.users[props.control.user.username]});
+    }
     fetchData();
+    fetchUser();
   }, [props.example]);
   function handleFavorite(row){
     // Make the API call
-    let newRows = table.rows;
-    let index = newRows.indexOf(row);
-    if(index!==-1){
-      newRows[index].favorite = !newRows[index].favorite;
+    let userFavorites = props.control.user.favorites;
+    let index = userFavorites.indexOf(row.id);
+    if(index===-1){
+      userFavorites.push(row.id)
     }
-    props.setExample({...props.example, rows: newRows})
+    else{
+      userFavorites.splice(index, 1)
+    }
+    let newUsers = props.example.users;
+    newUsers[props.control.user.username].favorites = userFavorites;
+    props.setExample({...props.example, users: newUsers})
   }
   function textTab(){
     switch(table.tab){
@@ -105,16 +110,19 @@ export default function UserTable(props){
   function selectRows(){
     let rows = []
     if(table.tab===1){
-      rows = table.rows.reduce((favs, row) => {
-        if(row.favorite){favs.push(row)}
-        return favs;
-      }, []);
+      rows = table.rows.filter(function(row){
+        return props.control.user.favorites.indexOf(row.id)!==-1;
+      })
     }
     else if(table.tab===2){
-      rows = []
+      rows = table.rows.filter(function(row){
+        return row.id in props.control.user.recents;
+      })
     }
-    else if(table.tab===2){
-      rows = []
+    else if(table.tab===3){
+      rows = table.rows.filter(function(row){
+        return props.control.user.created.indexOf(row.id)!==-1;
+      })
     }
     else{
       rows = table.rows
@@ -136,9 +144,9 @@ export default function UserTable(props){
       <Grid item>
         <Tabs value={table.tab} onChange={changeTab} indicatorColor={table.tab===3?"secondary":"primary"} textColor={table.tab===3?"secondary":"primary"}>
           <Tab label="All"/>
-          <Tab label={"Favorites ("+table.favorites+")"}/>
+          <Tab label={"Favorites ("+props.control.user.favorites.length+")"}/>
           <Tab label="Recent"/>
-          <Tab label="My Forms"/>
+          {!props.control.user.admin? null : <Tab label={"My Forms ("+props.control.user.created.length+")"}/>}
         </Tabs>
       </Grid>
       <Grid item>
@@ -193,7 +201,7 @@ export default function UserTable(props){
                             return(
                               <TableCell key={column.id} align={column.align}>
                                 <IconButton onClick={()=>handleFavorite(row)}>
-                                  {row[column.id]?<FavoriteIcon />:<FavoriteBorderIcon />}
+                                  {props.control.user.favorites.indexOf(row.id)!==-1?<FavoriteIcon />:<FavoriteBorderIcon />}
                                 </IconButton>
                               </TableCell>
                             )
@@ -208,11 +216,7 @@ export default function UserTable(props){
                         }
                         else return null
                       })}
-                      <TableCell>
-                        <IconButton onClick={()=>showCard(row)}>
-                          {<ChevronRightIcon />}
-                        </IconButton>
-                      </TableCell>
+                      <FormCard {...props} row={row}/>
                     </TableRow>
                   )})}
               </TableBody>

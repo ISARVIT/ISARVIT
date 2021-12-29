@@ -8,6 +8,8 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
@@ -20,15 +22,28 @@ const useStyles = makeStyles((theme) => ({
 export default function TitleToolbar(props) {
     const classes = useStyles();
     const [openHelp, setOpenHelp] = React.useState(false);
+    const [menuAnchor, setMenuAnchor] = React.useState(null);
+    const openMenu=(event)=>{setMenuAnchor(event.currentTarget)}
+    const closeMenu=()=>{setMenuAnchor(null)}
+    const goProfile=()=>{props.setControl({...props.control, view:'user'})}
+    const logout=()=>{props.setControl({view: 'landing', user: null})}
     function loginButton(){
-        if(!props.control.login)
+        if(!props.control.user)
             return <Button variant="outlined" onClick={()=>props.setView('login')}>Login</Button>
         else
-            return <Button variant="outlined" startIcon={<AccountCircleIcon />}>{props.control.login.username}</Button>
+            return (
+                <React.Fragment>
+                    <Button variant="outlined" startIcon={<AccountCircleIcon />} onClick={openMenu}>{props.control.user.username}</Button>
+                    <Menu open={Boolean(menuAnchor)} onClose={closeMenu} anchorEl={menuAnchor} anchorOrigin={{vertical: 'top', horizontal: 'right'}} keepMounted transformOrigin={{vertical: 'top', horizontal: 'right'}}>
+                        <MenuItem onClick={goProfile}>Profile</MenuItem>
+                        <MenuItem onClick={logout}>Logout</MenuItem>
+                    </Menu>
+                </React.Fragment>
+            )
     }
     function formButton(){
-        if(props.control.login)
-            return <Button variant="outlined" onClick={()=>props.setView('forms')}>Forms</Button>
+        if(props.control.user)
+            return <Button variant="outlined" onClick={()=>props.setView('user')}>Forms</Button>
     }
     return(
         <Toolbar className={classes.toolbar}>
