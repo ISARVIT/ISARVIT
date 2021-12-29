@@ -97,3 +97,22 @@ div[class^="col-"] {
   display: table-row;
   page-break-inside: avoid;
 }
+
+.dndnode {
+    align-items: center;
+    border: 1px solid #1a192b;
+    border-radius: 2px;
+    cursor: grab;
+    display: flex;
+    height: 20px;
+    justify-content: center;
+    padding: 4px;
+}
+
+.output {
+  border-color: #ff0072;
+}
+
+.input {
+  border-color: #0041d0;
+}

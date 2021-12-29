@@ -1,65 +1,79 @@
 import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Grid from '@material-ui/core/Grid';
 import React from 'react';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 
-import FormBuilder from 'react-form-creator'
-
 import Questions from './Questions.js';
+import Variables from './Variables.js';
+import Template from './Template.js';
+import Publish from './Publish.js';
+
+function ErrorCard(){
+  return(
+    <Grid item>
+      There is an error with your forms creator. Please try moving back or forth, or contact the ISARVIT team
+    </Grid>
+  )
+}
 
 export default function Creator(props){
-  const [card, setCard] = React.useState(0);
-  const [forms, setForms] = React.useState(null);
-  const inputRef = React.useRef(null);
-  const click = () => {
-    console.log(inputRef.current.getJson());
-    setForms(inputRef.current.getJson());
-    setCard(1);
+  const [creator, setCreator] = React.useState({
+    card: 0,
+    questions: [
+      {questionID: 0, variable: 'age', questionLabel: 'Insert your age'},
+      {questionID: 1, variable: 'weight', questionLabel: 'Insert your weight'},
+      {questionID: 1, variable: 'id', questionLabel: 'Enter your ID'}
+    ],
+    outputs: [],
+    nodes: [],
+    template: '',
+  });
+  const back=()=>{
+    if(creator.card){
+      setCreator({...creator, card: creator.card-1})
+    }
+    else{
+      props.setControl({...props.control, view: 'user'})
+    }
+  }
+  const forward=()=>{
+    if(creator.card<4){
+      setCreator({...creator, card: creator.card+1})
+    }
+    else{
+      props.setControl({...props.control, view: 'user'})
+    }
+  }
+  const sendExtraProps = {...props, creator, setCreator}
+  function renderStep(){
+    switch(creator.card){
+      case 0: return <Questions {...sendExtraProps}/>
+      case 1: return <Variables {...sendExtraProps}/>
+      case 2: return <Template {...sendExtraProps}/>
+      case 3: return <Publish {...sendExtraProps}/>
+      default: return <ErrorCard />
+    }
   }
   return (
     <Grid container direction="column" justifyContent="center" alignItems="center" xs={12} spacing={2} style={{marginTop: '2rem', }}>
       <Grid item xs={4} style={{width: '100%'}}>
-        <Stepper activeStep={card} alternativeLabel>
-          <Step>
-            <StepLabel>Create Questions</StepLabel>
-          </Step>
-          <Step>
-            <StepLabel>Create Variables</StepLabel>
-          </Step>
-          <Step>
-            <StepLabel>Connect Variables</StepLabel>
-          </Step>
-          <Step>
-            <StepLabel>Create Template</StepLabel>
-          </Step>
-          <Step>
-            <StepLabel>Publish</StepLabel>
-          </Step>
+        <Stepper activeStep={creator.card} alternativeLabel>
+          <Step><StepLabel>Create Questions</StepLabel></Step>
+          <Step><StepLabel>Create Variables</StepLabel></Step>
+          <Step><StepLabel>Create Template</StepLabel></Step>
+          <Step><StepLabel>Publish</StepLabel></Step>
         </Stepper>
       </Grid>
-        {card===0?
-            <Grid container direction="column" justifyContent="center" alignItems="center" spacing={3} style={{padding: '2rem'}}>
-                <Grid item>
-                    <FormBuilder ref={inputRef}/>
-                </Grid>
-                <Grid item>
-                    <Button variant="contained" color="primary" onClick={click}>
-                        Continue
-                    </Button>
-                </Grid>
-            </Grid>
-        :card===1?
-            <>
-            {JSON.stringify(forms)}
-            <Questions/>
-            </>
-        :
-        <Grid container direction="column" justifyContent="space-around" alignItems="space-around" spacing={3} style={{padding: '2rem'}} xs>
-            
-        </Grid>
-        }
+      <Grid item xs={12}>
+          <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
+            <Button onClick={back}>{creator.card?'Back':'Cancel'}</Button>
+            <Button onClick={forward}>{creator.card===3?'Publish':'Continue'}</Button>
+          </ButtonGroup>
+      </Grid>
+      {renderStep()}
     </Grid>
   )
 }
