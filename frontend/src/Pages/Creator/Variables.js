@@ -57,7 +57,7 @@ export default function Variables(props){
     let targetIndex = newNodes.indexOf(target)
     if(target.type==='default'){
       if(target.data.variable==='sum'){
-        newNodes[targetIndex].data.label = '1+1'
+        // newNodes[targetIndex].data.label = '1+1'
       }
     }
     newNodes = addEdge({...params, animated: true}, newNodes)
@@ -119,66 +119,68 @@ export default function Variables(props){
   }
   return (
     <Grid item>
-      <Paper>
+      <Paper elevation={3}>
         <Grid container direction="row" justifyContent="flex-start" alignItems="stretch" >
-          <Grid item xs={2} style={{height: '70vh'}}>
-            <Button onClick={clearAll} style={{margin:'1rem'}} variant="outlined" color="primary">
-              Clear all
-            </Button>
-            <Accordion>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography className={classes.heading}>Input</Typography>
-                <Typography className={classes.secondaryHeading}>Variables from questionary</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <List style={{width: '100%'}} spacing={1}>
-                  {props.creator.questions.map(question => 
-                    <ListItem key={question.id} className={classes.node} style={{borderColor: '#0041d0'}} button onDragStart={(event) => onDragStart(event, question, 'input')} draggable>
-                      {question.variable}
-                    </ListItem>
-                  )}
-                </List>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography className={classes.heading}>Operations</Typography>
-                <Typography className={classes.secondaryHeading}>Change input into text</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <List style={{width: '100%'}}>
-                  {operations.map(operation => 
-                    <ListItem key={operation.id} className={classes.node} button onDragStart={(event) => onDragStart(event, operation, 'default')} draggable>
-                      {operation.operationLabel}
-                    </ListItem>
-                  )}
-                </List>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography className={classes.heading}>Output</Typography>
-                <Typography className={classes.secondaryHeading}>Variables for the Report</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <List style={{width: '100%'}}>
-                  {props.creator.outputs.map(output => 
-                    <ListItem key={output.id} className={classes.node} style={{borderColor: '#ff0072'}} button onDragStart={(event) => onDragStart(event, output, 'output')} draggable>
-                      {output.variable}
-                    </ListItem>
-                  )}
-                  {createOutput.open?
-                    <ListItem>
-                      <TextField label="Name" color="secondary" value={createOutput.name} onChange={handleChangeCreate} onKeyDown={saveOutput}/>
-                    </ListItem>
-                  :
-                    <ListItem button onClick={openCreate} style={{color: '#ff0072'}}>
-                      Create Variable
-                    </ListItem>
-                  }
-                </List>
-              </AccordionDetails>
-            </Accordion>
+          <Grid item xs={2} >
+            <Paper elevation={3} style={{height: '70vh'}}>
+              <Button onClick={clearAll} style={{margin:'1rem'}} variant="outlined" color="primary">
+                Clear all
+              </Button>
+              <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography className={classes.heading}>Input</Typography>
+                  <Typography className={classes.secondaryHeading}>Variables from questionary</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <List style={{width: '100%'}} spacing={1}>
+                    {props.creator.questions.map(question => 
+                      <ListItem key={question.id} className={classes.node} style={{borderColor: '#0041d0'}} button onDragStart={(event) => onDragStart(event, question, 'input')} draggable>
+                        {question.variable}
+                      </ListItem>
+                    )}
+                  </List>
+                </AccordionDetails>
+              </Accordion>
+              <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography className={classes.heading}>Operations</Typography>
+                  <Typography className={classes.secondaryHeading}>Change input into text</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <List style={{width: '100%'}}>
+                    {operations.map(operation => 
+                      <ListItem key={operation.id} className={classes.node} button onDragStart={(event) => onDragStart(event, operation, 'default')} draggable>
+                        {operation.operationLabel}
+                      </ListItem>
+                    )}
+                  </List>
+                </AccordionDetails>
+              </Accordion>
+              <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography className={classes.heading}>Output</Typography>
+                  <Typography className={classes.secondaryHeading}>Variables for the Report</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <List style={{width: '100%'}}>
+                    {props.creator.outputs.map(output => 
+                      <ListItem key={output.id} className={classes.node} style={{borderColor: '#ff0072'}} button onDragStart={(event) => onDragStart(event, output, 'output')} draggable>
+                        {output.variable}
+                      </ListItem>
+                    )}
+                    {createOutput.open?
+                      <ListItem>
+                        <TextField label="Name" color="secondary" value={createOutput.name} onChange={handleChangeCreate} onKeyDown={saveOutput}/>
+                      </ListItem>
+                    :
+                      <ListItem button onClick={openCreate} style={{color: '#ff0072'}}>
+                        Create Variable
+                      </ListItem>
+                    }
+                  </List>
+                </AccordionDetails>
+              </Accordion>
+            </Paper>
           </Grid>
           <Grid item xs={10}  style={{width: '70vw'}}  ref={reactFlowWrapper}>
             <ReactFlowProvider>

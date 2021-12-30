@@ -48,7 +48,7 @@ export default function UserCard(props){
   }
   return (
     <Grid item xs={4} style={{width: '100%'}}>
-      <Paper style={{padding:'1rem'}}>
+      <Paper elevation={3} style={{padding:'1rem'}}>
         <Grid xs={12} container direction="column" justifyContent="flex-start" alignItems="stretch">
           <Grid xs={12} spacing={2} item container direction="row" justifyContent="flex-start" alignItems="stretch" className={classes.toolbar}>
             <Grid item xs={2}>

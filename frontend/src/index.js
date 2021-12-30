@@ -19,7 +19,7 @@ import { dbExample } from './Source/example.js';
 const themeLight = createTheme({
   palette: {
       background: {
-          default: "#ffff"
+          default: "#F8F8F8"
       },
   }
 });
@@ -36,7 +36,7 @@ export default function Control(){
       case 'landing': return <Landing {...sendControl}/>
       case 'login':   return <Login {...sendControl}/>
       case 'user':    return <User {...sendControl}/>
-      case 'forms':   return <Form {...sendControl}/>
+      case 'form':   return <Form {...sendControl}/>
       case 'creator': return <Creator {...sendControl}/>
       default: return <Landing {...sendControl}/>
     }

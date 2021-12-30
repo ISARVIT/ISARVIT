@@ -118,9 +118,11 @@ export default function LangingPage(props) {
                     Create forms for medical CRs
                   </Typography>
                   <div className={classes.buttons}>
-                    <Button variant="contained" color="primary" className={classes.buttongg} onClick={()=>props.setControl({...props.control, view: 'login'})}>
-                      Login
-                    </Button>
+                    {props.control.user? null:
+                      <Button variant="contained" color="primary" className={classes.buttongg} onClick={()=>props.setControl({...props.control, view: 'login'})}>
+                        Login
+                      </Button>
+                    }
                   </div>
                  
               

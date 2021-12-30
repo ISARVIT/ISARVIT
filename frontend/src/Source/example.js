@@ -6,9 +6,9 @@ export function dbExample(){
     const dermatology_preview = 'https://i1.rgstatic.net/publication/309433994_Hydroxyurea_and_nonmelanoma_skin_cancers_Report_of_three_cases_and_review_of_the_literature/links/5810e8a408aef2ef97b2d07c/largepreview.png'
     return {
         rows: [
-            {favorite: false, id: 0, name: 'Urology Report', last_updated: new Date('2021-12-17T03:24:00').toJSON(), field: 'Urology', creator: 'Andreis PURIM', preview: urology_preview, creator_avatar: andreis_avatar, dynamic_image: true, creator_id: 1201, keywords: ['Urology','CR'], questions: 2, uses: 0, description: 'This is a complete urology report made in 2020 for all urology based-scans used by the CHU Lille.'},
-            {favorite: false, id: 1, name: 'Respiratory', last_updated: new Date('2021-12-15T03:24:00').toJSON(), field: 'Respiratory', creator: 'Andreis PURIM', preview: respiratory_preview, creator_avatar: andreis_avatar, dynamic_image: false, creator_id: 1201, keywords: ['Respiratory','CR'], questions: 3, uses: 1, description: 'A public CR created by the CHU Lille for respiratory scans used since 2018. It is release phase'},
-            {favorite: false, id: 2, name: 'Dermatology', last_updated: new Date('2021-12-14T03:24:00').toJSON(), field: 'Skin', creator: 'Katia MALTA', preview: dermatology_preview, creator_avatar: katia_avatar, dynamic_image: false, creator_id: 761, keywords: ['Dermatology','Skin'], questions: 4, uses: 12, description: 'This is a standard medical report for all dermatologic scans in Brazil. In the current version it does not have a dynamic image'}
+            {editable: false, id: 0, name: 'Urology Report', last_updated: new Date('2021-12-17T03:24:00').toJSON(), field: 'Urology', creator: 'Andreis PURIM', preview: urology_preview, creator_avatar: andreis_avatar, dynamic_image: true, creator_id: 1201, keywords: ['Urology','CR'], questions: 2, uses: 0, description: 'This is a complete urology report made in 2020 for all urology based-scans used by the CHU Lille.'},
+            {editable: false, id: 1, name: 'Respiratory', last_updated: new Date('2021-12-15T03:24:00').toJSON(), field: 'Respiratory', creator: 'Andreis PURIM', preview: respiratory_preview, creator_avatar: andreis_avatar, dynamic_image: false, creator_id: 1201, keywords: ['Respiratory','CR'], questions: 3, uses: 1, description: 'A public CR created by the CHU Lille for respiratory scans used since 2018. It is release phase'},
+            {editable: false, id: 2, name: 'Dermatology', last_updated: new Date('2021-12-14T03:24:00').toJSON(), field: 'Skin', creator: 'Katia MALTA', preview: dermatology_preview, creator_avatar: katia_avatar, dynamic_image: false, creator_id: 761, keywords: ['Dermatology','Skin'], questions: 4, uses: 12, description: 'This is a standard medical report for all dermatologic scans in Brazil. In the current version it does not have a dynamic image'}
         ],
         columns: [
             { id: 'favorite', label: 'Favorite', minWidth: 0, align: 'center'},
@@ -33,6 +33,7 @@ export function dbExample(){
                     },
                     created: [0,1]
                 }, 
-        }
+        },
+        forms: {}
     }
 }

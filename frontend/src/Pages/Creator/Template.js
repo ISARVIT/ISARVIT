@@ -1,15 +1,15 @@
 
-import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import JoditEditor from "jodit-react";
 import React from 'react';
+import Paper from '@material-ui/core/Paper';
 
 export default function Template(props){
 	const editor = React.useRef(null)
 
 	const config = {
         height: "100%",
-      toolbarAdaptive: false,
+        toolbarAdaptive: false,
         readonly: false,
         extraButtons: [
             {
@@ -35,15 +35,17 @@ export default function Template(props){
               template: (editor, key, value) => {
                   return '<span>'+value+'</span>';
               }
-          }
+            }
         ],
       }
   const handleChange=(newContent)=>{
     props.setCreator({...props.creator, template: newContent})
   }
   return (
-    <Grid item style={{width:'80vw',height:'70vh'}}>
-      <JoditEditor ref={editor} value={props.creator.template} config={config} tabIndex={1} onBlur={handleChange} />
+    <Grid item>
+      <Paper elevation={3} style={{width:'80vw',height:'70vh'}}>
+        <JoditEditor ref={editor} value={props.creator.template} config={config} tabIndex={1} onBlur={handleChange} />
+      </Paper>
     </Grid>
   )
 }

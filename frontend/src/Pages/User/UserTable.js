@@ -140,7 +140,7 @@ export default function UserTable(props){
     return rows
   }
   return (
-    <Grid item container direction="column" justifyContent="center" alignItems="center">
+    <Grid item container direction="column" justifyContent="center" alignItems="center" style={{paddingTop:'2rem'}}>
       <Grid item>
         <Tabs value={table.tab} onChange={changeTab} indicatorColor={table.tab===3?"secondary":"primary"} textColor={table.tab===3?"secondary":"primary"}>
           <Tab label="All"/>
@@ -150,7 +150,7 @@ export default function UserTable(props){
         </Tabs>
       </Grid>
       <Grid item>
-        <Paper>
+        <Paper elevation={3}>
           <Toolbar>
             <Typography variant="h6" id="tableTitle" style={{flex: '1 1 100%'}}>
               {textTab()} Forms {table.search!==''?'(Searching)':null}

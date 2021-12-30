@@ -22,11 +22,7 @@ function ErrorCard(){
 export default function Creator(props){
   const [creator, setCreator] = React.useState({
     card: 0,
-    questions: [
-      {questionID: 0, variable: 'age', questionLabel: 'Insert your age'},
-      {questionID: 1, variable: 'weight', questionLabel: 'Insert your weight'},
-      {questionID: 1, variable: 'id', questionLabel: 'Enter your ID'}
-    ],
+    questions: [],
     outputs: [],
     nodes: [],
     template: '',
@@ -40,12 +36,7 @@ export default function Creator(props){
     }
   }
   const forward=()=>{
-    if(creator.card<4){
-      setCreator({...creator, card: creator.card+1})
-    }
-    else{
-      props.setControl({...props.control, view: 'user'})
-    }
+    setCreator({...creator, card: creator.card+1})
   }
   const sendExtraProps = {...props, creator, setCreator}
   function renderStep(){
@@ -60,7 +51,7 @@ export default function Creator(props){
   return (
     <Grid container direction="column" justifyContent="center" alignItems="center" xs={12} spacing={2} style={{marginTop: '2rem', }}>
       <Grid item xs={4} style={{width: '100%'}}>
-        <Stepper activeStep={creator.card} alternativeLabel>
+        <Stepper activeStep={creator.card} alternativeLabel style={{ backgroundColor: "transparent" }}>
           <Step><StepLabel>Create Questions</StepLabel></Step>
           <Step><StepLabel>Create Variables</StepLabel></Step>
           <Step><StepLabel>Create Template</StepLabel></Step>
@@ -70,7 +61,7 @@ export default function Creator(props){
       <Grid item xs={12}>
           <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
             <Button onClick={back}>{creator.card?'Back':'Cancel'}</Button>
-            <Button onClick={forward}>{creator.card===3?'Publish':'Continue'}</Button>
+            <Button onClick={forward} disabled={creator.card>=3}>Continue</Button>
           </ButtonGroup>
       </Grid>
       {renderStep()}
