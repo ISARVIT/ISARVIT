@@ -1,28 +1,28 @@
 {
   "files": {
-    "main.css": "/ISARVIT/static/css/main.fbac5740.chunk.css",
-    "main.js": "/ISARVIT/static/js/main.c7bddc26.chunk.js",
-    "main.js.map": "/ISARVIT/static/js/main.c7bddc26.chunk.js.map",
-    "runtime-main.js": "/ISARVIT/static/js/runtime-main.3f5dbdb9.js",
-    "runtime-main.js.map": "/ISARVIT/static/js/runtime-main.3f5dbdb9.js.map",
-    "static/js/2.ebde6b82.chunk.js": "/ISARVIT/static/js/2.ebde6b82.chunk.js",
-    "static/js/2.ebde6b82.chunk.js.map": "/ISARVIT/static/js/2.ebde6b82.chunk.js.map",
-    "static/js/3.c93dea6d.chunk.js": "/ISARVIT/static/js/3.c93dea6d.chunk.js",
-    "static/js/3.c93dea6d.chunk.js.map": "/ISARVIT/static/js/3.c93dea6d.chunk.js.map",
-    "static/js/4.0efab4a4.chunk.js": "/ISARVIT/static/js/4.0efab4a4.chunk.js",
-    "static/js/4.0efab4a4.chunk.js.map": "/ISARVIT/static/js/4.0efab4a4.chunk.js.map",
+    "main.css": "/ISARVIT/static/css/main.42bffa0d.chunk.css",
+    "main.js": "/ISARVIT/static/js/main.4d9f124d.chunk.js",
+    "main.js.map": "/ISARVIT/static/js/main.4d9f124d.chunk.js.map",
+    "runtime-main.js": "/ISARVIT/static/js/runtime-main.8a0a1151.js",
+    "runtime-main.js.map": "/ISARVIT/static/js/runtime-main.8a0a1151.js.map",
+    "static/js/2.62ebd0b9.chunk.js": "/ISARVIT/static/js/2.62ebd0b9.chunk.js",
+    "static/js/2.62ebd0b9.chunk.js.map": "/ISARVIT/static/js/2.62ebd0b9.chunk.js.map",
+    "static/js/3.3e5dd40f.chunk.js": "/ISARVIT/static/js/3.3e5dd40f.chunk.js",
+    "static/js/3.3e5dd40f.chunk.js.map": "/ISARVIT/static/js/3.3e5dd40f.chunk.js.map",
+    "static/js/4.aac8bbbb.chunk.js": "/ISARVIT/static/js/4.aac8bbbb.chunk.js",
+    "static/js/4.aac8bbbb.chunk.js.map": "/ISARVIT/static/js/4.aac8bbbb.chunk.js.map",
     "index.html": "/ISARVIT/index.html",
-    "static/css/main.fbac5740.chunk.css.map": "/ISARVIT/static/css/main.fbac5740.chunk.css.map",
-    "static/js/2.ebde6b82.chunk.js.LICENSE.txt": "/ISARVIT/static/js/2.ebde6b82.chunk.js.LICENSE.txt",
-    "static/js/3.c93dea6d.chunk.js.LICENSE.txt": "/ISARVIT/static/js/3.c93dea6d.chunk.js.LICENSE.txt",
-    "static/js/4.0efab4a4.chunk.js.LICENSE.txt": "/ISARVIT/static/js/4.0efab4a4.chunk.js.LICENSE.txt",
+    "static/css/main.42bffa0d.chunk.css.map": "/ISARVIT/static/css/main.42bffa0d.chunk.css.map",
+    "static/js/2.62ebd0b9.chunk.js.LICENSE.txt": "/ISARVIT/static/js/2.62ebd0b9.chunk.js.LICENSE.txt",
+    "static/js/3.3e5dd40f.chunk.js.LICENSE.txt": "/ISARVIT/static/js/3.3e5dd40f.chunk.js.LICENSE.txt",
+    "static/js/4.aac8bbbb.chunk.js.LICENSE.txt": "/ISARVIT/static/js/4.aac8bbbb.chunk.js.LICENSE.txt",
     "static/media/qrcode1.f4934e48.PNG": "/ISARVIT/static/media/qrcode1.f4934e48.PNG",
     "static/media/urinary1.8cdb7f3a.PNG": "/ISARVIT/static/media/urinary1.8cdb7f3a.PNG"
   },
   "entrypoints": [
-    "static/js/runtime-main.3f5dbdb9.js",
-    "static/js/2.ebde6b82.chunk.js",
-    "static/css/main.fbac5740.chunk.css",
-    "static/js/main.c7bddc26.chunk.js"
+    "static/js/runtime-main.8a0a1151.js",
+    "static/js/2.62ebd0b9.chunk.js",
+    "static/css/main.42bffa0d.chunk.css",
+    "static/js/main.4d9f124d.chunk.js"
   ]
 }
