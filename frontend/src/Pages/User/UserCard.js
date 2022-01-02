@@ -20,6 +20,10 @@ const useStyles = makeStyles((theme) => ({
   admin: {
     color:theme.palette.secondary.main,
     fontSize:20
+  },
+  user: {
+    color:theme.palette.primary.main,
+    fontSize:20
   }
 }));
 
@@ -47,7 +51,7 @@ export default function UserCard(props){
     return 'primary'
   }
   return (
-    <Grid item xs={4} style={{width: '100%'}}>
+    <Grid item xs={7} style={{width: '100%'}}>
       <Paper elevation={3} style={{padding:'1rem'}}>
         <Grid xs={12} container direction="column" justifyContent="flex-start" alignItems="stretch">
           <Grid xs={12} spacing={2} item container direction="row" justifyContent="flex-start" alignItems="stretch" className={classes.toolbar}>
@@ -63,7 +67,7 @@ export default function UserCard(props){
               </Typography>
             </Grid>
             <Grid item xs={2}>
-              <Typography variant="overline" component="h1" className={classes.admin}>
+              <Typography variant="overline" component="h1" className={props.control.user.admin?classes.admin:classes.user}>
                 {props.control.user.admin?'Admin':'User'}
               </Typography>
               <Typography variant="caption" component="h1">

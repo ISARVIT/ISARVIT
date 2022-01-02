@@ -22,7 +22,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 const useStyles = makeStyles((theme) => ({
   media: {
     height: 0,
-    paddingTop: '56.25%', // 16:9
+    paddingTop: '40%', // 16:9
   },
 }));
 
@@ -43,13 +43,14 @@ export default function FormCard(props){
     setExpanded(!expanded);
   };
   function editForms(row){
+    alert("Available on next release")
     return null
   }
   return (
     <TableCell>
       <Tooltip title="See Form">
         <IconButton onClick={handleClickOpen}>
-          {<ChevronRightIcon />}
+          <ChevronRightIcon />
         </IconButton>
       </Tooltip>
       <Dialog onClose={handleClose} open={open} fullWidth maxWidth='sm'>
@@ -104,7 +105,7 @@ export default function FormCard(props){
                 Edit
               </Button>
             }
-            <Button onClick={useForms} color="primary">
+            <Button disabled={props.row.id} onClick={useForms} color="primary">
               Use
             </Button>
           </DialogActions>

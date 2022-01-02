@@ -75,8 +75,9 @@ export default function UserTable(props){
             favs++
           }
         }
-        setTable({...table, columns: columns, selectedColumns: columns.map((i)=>true), defaultColumns: columns.map((i)=>true), rows: rows, favorites: favs})
-        props.setAlert({open: true, text: "Error in fetching rows", severity: "error"})
+        let defaultColumns = columns.filter(function(row){return row.default})
+        setTable({...table, columns: columns, selectedColumns: defaultColumns, defaultColumns: defaultColumns, rows: rows, favorites: favs})
+        // props.setAlert({open: true, text: "Error in fetching rows", severity: "error"})
       })
     }
     const fetchUser = async () => {
@@ -203,6 +204,20 @@ export default function UserTable(props){
                                 <IconButton onClick={()=>handleFavorite(row)}>
                                   {props.control.user.favorites.indexOf(row.id)!==-1?<FavoriteIcon />:<FavoriteBorderIcon />}
                                 </IconButton>
+                              </TableCell>
+                            )
+                          }
+                          else if(column.id === 'last_updated'){
+                            return(
+                              <TableCell key={column.id} align={column.align}>
+                                {new Date(row[column.id]).toISOString().slice(0, 10)}
+                              </TableCell>
+                            )
+                          }
+                          else if(column.id === 'keywords'){
+                            return(
+                              <TableCell key={column.id} align={column.align}>
+                                {row[column.id].join(', ')}
                               </TableCell>
                             )
                           }

@@ -46,12 +46,15 @@ function Question(props) {
   }
   const changeQuestion=(event)=>{
     let newQuestions = props.creator.questions
+    let newVariable = event.target.value.toLowerCase().replace(/\s/g, '_').replace(/[^a-z0-9_]/gi,'');
     newQuestions[props.creator.questions.indexOf(props.question)].questionLabel = event.target.value
+    newQuestions[props.creator.questions.indexOf(props.question)].variable = newVariable
     props.setCreator({...props.creator, questions: newQuestions})
   }
   const changeVariable=(event)=>{
+    let treatedText = event.target.value.replace(/[^a-z0-9_]/gi,'');
     let newQuestions = props.creator.questions
-    newQuestions[props.creator.questions.indexOf(props.question)].variable = event.target.value
+    newQuestions[props.creator.questions.indexOf(props.question)].variable = treatedText
     props.setCreator({...props.creator, questions: newQuestions})
   }
   const changeType=(event)=>{
@@ -114,7 +117,7 @@ function Question(props) {
 export default function Questions(props){
   const addQuestion=()=>{
     let newQuestions = props.creator.questions
-    let newQuestion = {questionID: newQuestions.length, dragID: newQuestions.length.toString(), type:'Text', variable: 'var-'+newQuestions.length, questionLabel: ''};
+    let newQuestion = {questionID: newQuestions.length, dragID: newQuestions.length.toString(), type:'Text', variable: 'var_'+newQuestions.length, questionLabel: ''};
     newQuestions.push(newQuestion);
     props.setCreator({...props.creator, questions: newQuestions})
   }

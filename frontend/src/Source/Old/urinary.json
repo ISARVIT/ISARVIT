@@ -42,6 +42,54 @@
         "name": "condition_contrast",
         "title": "Acute phase / clinical crisis at the time of the exam",
         "type": "dropdown"
+      },
+      {
+        "choices": ["No", "Yes", "Unknown", "NA"],
+        "name": "condition_fever",
+        "title": "Patient febrile at the time of the exam",
+        "type": "dropdown"
+      },
+      {
+        "choices": ["No", "Bladder drainage", "Upper tract drainage", "NA"],
+        "name": "condition_derivation",
+        "title": "Urinary tract diversion in place at the time of the exam",
+        "type": "dropdown"
+      },
+      {
+        "choices": ["No", "Yes", "Unknown", "NA"],
+        "name": "abnormal_liver",
+        "title":  "Liver anomaly detected",
+        "type": "dropdown"
+      },
+      {
+        "choices": ["No", "Yes", "Unknown", "NA"],
+        "name": "abnormal_adrenals",
+        "title":  "Adrenals anomaly detected",
+        "type": "dropdown"
+      },
+      {
+        "choices": ["No", "Yes", "Unknown", "NA"],
+        "name": "abnormal_pancreas",
+        "title":  "Pancreas anomaly detected",
+        "type": "dropdown"
+      },
+      {
+        "choices": ["No", "Yes", "Unknown", "NA"],
+        "name":  "abnormal_spleen",
+        "title":  "Splenic anomaly detected",
+        "type": "dropdown"
+      },
+      {
+        "choices": ["No", "Yes", "Unknown", "NA"],
+        "name":  "abnormal_ovaries",
+        "title":  "Ovarian anomaly detected",
+        "type": "dropdown"
+      },
+      {
+        "choices": ["No", "Yes", "Unknown", "NA"],
+        "name":  "abnormal_lymphnode",
+        "title":  "Abnormal lymphnode detected",
+        "type": "dropdown"
       }
     ]
 }

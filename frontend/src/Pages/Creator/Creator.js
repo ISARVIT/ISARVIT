@@ -8,6 +8,7 @@ import StepLabel from '@material-ui/core/StepLabel';
 
 import Questions from './Questions.js';
 import Variables from './Variables.js';
+import SVG from './SVG.js';
 import Template from './Template.js';
 import Publish from './Publish.js';
 
@@ -26,6 +27,10 @@ export default function Creator(props){
     outputs: [],
     nodes: [],
     template: '',
+    svg: {
+      base: '',
+      rest: [],
+    }
   });
   const back=()=>{
     if(creator.card){
@@ -43,17 +48,19 @@ export default function Creator(props){
     switch(creator.card){
       case 0: return <Questions {...sendExtraProps}/>
       case 1: return <Variables {...sendExtraProps}/>
-      case 2: return <Template {...sendExtraProps}/>
-      case 3: return <Publish {...sendExtraProps}/>
+      case 2: return <SVG {...sendExtraProps}/>
+      case 3: return <Template {...sendExtraProps}/>
+      case 4: return <Publish {...sendExtraProps}/>
       default: return <ErrorCard />
     }
   }
   return (
     <Grid container direction="column" justifyContent="center" alignItems="center" xs={12} spacing={2} style={{marginTop: '2rem', }}>
-      <Grid item xs={4} style={{width: '100%'}}>
+      <Grid item xs={5} style={{width: '100%'}}>
         <Stepper activeStep={creator.card} alternativeLabel style={{ backgroundColor: "transparent" }}>
           <Step><StepLabel>Create Questions</StepLabel></Step>
           <Step><StepLabel>Create Variables</StepLabel></Step>
+          <Step><StepLabel>Create SVG</StepLabel></Step>
           <Step><StepLabel>Create Template</StepLabel></Step>
           <Step><StepLabel>Publish</StepLabel></Step>
         </Stepper>
@@ -61,7 +68,7 @@ export default function Creator(props){
       <Grid item xs={12}>
           <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
             <Button onClick={back}>{creator.card?'Back':'Cancel'}</Button>
-            <Button onClick={forward} disabled={creator.card>=3}>Continue</Button>
+            <Button onClick={forward} disabled={creator.card>=4}>Continue</Button>
           </ButtonGroup>
       </Grid>
       {renderStep()}

@@ -1,12 +1,14 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import ReactFlow, { ReactFlowProvider, addEdge, removeElements, Controls, Background} from 'react-flow-renderer';
+import ReactFlow, { ReactFlowProvider, addEdge, removeElements, Controls, Background, Handle} from 'react-flow-renderer';
 import Paper from '@material-ui/core/Paper';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Button from '@material-ui/core/Button';
 
+
+import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -14,6 +16,15 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 
+import EditIcon from '@material-ui/icons/Edit';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
+import { Equation, EquationEvaluate, EquationOptions, defaultErrorHandler } from 'react-equation'
+import { defaultVariables, defaultFunctions } from 'equation-resolver'
 
 import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
@@ -35,12 +46,86 @@ const useStyles = makeStyles((theme) => ({
     padding: '1rem',
     marginBottom: '1rem',
   },
+  operationNode: {
+    alignItems: 'center',
+    border: '1px solid #1a192b',
+    borderRadius: '2px',
+    backgroundColor: 'white',
+    padding: '0.2rem 2rem',
+    cursor: 'grab',
+    display: 'flex',
+    justifyContent: 'center',
+  }
 }));
 
 const operations = [
-  {operationID: 0, variable: 'sum', operationLabel: 'Sum', sums:[]},
-  {operationID: 1, variable: 'if', operationLabel: 'If'},
+  {operationID: 0, variable: 'equation', operationLabel: 'Equation'},
+  {operationID: 1, variable: 'conditional', operationLabel: 'If / Else'},
 ]
+
+function OperationNode({ data, isConnectable }){
+  const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+  const [equation, setEquation] = React.useState('');
+  const [write, setWrite] = React.useState('');
+  const openDialog=()=>{setOpen(true)}
+  const closeDialog=()=>{setOpen(false)}
+  const changeEquation=(event)=>{setEquation(event.target.value)}
+  const changeWrite=(event)=>{setWrite(event.target.value)}
+  return(
+    <div className={classes.operationNode}>
+      <Handle
+        position="top"
+        isConnectable={isConnectable}
+      />
+      <div>
+        {data.variable}
+        <Dialog onClose={closeDialog} open={open} fullWidth maxWidth='md'> 
+          <DialogTitle>{data.operationLabel}</DialogTitle>
+          {data.variable==='equation'?
+            <DialogContent>
+              <TextField value={equation} onChange={changeEquation} fullWidth required label="Equation" />
+              <EquationOptions variables={defaultVariables} functions={defaultFunctions} errorHandler={defaultErrorHandler}>
+                <EquationEvaluate value={equation!==''?equation:'0'}/>
+              </EquationOptions>
+            </DialogContent>
+          :
+            <DialogContent>
+              <Grid container spacing={1} direction="row" justifyContent="flex-start" alignItems="center">
+                <Grid item xs={3}>
+                  <TextField value={equation} onChange={changeEquation} fullWidth required label="If Condition" />
+                </Grid>
+                <Grid item xs={9}>
+                  <TextField value={equation} onChange={changeEquation} fullWidth required label="Then Write" />
+                </Grid>
+                <Grid item xs={12}>
+                  <Button variant="outlined" color="primary" onClick={()=>alert("Not available in the moment")} size="small">
+                    New if
+                  </Button>
+                </Grid>
+              </Grid>
+            </DialogContent>
+          }
+          <DialogActions>
+            <Button onClick={closeDialog} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={closeDialog} color="primary" autoFocus>
+              Save
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <IconButton onClick={openDialog} size="small">
+          <EditIcon/>
+        </IconButton>
+      </div>
+      <Handle
+        position="bottom"
+        isConnectable={isConnectable}
+      />
+    </div>
+  )
+}
 
 export default function Variables(props){
   const classes = useStyles();
@@ -77,14 +162,6 @@ export default function Variables(props){
     const varInfo = JSON.parse(event.dataTransfer.getData('application/reactflow'));
     const type = varInfo.nodeType;
     let label = varInfo.variable;
-    if(type==='default'){
-      if(label==='sum'){
-        label='... + ...'
-      }
-      else if(label==='if'){
-        label='If ____ Write ____'
-      }
-    }
     const newNode = {id: props.creator.nodes.length.toString(), type, position, data: { label, ...varInfo },};
     let newNodes = props.creator.nodes 
     newNodes = newNodes.concat(newNode)
@@ -121,7 +198,7 @@ export default function Variables(props){
     <Grid item>
       <Paper elevation={3}>
         <Grid container direction="row" justifyContent="flex-start" alignItems="stretch" >
-          <Grid item xs={2} >
+          <Grid item xs={3} >
             <Paper elevation={3} style={{height: '70vh'}}>
               <Button onClick={clearAll} style={{margin:'1rem'}} variant="outlined" color="primary">
                 Clear all
@@ -149,7 +226,7 @@ export default function Variables(props){
                 <AccordionDetails>
                   <List style={{width: '100%'}}>
                     {operations.map(operation => 
-                      <ListItem key={operation.id} className={classes.node} button onDragStart={(event) => onDragStart(event, operation, 'default')} draggable>
+                      <ListItem key={operation.id} className={classes.node} button onDragStart={(event) => onDragStart(event, operation, 'operation')} draggable>
                         {operation.operationLabel}
                       </ListItem>
                     )}
@@ -182,13 +259,14 @@ export default function Variables(props){
               </Accordion>
             </Paper>
           </Grid>
-          <Grid item xs={10}  style={{width: '70vw'}}  ref={reactFlowWrapper}>
+          <Grid item xs={9}  style={{width: '70vw'}}  ref={reactFlowWrapper}>
             <ReactFlowProvider>
               <ReactFlow
                 elements={props.creator.nodes}
                 onConnect={onConnect}
                 onLoad={onLoad}
                 onDrop={onDrop}
+                nodeTypes={{operation: OperationNode}}
                 defaultZoom={1.5}
                 onDragOver={onDragOver}
               >
