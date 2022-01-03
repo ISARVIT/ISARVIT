@@ -1,5 +1,4 @@
 import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Grid from '@material-ui/core/Grid';
 import React from 'react';
 import Step from '@material-ui/core/Step';
@@ -9,13 +8,11 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Survey from "material-survey/components/Survey"
 import Download from './Download.js';
 
-const forms = require('./../../Source/Old/urinary.json')
-
 export default function Form(props){
   const [answers, setAnswers] = React.useState({
     page: 0,
     answers: null,
-    questions: null,
+    questions: props.example.forms[0],
   });
   const saveAnswers=(newAnswers)=>{
     setAnswers({...answers, page:1, answers: newAnswers})
@@ -44,7 +41,7 @@ export default function Form(props){
         <Download {...sendExtraProps} />
       :
         <Grid item xs={12}>
-          <Survey form={forms} autocompleteRequest={function noRefCheck() {}} onFinish={saveAnswers}/>
+          <Survey form={answers.questions} autocompleteRequest={function noRefCheck() {}} onFinish={saveAnswers}/>
         </Grid>
       }
     </Grid>

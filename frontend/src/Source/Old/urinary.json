@@ -26,6 +26,7 @@
       },
       {
         "choices": ["CT scan", "Ultrasonography", "Radiography AND US"],
+        "isRequired": true,
         "name": "exam_type",
         "title": "Exam type",
         "type": "dropdown"
@@ -33,60 +34,70 @@
       },
       {
         "choices": ["No", "IV", "IV late phase", "Urinary tract injection", "NA"],
+        "isRequired": true,
         "name": "exam_indication",
         "title": "Enhanced contrast agent",
         "type": "dropdown"
       },
       {
         "choices": ["Low dose", "Standard dose", "NA"],
+        "isRequired": true,
         "name": "condition_contrast",
         "title": "Acute phase / clinical crisis at the time of the exam",
         "type": "dropdown"
       },
       {
         "choices": ["No", "Yes", "Unknown", "NA"],
+        "isRequired": true,
         "name": "condition_fever",
         "title": "Patient febrile at the time of the exam",
         "type": "dropdown"
       },
       {
         "choices": ["No", "Bladder drainage", "Upper tract drainage", "NA"],
+        "isRequired": true,
         "name": "condition_derivation",
         "title": "Urinary tract diversion in place at the time of the exam",
         "type": "dropdown"
       },
       {
         "choices": ["No", "Yes", "Unknown", "NA"],
+        "isRequired": true,
         "name": "abnormal_liver",
         "title":  "Liver anomaly detected",
         "type": "dropdown"
       },
       {
         "choices": ["No", "Yes", "Unknown", "NA"],
+        "isRequired": true,
         "name": "abnormal_adrenals",
         "title":  "Adrenals anomaly detected",
         "type": "dropdown"
       },
       {
         "choices": ["No", "Yes", "Unknown", "NA"],
+        "isRequired": true,
         "name": "abnormal_pancreas",
         "title":  "Pancreas anomaly detected",
         "type": "dropdown"
       },
       {
         "choices": ["No", "Yes", "Unknown", "NA"],
+        "isRequired": true,
         "name":  "abnormal_spleen",
         "title":  "Splenic anomaly detected",
         "type": "dropdown"
       },
       {
         "choices": ["No", "Yes", "Unknown", "NA"],
+        "isRequired": true,
         "name":  "abnormal_ovaries",
         "title":  "Ovarian anomaly detected",
         "type": "dropdown"
       },
       {
         "choices": ["No", "Yes", "Unknown", "NA"],
+        "isRequired": true,
         "name":  "abnormal_lymphnode",
         "title":  "Abnormal lymphnode detected",
         "type": "dropdown"

@@ -7,7 +7,6 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Button from '@material-ui/core/Button';
 
-
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -20,10 +19,9 @@ import EditIcon from '@material-ui/icons/Edit';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import { Equation, EquationEvaluate, EquationOptions, defaultErrorHandler } from 'react-equation'
+import { EquationEvaluate, EquationOptions, defaultErrorHandler } from 'react-equation'
 import { defaultVariables, defaultFunctions } from 'equation-resolver'
 
 import { makeStyles } from '@material-ui/core/styles';
