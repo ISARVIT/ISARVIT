@@ -17,7 +17,7 @@ The idea is simple: a Doctor (whom from now on will be refered as an "Admin") ca
 # 1. Backend
 ![](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white) ![](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white) ![](https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)
 
-The backend is developed in Python, using the framework Flask (with some libraries) and hosted in Heroku. The idea was done an API to help the frontend to change information with a database hosted using MySQL, this should include cryptographic and make a safe environment. You an see the live version [here](https://api-isarvit.herokuapp.com)
+The backend is developed in Python, using the framework Flask (with some libraries) and hosted in Heroku. The idea was done an API to help the frontend to change information with a database hosted using MySQL, this should include cryptographic and make a safe environment. You can see the live version [here](https://api-isarvit.herokuapp.com).
 
 To run the backend in your machine, you need to have [FLASK](https://flask.palletsprojects.com/en/2.0.x/) installed. The tutorial to install from zero in your machine are :
 
@@ -70,6 +70,7 @@ pip install -r requirements.txt
 **Step 6: Configure Flask**
 
 In venv set the main.py to be executed in Flask with the command:
+
 Windows:
 ```bash
 $env:FLASK_APP:"<name of file>.py"
@@ -83,9 +84,9 @@ After that, use this command to run the application:
 flask run
 ```
 
-*Observation: If you want use a local database Mysql, you can find a script in **API/static/MySQL/make** to create the database necessary for the application.*
+*Observation: If you want use a local database [Mysql](https://www.mysql.com), you can find a script in **API/static/MySQL/make** to create the database necessary for the application.*
 
-Enjoy the rest of tutorial! ~ Joel
+*Enjoy the rest of tutorial! ~ Joel*
 
 # 2. Frontend
 ![](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white) ![](https://img.shields.io/badge/Material%20UI-007FFF?style=for-the-badge&logo=mui&logoColor=white) ![](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
