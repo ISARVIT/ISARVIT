@@ -1,11 +1,11 @@
 function back(){
-    var path = document.getElementById("Login");
-    path.innerHTML = `<input type = "submit" value = "Sign In" onclick="login();"/>
-    <input type = "submit" value = "Sign Up" onclick="registration();"/>`;
+    var path = document.getElementById("login");
+    path.innerHTML = `<input class="content-login-buttom" type = "submit" value = "Sign In" onclick="login();"/>
+    <input class="content-login-buttom" type = "submit" value = "Sign Up" onclick="registration();"/>`;
 }
 
 function registration(){
-    var path = document.getElementById("Login");
+    var path = document.getElementById("login");
     path.innerHTML = `
         <form action = "/API/registration" method = "POST">
             <p> First Name : <input type = "text" name = "firstName" /></p>
@@ -13,25 +13,28 @@ function registration(){
             <p> Username : <input type = "text" name = "username" /></p>
             <p> Email : <input type = "text" name = "email" /></p>
             <p> Password : <input type = "password" name = "password" /></p>
-            <p><input type = "submit" value = "Submit" /></p><input type = "submit" value = "Back" onclick="back();"/>
+            <div class="content-login-div">
+                <input class="content-login-buttom" type = "submit" value = "Submit" />
+                <input class="content-login-buttom" type = "submit" value = "Back" onclick="back();"/>
+            </div>        
         </form> `;
 }
 
 function login(){
-    var path = document.getElementById("Login");
+    var path = document.getElementById("login");
     path.innerHTML = `
         <form action = "/API/login" method = "POST">
             <p> Login : <input type = "text" name = "Login" /></p>
             <p> Password : <input type = "password" name = "password" /></p>
-            <p><input type = "submit" value = "Submit" /></p><input type = "submit" value = "Back" onclick="back();"/>
+            <div class="content-login-div">
+                <input class="content-login-buttom" type = "submit" value = "Submit" />
+                <input class="content-login-buttom" type = "submit" value = "Back" onclick="back();"/>
+            </div> 
          </form> `;
 }
 
 function getForms(){
-    var User = document.getElementById("nameUser");
-    User = User.textContent;
-    User = User.substring(8,);
-    var URL = "API/getForms/" + User;
+    var URL = "API/getForms/" + User + '/' + hash;
 
     $.ajax({
         type: "POST",
@@ -65,17 +68,9 @@ function getForms(){
         
         code += `</table>`;
 
-        code += `<br><input type = "submit" value = "Hide Forms" onclick="hideForms();"/>
-        <input type = "submit" value = "Add Forms" onclick="addForms();"/>`
+        code += `<br><input type = "submit" value = "Back" onclick="back();"/>`
         path.innerHTML = code;
     });
-}
-
-function hideForms(){
-    var path = document.getElementById("Forms");
-    var code = `<input type = "submit" value = "Show Forms" onclick="getForms();"/>
-    <input type = "submit" value = "Add Forms" onclick="addForms();"/>`;
-    path.innerHTML = code;
 }
 
 

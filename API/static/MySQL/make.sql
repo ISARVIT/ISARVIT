@@ -13,6 +13,13 @@ CREATE TABLE `users`(
     PRIMARY KEY(Username)
 );
 
+CREATE TABLE `hash` (
+    user VARCHAR(255) NOT NULL,
+    hash VARCHAR(32) NOT NULL,
+
+    PRIMARY KEY(user)
+);
+
 -- Command to create the Forms table
 CREATE TABLE `forms`(
     FormName VARCHAR(255) NOT NULL,
