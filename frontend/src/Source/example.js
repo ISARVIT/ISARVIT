@@ -155,6 +155,12 @@ export function dbExample(){
                         "Standart Dose": "He chose STANDARDDOSE",
                         "NA": "He chose None of the Above"
                     },
+                    "condition_fever": {
+                        "No": "Patient does not has fever",
+                        "Yes": "<b>Patient HAS fever</b>",
+                        "Unknown": "Condition about the fever is unknown",
+                        "NA": "Not know inf patient has fever"
+                    },
                     
                 },
                 svg: {

@@ -59,7 +59,9 @@ const useStyles = makeStyles((theme) => ({
 const operations = [
   {operationID: 0, variable: 'equation', operationLabel: 'Equation'},
   {operationID: 1, variable: 'conditional', operationLabel: 'If / Else'},
+  
 ]
+const toString = {operationID: 2, variable: 'to_string', operationLabel: 'toString'}
 
 function OperationNode({ data, isConnectable }){
   const classes = useStyles();
@@ -74,6 +76,7 @@ function OperationNode({ data, isConnectable }){
     <div className={classes.operationNode}>
       <Handle
         position="top"
+        type="target"
         isConnectable={isConnectable}
       />
       <div>
@@ -119,6 +122,7 @@ function OperationNode({ data, isConnectable }){
       </div>
       <Handle
         position="bottom"
+        type="source"
         isConnectable={isConnectable}
       />
     </div>
@@ -228,6 +232,9 @@ export default function Variables(props){
                         {operation.operationLabel}
                       </ListItem>
                     )}
+                      <ListItem className={classes.node} button onDragStart={(event) => onDragStart(event, toString, 'default')} draggable>
+                        {toString.operationLabel}
+                      </ListItem>
                   </List>
                 </AccordionDetails>
               </Accordion>
