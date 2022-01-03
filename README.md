@@ -17,13 +17,13 @@ The idea is simple: a Doctor (whom from now on will be refered as an "Admin") ca
 # 1. Backend
 ![](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white) ![](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white) ![](https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)
 
-The backend is developed in Python, using the framework Flask (with some libraries) and hosted in Heroku. The idea was done an API to help the frontend to change information with a database hosted using MySQL, this should include cryptographic and make a safe environment. You an see the live version .[here](https://api-isarvit.herokuapp.com)
+The backend is developed in Python, using the framework Flask (with some libraries) and hosted in Heroku. The idea was done an API to help the frontend to change information with a database hosted using MySQL, this should include cryptographic and make a safe environment. You an see the live version [here](https://api-isarvit.herokuapp.com)
 
-To run the backend in your machine, you need to have .[FLASK](https://flask.palletsprojects.com/en/2.0.x/) installed. The tutorial to install from zero in your machine are :
+To run the backend in your machine, you need to have [FLASK](https://flask.palletsprojects.com/en/2.0.x/) installed. The tutorial to install from zero in your machine are :
 
 If you already have Python3 intalled, skip to step 2.
 
-**Step 1: Install Python3**
+**Step 1: Install Python3**.
 Windows:
 ```bash
 pip install python3
@@ -32,7 +32,7 @@ Linux:
 ```bash
 sudo apt install python3
 ```
-**Step 2: Prepare the environment**
+**Step 2: Prepare the environment**.
 So create a separate directory for your project and execute :
 ```bash
 mkdir <project name>
@@ -45,7 +45,7 @@ And then create a virtual env :
 ```bash
 python3 -m venv <name of environment>
 ```
-**Step 3: Activate the environment**
+**Step 3: Activate the environment**.
 Windows:
 ```bash
 <name of environment>\Scripts\activate
@@ -54,15 +54,15 @@ Linux:
 ```bash
 .<name of environment>/bin/activate
 ```
-**Step 4: Install FLask in environment**
+**Step 4: Install FLask in environment**.
 ```bash
 pip install Flask
 ```
-**Step 5: Install requirements**
+**Step 5: Install requirements**.
 ```bash
 pip install -r requirements.txt
 ```
-**Step 6: Configure Flask**
+**Step 6: Configure Flask**.
 In venv set the main.py to be executed in Flask with the command:
 Windows:
 ```bash
