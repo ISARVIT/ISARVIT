@@ -75,8 +75,9 @@ export default function UserTable(props){
             favs++
           }
         }
-        setTable({...table, columns: columns, selectedColumns: columns.map((i)=>true), defaultColumns: columns.map((i)=>true), rows: rows, favorites: favs})
-        props.setAlert({open: true, text: "Error in fetching rows", severity: "error"})
+        let defaultColumns = columns.filter(function(row){return row.default})
+        setTable({...table, columns: columns, selectedColumns: defaultColumns, defaultColumns: defaultColumns, rows: rows, favorites: favs})
+        // props.setAlert({open: true, text: "Error in fetching rows", severity: "error"})
       })
     }
     const fetchUser = async () => {
@@ -140,7 +141,7 @@ export default function UserTable(props){
     return rows
   }
   return (
-    <Grid item container direction="column" justifyContent="center" alignItems="center">
+    <Grid item container direction="column" justifyContent="center" alignItems="center" style={{paddingTop:'2rem'}}>
       <Grid item>
         <Tabs value={table.tab} onChange={changeTab} indicatorColor={table.tab===3?"secondary":"primary"} textColor={table.tab===3?"secondary":"primary"}>
           <Tab label="All"/>
@@ -150,7 +151,7 @@ export default function UserTable(props){
         </Tabs>
       </Grid>
       <Grid item>
-        <Paper>
+        <Paper elevation={3}>
           <Toolbar>
             <Typography variant="h6" id="tableTitle" style={{flex: '1 1 100%'}}>
               {textTab()} Forms {table.search!==''?'(Searching)':null}
@@ -203,6 +204,20 @@ export default function UserTable(props){
                                 <IconButton onClick={()=>handleFavorite(row)}>
                                   {props.control.user.favorites.indexOf(row.id)!==-1?<FavoriteIcon />:<FavoriteBorderIcon />}
                                 </IconButton>
+                              </TableCell>
+                            )
+                          }
+                          else if(column.id === 'last_updated'){
+                            return(
+                              <TableCell key={column.id} align={column.align}>
+                                {new Date(row[column.id]).toISOString().slice(0, 10)}
+                              </TableCell>
+                            )
+                          }
+                          else if(column.id === 'keywords'){
+                            return(
+                              <TableCell key={column.id} align={column.align}>
+                                {row[column.id].join(', ')}
                               </TableCell>
                             )
                           }

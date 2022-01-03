@@ -55,7 +55,7 @@ export default function TitleToolbar(props) {
                         <DialogContent>
                             <DialogContentText id="alert-dialog-description">
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus maximus quam dapibus massa viverra, sed convallis dolor bibendum. Morbi ornare eros vel orci porttitor, sit amet molestie nisl varius. Curabitur velit dolor, egestas quis ex eu, commodo mattis eros. In tortor magna, vulputate maximus convallis sit amet, suscipit in mauris. Praesent tempor eleifend enim ut convallis. Nam vehicula est vitae turpis fringilla vestibulum a lacinia sem. Fusce varius vulputate metus, malesuada sollicitudin arcu pulvinar id. Nam eleifend ornare erat, eu lacinia nibh iaculis ac. Donec sollicitudin risus in orci lacinia accumsan. Proin vulputate dictum viverra.
-                                Feito com ❤️ pelo Andreis.
+                                Made with ❤️ by Andreis.
                             </DialogContentText>
                         </DialogContent>
                     </Dialog>

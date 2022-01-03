@@ -27,6 +27,18 @@ export default function Login(props){
     setUser({...user, password: event.target.value});
   };
   const connect = () => {
+    // axios({
+    //     method: 'get',
+    //     url: 'https://api-isarvit.herokuapp.com/API/login',
+    //     headers: { 'user': user.username, 'password': user.password}
+    // })
+    // .then(function (response){
+    //   props.setControl({...props.control, login: response})
+    // })
+    // .catch(function (error){
+    //   props.setAlert({open: true, text: "Error in login", severity: "error"})
+    // });
+
     // axios.get('/user?')
     // .then(function (response) {
     //   alert("Sucess");

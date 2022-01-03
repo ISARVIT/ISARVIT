@@ -22,7 +22,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 const useStyles = makeStyles((theme) => ({
   media: {
     height: 0,
-    paddingTop: '56.25%', // 16:9
+    paddingTop: '40%', // 16:9
   },
 }));
 
@@ -36,20 +36,24 @@ export default function FormCard(props){
   const handleClose = () => {
     setOpen(false);
   };
+  const useForms = () => {
+    props.setView('form')
+  }
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  function showCard(row){
+  function editForms(row){
+    alert("Available on next release")
     return null
   }
   return (
     <TableCell>
       <Tooltip title="See Form">
         <IconButton onClick={handleClickOpen}>
-          {<ChevronRightIcon />}
+          <ChevronRightIcon />
         </IconButton>
       </Tooltip>
-      <Dialog onClose={handleClose} open={open}>
+      <Dialog onClose={handleClose} open={open} fullWidth maxWidth='sm'>
         <Card>
           <CardHeader
             avatar={<Avatar src={props.row.creator_avatar} />}
@@ -66,6 +70,9 @@ export default function FormCard(props){
             <Grid container spacing={1} direction="row" justifyContent="flex-start" alignItems="center">
               <Grid item>
                 <Typography variant="h4" component="span">{props.row.name}</Typography>
+              </Grid>
+              <Grid item>
+              <Chip variant="outlined" label={props.row.field} color='primary'/>
               </Grid>
               {!props.row.dynamic_image? null:
                 <Grid item>
@@ -84,17 +91,21 @@ export default function FormCard(props){
             </Typography>
             <Link component="button" variant="span" onClick={handleExpandClick}>Read {expanded?'less':'more'}</Link>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
-              <Typography paragraph>Method:</Typography>
-                <Typography paragraph>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam at congue est, et tempus dolor. Fusce posuere dictum velit, nec pellentesque dui tempor ut. Donec molestie ut elit id luctus. Proin lobortis dapibus risus sit amet varius. Phasellus lobortis non urna eu egestas. Maecenas elementum augue ante, sit amet condimentum leo lacinia sed. Etiam eget ex semper, volutpat lacus at, sollicitudin est. Integer volutpat luctus consequat. Phasellus facilisis imperdiet eros, sit amet aliquet ligula. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;
-                </Typography>
-                <Typography paragraph>
-                  Donec rhoncus vitae nisl in mollis. Pellentesque ultrices porttitor lorem, porttitor ultrices ex posuere a. Mauris in odio blandit, suscipit orci eu, blandit nisl. Mauris a euismod ligula, ac dictum dolor. Ut metus justo, ullamcorper sit amet eros vitae, congue semper urna. Nunc elit turpis, ultrices vel augue eu, sollicitudin tristique ipsum. Etiam nec justo cursus nisl aliquam egestas. Quisque porta urna quis nibh faucibus, at pellentesque metus scelerisque. Morbi sit amet purus id turpis lacinia pellentesque. Nullam luctus nec elit eget pellentesque. Curabitur non aliquet ligula. Proin fringilla sem dui, sed rhoncus mi porttitor ac. Etiam et nisl non felis eleifend sollicitudin. Cras commodo, purus vitae molestie placerat, dolor ipsum aliquet nulla, id placerat arcu nisi dapibus orci. Maecenas nisi tellus, laoreet et purus luctus, euismod imperdiet lacus. Nunc pellentesque dolor id est feugiat, sed hendrerit sapien vestibulum.
-                </Typography>
+              <Typography paragraph>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam at congue est, et tempus dolor. Fusce posuere dictum velit, nec pellentesque dui tempor ut. Donec molestie ut elit id luctus. Proin lobortis dapibus risus sit amet varius. Phasellus lobortis non urna eu egestas. Maecenas elementum augue ante, sit amet condimentum leo lacinia sed. Etiam eget ex semper, volutpat lacus at, sollicitudin est. Integer volutpat luctus consequat. Phasellus facilisis imperdiet eros, sit amet aliquet ligula. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;
+              </Typography>
+              <Typography paragraph>
+                Donec rhoncus vitae nisl in mollis. Pellentesque ultrices porttitor lorem, porttitor ultrices ex posuere a. Mauris in odio blandit, suscipit orci eu, blandit nisl. Mauris a euismod ligula, ac dictum dolor. Ut metus justo, ullamcorper sit amet eros vitae, congue semper urna. Nunc elit turpis, ultrices vel augue eu, sollicitudin tristique ipsum. Etiam nec justo cursus nisl aliquam egestas. Quisque porta urna quis nibh faucibus, at pellentesque metus scelerisque. Morbi sit amet purus id turpis lacinia pellentesque. Nullam luctus nec elit eget pellentesque. Curabitur non aliquet ligula. Proin fringilla sem dui, sed rhoncus mi porttitor ac. Etiam et nisl non felis eleifend sollicitudin. Cras commodo, purus vitae molestie placerat, dolor ipsum aliquet nulla, id placerat arcu nisi dapibus orci. Maecenas nisi tellus, laoreet et purus luctus, euismod imperdiet lacus. Nunc pellentesque dolor id est feugiat, sed hendrerit sapien vestibulum.
+              </Typography>
             </Collapse>
           </CardContent>
           <DialogActions style={{paddingTop: 0}}>
-            <Button onClick={handleClose} color="primary">
+            {props.control.user.id!==props.row.creator_id? null:
+              <Button disabled={!props.row.editable} onClick={editForms} color="primary">
+                Edit
+              </Button>
+            }
+            <Button disabled={props.row.id} onClick={useForms} color="primary">
               Use
             </Button>
           </DialogActions>
