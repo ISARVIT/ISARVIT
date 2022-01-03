@@ -97,7 +97,7 @@ function OperationNode({ data, isConnectable }){
                   <TextField value={equation} onChange={changeEquation} fullWidth required label="If Condition" />
                 </Grid>
                 <Grid item xs={9}>
-                  <TextField value={equation} onChange={changeEquation} fullWidth required label="Then Write" />
+                  <TextField value={write} onChange={changeWrite} fullWidth required label="Then Write" />
                 </Grid>
                 <Grid item xs={12}>
                   <Button variant="outlined" color="primary" onClick={()=>alert("Not available in the moment")} size="small">
