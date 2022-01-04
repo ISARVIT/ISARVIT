@@ -106,6 +106,13 @@ function Question(props) {
                 </Typography>
                 <TextField value={props.question.variable} onChange={changeVariable} placeholder="Variable Name" />
               </Grid>
+              {props.question.type==='Choice'||props.question.type==='Multiple Choice'? 
+                <Grid item xs={12}  style={{padding:'1rem'}}>
+                  <TextField fullWidth required label="Options separated by ," variant="outlined" />
+                </Grid>
+                :
+                null
+              }
             </Grid>
           </Paper>
         </Grid>
@@ -134,7 +141,7 @@ export default function Questions(props){
     props.setCreator({...props.creator, questions: newQuestions});
   }
   return (
-    <Grid item xs={4} spacing={3} container direction="column" justifyContent="flex-start" alignItems="stretch">
+    <Grid item xs={5} spacing={3} container direction="column" justifyContent="flex-start" alignItems="stretch">
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="list">
           {provided => (
