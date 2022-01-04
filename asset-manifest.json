@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/ISARVIT/static/css/main.16e9230d.chunk.css",
-    "main.js": "/ISARVIT/static/js/main.fff25277.chunk.js",
-    "main.js.map": "/ISARVIT/static/js/main.fff25277.chunk.js.map",
+    "main.js": "/ISARVIT/static/js/main.bf5754b3.chunk.js",
+    "main.js.map": "/ISARVIT/static/js/main.bf5754b3.chunk.js.map",
     "runtime-main.js": "/ISARVIT/static/js/runtime-main.dba9a743.js",
     "runtime-main.js.map": "/ISARVIT/static/js/runtime-main.dba9a743.js.map",
     "static/js/2.b5acecf4.chunk.js": "/ISARVIT/static/js/2.b5acecf4.chunk.js",
@@ -21,6 +21,6 @@
     "static/js/runtime-main.dba9a743.js",
     "static/js/2.b5acecf4.chunk.js",
     "static/css/main.16e9230d.chunk.css",
-    "static/js/main.fff25277.chunk.js"
+    "static/js/main.bf5754b3.chunk.js"
   ]
 }
