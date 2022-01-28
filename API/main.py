@@ -183,41 +183,38 @@ def login():
 # -------------------------------------------------------------------------------------------------------------------------- #
 # App to get all data from a user
 @app.route('/API/getUserData/<user>/<hash>', methods=['POST', 'GET'])
-def getUserData(user=None, hash=None):
-    username = user
+def getUserData(user=None, hash=None):  
     cursor = mysql.connection.cursor()
 
     flag = checkHash(user, hash, cursor)
 
     if flag:
         try:
-            cursor.execute("SELECT * FROM users WHERE `username` = %s", (username,))
+            cursor.execute("SELECT * FROM users WHERE `username` = %s", (user,))
             data = cursor.fetchone()
             mysql.connection.commit()
             cursor.close()
 
             json = '['
 
-            for row in range(len(data)):
-                aux = {
-                    "id" : str(data[row][0]),
-                    "username" : str(data[row][1]),
-                    "password" : str(data[row][2]),
-                    "firstName" : str(data[row][3]),
-                    "lastName" : str(data[row][4]),
-                    "email" : str(data[row][5]),
-                    "description" : str(data[row][6]),
-                    "joined" : str(data[row][7]), 
-                    "avatar" : str(data[row][8]), 
-                    "chips" : str(data[row][9]), 
-                    "admin" : str(data[row][10])
-                }
+            aux = {
+                "id" : str(data[0]),
+                "username" : str(data[1]),
+                "password" : str(data[2]),
+                "firstName" : str(data[3]),
+                "lastName" : str(data[4]),
+                "email" : str(data[5]),
+                "description" : str(data[6]),
+                "joined" : str(data[7]), 
+                "avatar" : str(data[8]), 
+                "chips" : str(data[9]), 
+                "admin" : str(data[10])
+            }
 
-                json += str(aux)
+            json += str(aux)
 
-                if not (row == len(data) - 1):
-                    json += ','
             json += ']'
+
             return jsonify(json)
         except:
             return jsonify(problemsCursor())  
