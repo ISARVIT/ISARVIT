@@ -38,19 +38,9 @@ export default function Login(props){
     // .catch(function (error){
     //   props.setAlert({open: true, text: "Error in login", severity: "error"})
     // });
-
-    // axios.get('/user?')
-    // .then(function (response) {
-    //   alert("Sucess");
-    //   props.setControl({...props.control, login: response})
-    // })
-    // .catch(function (error) {
-    //   props.setControl({...props.control, login: 123, view: 'user'})
-    //   props.setAlert({open: true, text: "Error in login", severity: "error"})
-    // })
     if(user.username in props.example.users && props.example.users[user.username].password === user.password)
       props.setControl({...props.control, user: props.example.users[user.username], view: 'user'})
-  }
+}
 
   return (
     <Card>
