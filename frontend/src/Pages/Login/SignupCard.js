@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Card from '@material-ui/core/Card';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
@@ -53,8 +54,14 @@ export default function Signup(){
                 <Typography gutterBottom variant="h5" component="h2">
                     Signup
                 </Typography>
-                    <TextField label="First name" value={user.firstname} onChange={changeFirstname}/>
-                    <TextField label="Last name" value={user.lastname} onChange={changeLastname} />
+                    <Grid container direction="row" justifyContent="space-between" spacing={1}>
+                        <Grid item xs={5}>
+                            <TextField fullWidth label="First name" value={user.firstname} onChange={changeFirstname}/>
+                        </Grid>
+                        <Grid item xs={7}>
+                            <TextField fullWidth label="Last name" value={user.lastname} onChange={changeLastname} />
+                        </Grid>
+                    </Grid>
                     <TextField fullWidth label="Username" value={user.username} onChange={changeUsername} />
                     <TextField fullWidth label="Mail" value={user.email} onChange={changeEmail} />
                     <FormControl fullWidth>

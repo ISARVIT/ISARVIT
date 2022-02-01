@@ -4,13 +4,17 @@ import Grid from '@material-ui/core/Grid';
 import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import html2canvas from 'html2canvas';
-
+import JoditEditor from "jodit-react";
 import QRCode from 'qrcode.react'
 import InlineSVG from 'svg-inline-react';
 import { jsPDF } from 'jspdf';
 import ReactHtmlParser from 'react-html-parser';
+import YAML from 'json-to-pretty-yaml';
 
 export default function Download(props){
+  const editor = React.useRef(null)
+  const [edit,setEdit]=React.useState(false)
+  const openEdit = ()=>{setEdit(true)}
   function getOrgans(){
     return props.answers.questions.svg.organs.map(organ=>organ.length!==1?organ[(Math.random()<0.5)|0]:organ[0]).join('')
   }
@@ -50,24 +54,30 @@ export default function Download(props){
     <Grid container direction="column" justifyContent="center" alignItems="center" xs={12} spacing={2}>
       <Grid item>
         <ButtonGroup size="large" color="primary">
-          <Button onClick={()=>alert("Not Available Yet!")}>Edit Result</Button>
+          <Button value={edit} onClick={openEdit} disabled={edit}>Edit Result</Button>
           <Button onClick={download}>Download</Button>
         </ButtonGroup>
       </Grid>
       <Grid item>
-        <Paper elevation={5}>
-          <div id='divToPrint' style={{backgroundColor: '#FFF', width: '210mm', minHeight: '297mm', marginLeft: 'auto', marginRight: 'auto', padding:'2rem'}}>
-            <p>ID : {props.answers.answers.identifier} Prénom : {props.answers.answers.patient_first_name} Nom : {props.answers.answers.patient_last_name} Date de naissance : {props.answers.answers.patient_birth}</p>
-            <h1 style={{textAlign:'center'}}>URINARY / SCANNER ABDOMINO-PELVIEN</h1>
-            <div style={{display: 'flex', justifyContent: 'center'}}>
-              <QRCode value={props.answers.answers}/>
-              <InlineSVG src={svgSource}/>
-            </div>
-            <hr/>
-            <p> Examen : Radiography Réalisé le : {new Date().toLocaleDateString('fr-FR')} </p>
-            { ReactHtmlParser(getTemplate()) }
-            </div>
-        </Paper>
+        {edit?
+          <Paper elevation={3} style={{width: '210mm', height: '297mm',}}>
+            <JoditEditor ref={editor} value={getTemplate()} tabIndex={1} />
+          </Paper>
+        :
+          <Paper elevation={5}>
+            <div id='divToPrint' style={{backgroundColor: '#FFF', width: '210mm', minHeight: '297mm', marginLeft: 'auto', marginRight: 'auto', padding:'2rem'}}>
+              <p>ID : {props.answers.answers.identifier} Prénom : {props.answers.answers.patient_first_name} Nom : {props.answers.answers.patient_last_name} Date de naissance : {props.answers.answers.patient_birth}</p>
+              <h1 style={{textAlign:'center'}}>URINARY / SCANNER ABDOMINO-PELVIEN</h1>
+              <div style={{display: 'flex', justifyContent: 'center'}}>
+                <QRCode value={YAML.stringify(props.answers.answers)}/>
+                <InlineSVG src={svgSource}/>
+              </div>
+              <hr/>
+              <p> Examen : Radiography Réalisé le : {new Date().toLocaleDateString('fr-FR')} </p>
+              { ReactHtmlParser(getTemplate()) }
+              </div>
+          </Paper>
+        }
       </Grid>
     </Grid>
   )

@@ -20,7 +20,7 @@ export default function Login(props){
           <Tab label="Signup"/>
         </Tabs>
       </Grid>
-      <Grid item xs={2} style={{width: '100%'}}>
+      <Grid item xs={3} style={{width: '100%'}}>
         {!card?<LoginCard {...props}/>:<SignupCard {...props}/>}
       </Grid>
     </Grid>
