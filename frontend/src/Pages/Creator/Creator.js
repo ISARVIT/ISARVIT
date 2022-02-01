@@ -29,7 +29,7 @@ export default function Creator(props){
     template: '',
     svg: {
       base: '',
-      rest: [],
+      parts: [],
     }
   });
   const back=()=>{
@@ -55,7 +55,7 @@ export default function Creator(props){
     }
   }
   return (
-    <Grid container direction="column" justifyContent="center" alignItems="center" xs={12} spacing={2} style={{marginTop: '2rem', }}>
+    <Grid container direction="column" justifyContent="center" alignItems="center" xs={12} spacing={2} style={{marginTop: '2rem' }}>
       <Grid item xs={5} style={{width: '100%'}}>
         <Stepper activeStep={creator.card} alternativeLabel style={{ backgroundColor: "transparent" }}>
           <Step><StepLabel>Create Questions</StepLabel></Step>
