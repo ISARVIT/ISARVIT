@@ -143,7 +143,7 @@ export default function Questions(props){
   return (
     <Grid item xs={5} spacing={3} container direction="column" justifyContent="flex-start" alignItems="stretch">
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="list">
+        <Droppable droppableId="parts">
           {provided => (
             <Grid item xs={12} spacing={4} container direction="column" justifyContent="flex-start" alignItems="strech" ref={provided.innerRef} {...provided.droppableProps}>
               {props.creator.questions.map((question, index) => (
