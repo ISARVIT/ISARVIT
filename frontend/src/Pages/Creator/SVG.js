@@ -26,9 +26,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 function Part(props){
-  function removePart(key){
+  function removePart(partID){
     let newSVG = props.creator.svg;
-    newSVG.parts = newSVG.parts.filter(function(part){return part.key !== key})
+    newSVG.parts = newSVG.parts.filter(function(part){return part.partID !== partID})
     props.setCreator({...props.creator, svg: newSVG})
   }
   function changePart(part, event, bool){
@@ -61,7 +61,7 @@ function Part(props){
               <IconButton size='small'>
                 <DragIndicatorIcon/>
               </IconButton>
-              <IconButton size='small' onClick={()=>removePart(props.part.key)}>
+              <IconButton size='small' onClick={()=>removePart(props.part.partID)}>
                 <ClearIcon />
               </IconButton>
             </Grid>
@@ -91,19 +91,14 @@ export default function SVG(props){
     newSVG.base = event.target.value;
     props.setCreator({...props.creator, svg: newSVG})
   };
-  function buildSVG(debug){
+  function buildSVG(){
     SVG = props.creator.svg.base;
-    if(debug){
-
-    }
-    else{
-      SVG += props.creator.svg.parts.map(part=>part.valueTrue).join("")
-    }
+    SVG += props.creator.svg.parts.map(part=>(part.outputID!==-1&&!part.show)?part.valueFalse:part.valueTrue).join("")
     return SVG+'</svg>'
   }
   const addPart=()=>{
     let newSVG = props.creator.svg;
-    newSVG.parts.push({key: newSVG.parts.length, dragID: newSVG.parts.length.toString(), debug: true, outputID: -1, valueTrue: '', valueFalse: ''})
+    newSVG.parts.push({partID: newSVG.parts.length, dragID: newSVG.parts.length.toString(), show: true, outputID: -1, valueTrue: '', valueFalse: ''})
     props.setCreator({...props.creator, svg: newSVG})
   }
   const reorder = (list, startIndex, endIndex) => {
@@ -121,12 +116,12 @@ export default function SVG(props){
   }
   const changeTab=(event, newTab)=>{setTab(newTab)};
   function changeSwitch(part,event){
-    // let newSVG = props.creator.svg;
-    // let index = newSVG.parts.indexOf(part);
-    // if(index !== -1){
-    //   newSVG.parts[index].debug = event.target.checked
-    // }
-    // props.setCreator({...props.creator, svg: newSVG})
+    let newSVG = props.creator.svg;
+    let index = newSVG.parts.indexOf(part);
+    if(index !== -1){
+      newSVG.parts[index].debug = event.target.checked
+    }
+    props.setCreator({...props.creator, svg: newSVG})
   }
   return(
     <React.Fragment>
@@ -147,42 +142,42 @@ export default function SVG(props){
         </Grid>
         <Grid item xs={12}>
           <Paper xs={12} style={{ padding:'2rem'}} elevation={3}>
-          <Grid container xs={12} spacing={2} direction="column" justifyContent="flex-start" alignItems="stretch">
-            <Grid item style={{marginLeft:'auto', marginRight:'auto', border:'thin solid gray', borderRadius:'10px'}}>
-              <InlineSVG src={buildSVG()}/>
-            </Grid>
-            {!tab?
-              <React.Fragment>
-                <Grid item xs={12}>
-                  <TextField fullWidth value={props.creator.svg.base} multiline onChange={changeBase} fullWidth label="Base (start with <svg>...)" />
-                </Grid>
-                <DragDropContext onDragEnd={onDragEnd}>
-                  <Droppable droppableId="svgparts">
-                    {provided => (
-                      <Grid item xs={12} spacing={4} container direction="column" justifyContent="flex-start" alignItems="strech" ref={provided.innerRef} {...provided.droppableProps}>
-                        {props.creator.svg.parts.map((part, index)=>
-                          <Part {...props} part={part} index={index} key={part.dragID} />
-                        )}
-                        {provided.placeholder}
-                      </Grid>
-                    )}
-                  </Droppable>
-                  <Grid item style={{marginLeft:'auto', marginRight:'auto'}}>
-                    <IconButton onClick={addPart}>
-                      <ControlPointIcon />
-                    </IconButton>
-                  </Grid>
-                </DragDropContext>
-              </React.Fragment>
-            :
-              props.creator.svg.parts.map((part)=>
-                part.outputID===-1?null:
+            <Grid container xs={12} spacing={2} direction="column" justifyContent="flex-start" alignItems="stretch">
+              <Grid item style={{marginLeft:'auto', marginRight:'auto', border:'thin solid gray', borderRadius:'10px'}}>
+                <InlineSVG src={buildSVG()}/>
+              </Grid>
+              {!tab?
+                <React.Fragment>
                   <Grid item xs={12}>
-                    {props.creator.outputs.find(output => part.outputID === output.outputID).variable}
-                    {/* <Switch checked={part.debug} onChange={(event)=>changeSwitch(part,event)}/> */}
-                  </Grid>                
-              )
-            }
+                    <TextField fullWidth value={props.creator.svg.base} multiline onChange={changeBase} fullWidth label="Base (start with <svg>...)" />
+                  </Grid>
+                  <DragDropContext onDragEnd={onDragEnd}>
+                    <Droppable droppableId="svgparts">
+                      {provided => (
+                        <Grid item xs={12} spacing={4} container direction="column" justifyContent="flex-start" alignItems="strech" ref={provided.innerRef} {...provided.droppableProps}>
+                          {props.creator.svg.parts.map((part, index)=>
+                            <Part {...props} part={part} index={index} key={part.dragID} />
+                          )}
+                          {provided.placeholder}
+                        </Grid>
+                      )}
+                    </Droppable>
+                    <Grid item style={{marginLeft:'auto', marginRight:'auto'}}>
+                      <IconButton onClick={addPart}>
+                        <ControlPointIcon />
+                      </IconButton>
+                    </Grid>
+                  </DragDropContext>
+                </React.Fragment>
+              :
+                props.creator.svg.parts.map(part=>
+                  part.outputID===-1? null:
+                    <Grid item xs={12}>
+                      {props.creator.outputs.find(output => part.outputID === output.outputID).variable} 
+                      <Switch checked={part.debug} onChange={(event)=>changeSwitch(part,event)}/>
+                    </Grid>
+                )
+              }
             </Grid>
           </Paper>
         </Grid>
