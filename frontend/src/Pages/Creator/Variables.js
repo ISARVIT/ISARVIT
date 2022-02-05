@@ -57,11 +57,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const operations = [
-  {operationID: 0, variable: 'equation', operationLabel: 'Equation'},
-  {operationID: 1, variable: 'conditional', operationLabel: 'If / Else'},
-  
+  {operationID: 0, draggable:true, variable: 'equation', operationLabel: 'Equation'},
+  {operationID: 1, draggable:true, variable: 'conditional', operationLabel: 'If / Else'},
 ]
-const toString = {operationID: 2, variable: 'to_string', operationLabel: 'toString'}
+const debugOp = {operationID: 100, variable: 'debug_op', operationLabel: 'Debug'}
 
 function OperationNode({ data, isConnectable }){
   const classes = useStyles();
@@ -214,7 +213,7 @@ export default function Variables(props){
                   <List style={{width: '100%'}} spacing={1}>
                     {props.creator.questions.map(question => 
                       <ListItem key={question.id} className={classes.node} style={{borderColor: '#0041d0'}} button onDragStart={(event) => onDragStart(event, question, 'input')} draggable>
-                        {question.variable}
+                        {question.variable} ({question.type})
                       </ListItem>
                     )}
                   </List>
@@ -232,8 +231,8 @@ export default function Variables(props){
                         {operation.operationLabel}
                       </ListItem>
                     )}
-                      <ListItem className={classes.node} button onDragStart={(event) => onDragStart(event, toString, 'default')} draggable>
-                        {toString.operationLabel}
+                      <ListItem className={classes.node} button onDragStart={(event) => onDragStart(event, debugOp, 'default')} draggable>
+                        {debugOp.operationLabel}
                       </ListItem>
                   </List>
                 </AccordionDetails>

@@ -9,34 +9,52 @@ import Select from '@material-ui/core/Select';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import Divider from '@material-ui/core/Divider';
 import Tooltip from '@material-ui/core/Tooltip';
 import DragHandleIcon from '@material-ui/icons/DragHandle';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Input from '@material-ui/core/Input';
+import Switch from '@material-ui/core/Switch';
+import Checkbox from '@material-ui/core/Checkbox';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import RootRef from '@material-ui/core/RootRef';
 import FormControl from '@material-ui/core/FormControl';
+import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
+import Link from '@material-ui/core/Link';
+import FormGroup from '@material-ui/core/FormGroup';
+
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import ControlPointIcon from '@material-ui/icons/ControlPoint';
+
 import ExposurePlus2Icon from '@material-ui/icons/ExposurePlus2';
 import EventIcon from '@material-ui/icons/Event';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
+import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+
+import ClearIcon from '@material-ui/icons/Clear';
+import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 import Typography from '@material-ui/core/Typography';
 
 const typeOptions = [
   {label: 'Text', icon: <TextFieldsIcon/>},
   {label: 'Number', icon: <ExposurePlus2Icon/>},
-  // {label: 'Date', icon: <EventIcon/>},
   {label: 'Choice', icon: <RadioButtonCheckedIcon/>},
   {label: 'Multiple Choice', icon: <CheckBoxIcon/>},
 ]
+
+function Option(props){
+
+}
 
 function Question(props) {
   const deleteQuestion=(event)=>{
@@ -63,6 +81,21 @@ function Question(props) {
     newQuestions[props.creator.questions.indexOf(props.question)].type = event.target.value
     props.setCreator({...props.creator, questions: newQuestions})
   }
+  const changeRequired=(event)=>{
+    let newQuestions = props.creator.questions
+    newQuestions[props.creator.questions.indexOf(props.question)].required = event.target.checked
+    props.setCreator({...props.creator, questions: newQuestions})
+  }
+  const addOthers=()=>{
+    let newQuestions = props.creator.questions
+    newQuestions[props.creator.questions.indexOf(props.question)].others = true
+    props.setCreator({...props.creator, questions: newQuestions})
+  }
+  const removeOthers=()=>{
+    let newQuestions = props.creator.questions
+    newQuestions[props.creator.questions.indexOf(props.question)].others = false
+    props.setCreator({...props.creator, questions: newQuestions})
+  }
   const changeMinMax=(event)=>{
     let newQuestions = props.creator.questions
     if(event.target.value!==''){
@@ -73,24 +106,53 @@ function Question(props) {
     }
     props.setCreator({...props.creator, questions: newQuestions})
   }
+  const addChoice=()=>{
+    let newQuestions = props.creator.questions;
+    let index = newQuestions.indexOf(props.question);
+    let newChoice = {choiceID: newQuestions[index].qchoices, dragID: newQuestions[index].qchoices.toString(), text:'Text'};
+    newQuestions[index].choices.push(newChoice);
+    newQuestions[index].qchoices = newQuestions[index].qchoices+1;
+    props.setCreator({...props.creator, questions: newQuestions})
+  }
+  function deleteChoice(choice,event){
+    let newQuestions = props.creator.questions
+    let index = props.creator.questions.indexOf(props.question)
+    newQuestions[index].choices.splice(newQuestions[index].choices.indexOf(choice), 1)
+    props.setCreator({...props.creator, questions: newQuestions})
+  }
+  const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result;
+  };
+  function onDragEnd(result) {
+    if(!result.destination){return}
+    if(result.destination.index === result.source.index){return}
+    let newQuestions = props.creator.questions;
+    let index = newQuestions.indexOf(props.question);
+    newQuestions[index].choices = reorder(newQuestions[index].choices,result.source.index,result.destination.index);
+    props.setCreator({...props.creator, questions: newQuestions});
+    console.log(props.creator.questions)
+  }
   return (
     <Draggable draggableId={props.question.dragID} index={props.index}>
       {provided => (
-        <Grid item xs={12}>
-          <Paper elevation={3} style={{minWidth: '100%'}} ref={provided.innerRef} {...provided.draggableProps}>
-            <Grid container direction="column" justifyContent="flex-start" alignItems="flex-start">
+        <Grid item xs={12} ref={provided.innerRef} {...provided.draggableProps}>
+          <Paper elevation={3} style={{minWidth: '100%'}}>
+            <Grid xs={12} container direction="column" justifyContent="flex-start" alignItems="stretch"  style={{padding:'0 2rem 0 2rem'}}>
               <Grid item {...provided.dragHandleProps} style={{marginLeft:'auto',marginRight:'auto',minHeight:'2rem'}}>
                 <DragHandleIcon />
               </Grid>
               <Grid item xs={12} container direction="row" justifyContent="space-between" alignItems="center">
-                <Grid item xs={8} style={{paddingLeft:'1rem',paddingRight:'3rem'}}>
+                <Grid item xs={9} style={{paddingRight:'3rem'}}>
                   <TextField fullWidth placeholder="Question" value={props.question.questionLabel} onChange={changeQuestion} variant="outlined" />
                 </Grid>
                 <Grid item xs={3}>
                   <FormControl variant="outlined" fullWidth>
                     <Select value={props.question.type} onChange={changeType} renderValue={(selected)=>selected}>
                       <MenuItem value="" disabled>
-                        Type
+                        Input
                       </MenuItem>
                       {typeOptions.map(type=>
                         <MenuItem key={type.label} value={type.label}>
@@ -100,43 +162,83 @@ function Question(props) {
                           <ListItemText primary={type.label}/>
                         </MenuItem>
                       )}
+                      <MenuItem value="" disabled>
+                        Others
+                      </MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item xs={1}>
-                  <Tooltip title="Delete Question">
-                    <IconButton onClick={deleteQuestion}>
-                      <DeleteIcon />
-                    </IconButton>
-                  </Tooltip>
-                </Grid>
               </Grid>
-              <Grid item xs={12} spacing={1} container direction="row" justifyContent="space-between" alignItems="center" style={{padding:'1rem'}}>
-                <Grid item xs={4}>
-                  <TextField fullWidth value={props.question.variable} onChange={changeVariable} placeholder="Variable Name" helperText="Variable Name" />
-                </Grid>
-                {props.question.type!=='Number'? null:
+              <Grid item xs={12} spacing={1} container direction="row" justifyContent="flex-start" alignItems="center" style={{padding:'1rem 0 1rem 0'}}>
+                {props.question.type==='Number'?
                   <React.Fragment>
-                    <Grid item xs={4} />
-                    <Grid item xs={2}>
-                      <Input fullWidth value={props.question.min} name="min" onChange={changeMinMax} type="number" placeholder="No min" helperText="Min Value" />
+                    <Grid item xs={3}>
+                      <Input fullWidth value={props.question.min} name="min" onChange={changeMinMax} type="number" placeholder="No min"/>
                     </Grid>
-                    <Grid item xs={2}>
-                      <Input fullWidth value={props.question.max} name="max" onChange={changeMinMax} type="number" placeholder="No max" helperText="Max Value" />
+                    <Grid item xs={3}>
+                      <Input fullWidth value={props.question.max} name="max" onChange={changeMinMax} type="number" placeholder="No max"/>
+                    </Grid>
+                    <Grid item xs={3}/>
+                    <Grid item xs={3}>
+                      <FormControlLabel control={<Checkbox color="primary" />} label="Integer" labelPlacement="end"/>
                     </Grid>
                   </React.Fragment>
+                :props.question.type==='Choice'||props.question.type==='Multiple Choice'?
+                  <DragDropContext onDragEnd={onDragEnd}>
+                    <Droppable droppableId={"choices_0"}>
+                      {(provided) => (
+                        <List dense ref={provided.innerRef}>
+                          {props.question.choices.map((choice,index)=>
+                            <Draggable draggableId={choice.dragID} index={index} key={choice.choiceID}>
+                              {provided => (
+                                <ListItem ContainerComponent="li" ref={provided.innerRef} {...provided.draggableProps}>
+                                  <ListItemIcon>
+                                    <IconButton size="small" {...provided.dragHandleProps}>
+                                      <DragIndicatorIcon />
+                                    </IconButton>
+                                    <IconButton size="small" onClick={(event)=>deleteChoice(event,choice)}>
+                                      <ClearIcon />
+                                    </IconButton>
+                                    {props.question.type==='Choice'?<IconButton size="small"><RadioButtonUncheckedIcon/></IconButton>:<IconButton size="small"><CheckBoxOutlineBlankIcon/></IconButton>}
+                                  </ListItemIcon>
+                                  <ListItemText primary={"Inbox"+choice.dragID} />
+                                </ListItem>
+                              )}
+                            </Draggable>
+                          )}
+                          {provided.placeholder}
+                          {!props.question.others? null:
+                            <ListItem ContainerComponent="li" disabled>
+                              <ListItemIcon>
+                                <TextFieldsIcon />
+                              </ListItemIcon>
+                              <ListItemText primary="Others"/>
+                            </ListItem>
+                          }
+                          <ListItem>
+                            <ListItemText primary={<span><Link component="button" onClick={addChoice}>Add Option</Link> or <Link component="button" onClick={addOthers}>Add 'Others'</Link></span>} />
+                          </ListItem>
+                        </List>
+                      )}
+                    </Droppable>
+                  </DragDropContext>
+                :null
                 }
               </Grid>
-              <Grid item xs={12} spacing={1} container direction="row" justifyContent="space-between" alignItems="center" style={{padding:'1rem'}}>
-
+            </Grid>
+            <Divider />
+            <Grid item xs={12} container direction="row" justifyContent="flex-start" alignItems="center" style={{paddingLeft:'2rem'}}>
+              <Grid item xs={4}>
+                <TextField fullWidth value={props.question.variable} onChange={changeVariable} placeholder="Variable Name" helperText="Variable Name" />
               </Grid>
-              {props.question.type==='Choice'||props.question.type==='Multiple Choice'? 
-                <Grid item xs={12}  >
-                  <TextField fullWidth required label="Options separated by ," variant="outlined" />
-                </Grid>
-                :
-                null
-              }
+              <FormGroup row style={{marginLeft:'auto',padding:'0.3rem'}}>
+                <FormControlLabel value="start" control={<Switch color="primary" value={props.question.required} onChange={changeRequired} />} label={(props.question.required?"":"Not ")+ "Required"} labelPlacement="start"/>
+                <Tooltip title="Delete Question">
+                  <IconButton onClick={deleteQuestion}>
+                    <DeleteIcon />
+                  </IconButton>
+                </Tooltip>
+              </FormGroup>
             </Grid>
           </Paper>
         </Grid>
@@ -148,9 +250,9 @@ function Question(props) {
 export default function Questions(props){
   const addQuestion=()=>{
     let newQuestions = props.creator.questions
-    let newQuestion = {questionID: newQuestions.length, dragID: newQuestions.length.toString(), type:'Text', variable: 'var_'+newQuestions.length, questionLabel: '', min: null, max: null, choices: []};
+    let newQuestion = {questionID: props.creator.qlength, dragID: props.creator.qlength.toString(), type:'Text', variable: 'var_'+props.creator.qlength, questionLabel: '', min: null, max: null, others: false, qchoices: 0, choices: []};
     newQuestions.push(newQuestion);
-    props.setCreator({...props.creator, questions: newQuestions})
+    props.setCreator({...props.creator, qlength: props.creator.qlength+1, questions: newQuestions})
   }
   const reorder = (list, startIndex, endIndex) => {
     const result = Array.from(list);
@@ -167,7 +269,7 @@ export default function Questions(props){
   return (
     <Grid item xs={5} spacing={3} container direction="column" justifyContent="flex-start" alignItems="stretch">
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="parts">
+        <Droppable droppableId="questions">
           {provided => (
             <Grid item xs={12} spacing={4} container direction="column" justifyContent="flex-start" alignItems="strech" ref={provided.innerRef} {...provided.droppableProps}>
               {props.creator.questions.map((question, index) => (

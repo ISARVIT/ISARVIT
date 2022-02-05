@@ -24,6 +24,7 @@ export default function Creator(props){
   const [creator, setCreator] = React.useState({
     card: 0,
     questions: [],
+    qlength: 0,
     outputs: [],
     nodes: [],
     template: '',
