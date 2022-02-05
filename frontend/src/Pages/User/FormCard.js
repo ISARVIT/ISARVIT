@@ -59,7 +59,7 @@ export default function FormCard(props){
             avatar={<Avatar src={props.row.creator_avatar} />}
             action={<Tooltip title="Options"><IconButton><MoreVertIcon /></IconButton></Tooltip>}
             title={'Created by '+props.row.creator}
-            subheader={'Last update: '+new Date(props.row.last_updated).toISOString().slice(0, 10)}
+            subheader={'FormID '+props.row.id+'. Last update: '+new Date(props.row.last_updated).toISOString().slice(0, 10)}
           />
           <CardMedia
             className={classes.media}
@@ -89,15 +89,16 @@ export default function FormCard(props){
             <Typography variant="body2" color="textSecondary" component="p">
               <b>Questions:</b> {props.row.questions} Questions
             </Typography>
-            <Link component="button" variant="span" onClick={handleExpandClick}>Read {expanded?'less':'more'}</Link>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
-              <Typography paragraph>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam at congue est, et tempus dolor. Fusce posuere dictum velit, nec pellentesque dui tempor ut. Donec molestie ut elit id luctus. Proin lobortis dapibus risus sit amet varius. Phasellus lobortis non urna eu egestas. Maecenas elementum augue ante, sit amet condimentum leo lacinia sed. Etiam eget ex semper, volutpat lacus at, sollicitudin est. Integer volutpat luctus consequat. Phasellus facilisis imperdiet eros, sit amet aliquet ligula. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;
-              </Typography>
-              <Typography paragraph>
-                Donec rhoncus vitae nisl in mollis. Pellentesque ultrices porttitor lorem, porttitor ultrices ex posuere a. Mauris in odio blandit, suscipit orci eu, blandit nisl. Mauris a euismod ligula, ac dictum dolor. Ut metus justo, ullamcorper sit amet eros vitae, congue semper urna. Nunc elit turpis, ultrices vel augue eu, sollicitudin tristique ipsum. Etiam nec justo cursus nisl aliquam egestas. Quisque porta urna quis nibh faucibus, at pellentesque metus scelerisque. Morbi sit amet purus id turpis lacinia pellentesque. Nullam luctus nec elit eget pellentesque. Curabitur non aliquet ligula. Proin fringilla sem dui, sed rhoncus mi porttitor ac. Etiam et nisl non felis eleifend sollicitudin. Cras commodo, purus vitae molestie placerat, dolor ipsum aliquet nulla, id placerat arcu nisi dapibus orci. Maecenas nisi tellus, laoreet et purus luctus, euismod imperdiet lacus. Nunc pellentesque dolor id est feugiat, sed hendrerit sapien vestibulum.
-              </Typography>
-            </Collapse>
+            {!props.row.paragraph? null:
+              <React.Fragment>
+                <Link component="button" variant="span" onClick={handleExpandClick}>Read {expanded?'less':'more'}</Link>
+                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                  <Typography paragraph>
+                    {props.row.paragraph}
+                  </Typography>
+                </Collapse>
+              </React.Fragment>
+            }
           </CardContent>
           {props.readingQRCode? null:
             <DialogActions style={{paddingTop: 0}}>

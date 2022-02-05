@@ -12,6 +12,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Tooltip from '@material-ui/core/Tooltip';
 import DragHandleIcon from '@material-ui/icons/DragHandle';
 import MenuItem from '@material-ui/core/MenuItem';
+import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
@@ -62,6 +63,16 @@ function Question(props) {
     newQuestions[props.creator.questions.indexOf(props.question)].type = event.target.value
     props.setCreator({...props.creator, questions: newQuestions})
   }
+  const changeMinMax=(event)=>{
+    let newQuestions = props.creator.questions
+    if(event.target.value!==''){
+      newQuestions[props.creator.questions.indexOf(props.question)][event.target.name] = event.target.value;
+    }
+    else{
+      newQuestions[props.creator.questions.indexOf(props.question)][event.target.name] = null
+    }
+    props.setCreator({...props.creator, questions: newQuestions})
+  }
   return (
     <Draggable draggableId={props.question.dragID} index={props.index}>
       {provided => (
@@ -108,10 +119,10 @@ function Question(props) {
                   <React.Fragment>
                     <Grid item xs={4} />
                     <Grid item xs={2}>
-                      <TextField fullWidth placeholder="No min" helperText="Min Value" />
+                      <Input fullWidth value={props.question.min} name="min" onChange={changeMinMax} type="number" placeholder="No min" helperText="Min Value" />
                     </Grid>
                     <Grid item xs={2}>
-                      <TextField fullWidth placeholder="No max" helperText="Max Value" />
+                      <Input fullWidth value={props.question.max} name="max" onChange={changeMinMax} type="number" placeholder="No max" helperText="Max Value" />
                     </Grid>
                   </React.Fragment>
                 }

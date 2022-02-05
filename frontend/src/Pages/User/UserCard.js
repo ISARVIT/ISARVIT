@@ -71,10 +71,10 @@ export default function UserCard(props){
                 {props.control.user.admin?'Admin':'User'}
               </Typography>
               <Typography variant="caption" component="h1">
-                Joined in {props.control.user.joined}
+                Joined in {props.control.user.joined.substring(0,4)}
               </Typography>
               <Typography variant="caption" component="h1">
-                Last seen {'today'}
+                Last seen {new Date().toISOString().slice(0, 10)===props.control.user.last_seen?'today':props.control.user.last_seen}
               </Typography>
             </Grid>
           </Grid>

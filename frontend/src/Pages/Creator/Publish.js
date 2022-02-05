@@ -52,8 +52,9 @@ export default function Publish(props){
     let newRows = props.example.rows;
     let newRow = publish;
     newRow.id = newRows.length;
-    newRow.keywords = newRow.keywords.split(',')
-    newRows.push(publish);
+    alert([...new Set(newRow.keywords.split(',').map(keyword=>keyword.trim()))].join(', '))
+    newRow.keywords = [...new Set(newRow.keywords.split(',').map(keyword=>keyword.trim()))];
+    newRows.push(newRow);
     props.example.forms[newRow.id] = props.creator;
     let newUsers = props.example.users
     newUsers[props.control.user.username].created.push(newRow.id)
