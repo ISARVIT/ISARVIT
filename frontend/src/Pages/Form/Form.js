@@ -10,16 +10,16 @@ import Download from './Download.js';
 
 export default function Form(props){
   const [answers, setAnswers] = React.useState({
-    page: 0,
-    answers: null,
-    questions: props.example.forms[0],
+    step: 0,
+    answers: {...props.control.QRData},
+    questions: props.example.forms[props.control.formID],
   });
   const saveAnswers=(newAnswers)=>{
-    setAnswers({...answers, page:1, answers: newAnswers})
+    setAnswers({...answers, step:1, answers: newAnswers})
   }
   const back=()=>{
-    if(answers.page){
-      setAnswers({...answers, page: answers.page-1})
+    if(answers.step){
+      setAnswers({...answers, step: answers.step-1})
     }
     else{
       props.setControl({...props.control, view: 'user'})
@@ -29,19 +29,19 @@ export default function Form(props){
   return (
     <Grid container direction="column" justifyContent="center" alignItems="center" xs={12} spacing={2} style={{marginTop: '2rem', }}>
       <Grid item xs={3} style={{width: '100%'}}>
-        <Stepper activeStep={answers.page} alternativeLabel style={{ backgroundColor: "transparent" }}>
+        <Stepper activeStep={answers.step} alternativeLabel style={{ backgroundColor: "transparent" }}>
           <Step><StepLabel>Answer Forms</StepLabel></Step>
           <Step><StepLabel>Verify and Download</StepLabel></Step>
         </Stepper>
       </Grid>
       <Grid item xs={12}>
-        <Button variant="contained" color="primary" size="small" onClick={back}>{answers.page?'Back':'Cancel'}</Button>
+        <Button variant="contained" color="primary" size="small" onClick={back}>{answers.step?'Back':'Cancel'}</Button>
       </Grid>
-      {answers.page?
+      {answers.step?
         <Download {...sendExtraProps} />
       :
         <Grid item xs={12}>
-          <Survey form={answers.questions} autocompleteRequest={function noRefCheck() {}} onFinish={saveAnswers}/>
+          <Survey form={answers.questions} defaultAnswers={answers.answers} autocompleteRequest={function noRefCheck() {}} onFinish={saveAnswers}/>
         </Grid>
       }
     </Grid>

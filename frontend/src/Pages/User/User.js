@@ -15,12 +15,9 @@ export default function User(props){
       <UserCard {...props}/>
       <UserTable {...props}/>
       <Grid item xs={12}>
-        <input accept="image/*" type="file" id='inputSVG' style={{display:'none'}}/>
-        <label htmlFor='inputSVG'>
-          <Button variant="contained" color="primary" component="span" startIcon={<CropFreeIcon />}>
-            Read QRCode
-          </Button>
-        </label>
+        <Button variant="contained" color="primary" startIcon={<CropFreeIcon />} onClick={()=>props.setView('readqr')}>
+          Read QRCode
+        </Button>
       </Grid>
       {!props.control.user.admin? null:
         <Grid item={true} xs={12}>

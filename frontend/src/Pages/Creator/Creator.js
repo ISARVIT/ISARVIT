@@ -30,6 +30,7 @@ export default function Creator(props){
     svg: {
       base: '',
       parts: [],
+      used_variables: [],
     }
   });
   const back=()=>{

@@ -55,29 +55,33 @@ function Part(props){
   return(
     <Draggable draggableId={props.part.dragID} index={props.index}>
       {provided => (
-        <Grid item container spacing={1} container direction="row" justifyContent="center" alignItems="center" ref={provided.innerRef} {...provided.draggableProps}>
-          <Grid item xs={4} container direction="row" justifyContent="center" alignItems="center">
-            <Grid item xs={4} {...provided.dragHandleProps}>
-              <IconButton size='small'>
-                <DragIndicatorIcon/>
-              </IconButton>
-              <IconButton size='small' onClick={()=>removePart(props.part.partID)}>
-                <ClearIcon />
-              </IconButton>
+        <Grid item xs={12} ref={provided.innerRef} {...provided.draggableProps}>
+          <Paper elevation={3} style={{padding:'1rem'}}>
+            <Grid container xs={12}  spacing={2} container direction="row" justifyContent="flex-start" alignItems="center">
+              <Grid item xs={4} container direction="row" justifyContent="center" alignItems="center">
+                <Grid item xs={4} {...provided.dragHandleProps}>
+                  <IconButton size='small'>
+                    <DragIndicatorIcon/>
+                  </IconButton>
+                  <IconButton size='small' onClick={()=>removePart(props.part.partID)}>
+                    <ClearIcon />
+                  </IconButton>
+                </Grid>
+                <Grid item xs={8}>
+                  <Select fullWidth value={props.part.outputID} onChange={(event)=>changeOutputID(props.part,event)}>
+                    <MenuItem value={-1}><em>Always True</em></MenuItem>
+                    {props.creator.outputs.map(variable=><MenuItem value={variable.outputID}>{variable.variable}</MenuItem>)}
+                  </Select>
+                </Grid>
+              </Grid>
+              <Grid item xs={8}>
+                <TextField value={props.part.valueTrue} multiline onChange={(event)=>changePart(props.part,event,true)} fullWidth placeholder='True' />
+                {props.part.outputID===-1?null:
+                  <TextField value={props.part.valueFalse} multiline onChange={(event)=>changePart(props.part,event,false)} fullWidth placeholder='False' />
+                }
+              </Grid>
             </Grid>
-            <Grid item xs={7}>
-              <Select fullWidth value={props.part.outputID} onChange={(event)=>changeOutputID(props.part,event)}>
-                <MenuItem value={-1}><em>Always True</em></MenuItem>
-                {props.creator.outputs.map(variable=><MenuItem value={variable.outputID}>{variable.variable}</MenuItem>)}
-              </Select>
-            </Grid>
-          </Grid>
-          <Grid item xs={7}>
-            <TextField value={props.part.valueTrue} multiline onChange={(event)=>changePart(props.part,event,true)} fullWidth placeholder='True' />
-            {props.part.outputID===-1?null:
-              <TextField value={props.part.valueFalse} multiline onChange={(event)=>changePart(props.part,event,false)} fullWidth placeholder='False' />
-            }
-          </Grid>
+          </Paper>
         </Grid>
       )}
     </Draggable>
@@ -92,9 +96,9 @@ export default function SVG(props){
     props.setCreator({...props.creator, svg: newSVG})
   };
   function buildSVG(){
-    SVG = props.creator.svg.base;
-    SVG += props.creator.svg.parts.map(part=>(part.outputID!==-1&&!part.show)?part.valueFalse:part.valueTrue).join("")
-    return SVG+'</svg>'
+    let SVGtext = props.creator.svg.base;
+    SVGtext += props.creator.svg.parts.map(part=>(part.outputID!==-1&&!part.show)?part.valueFalse:part.valueTrue).join("")
+    return SVGtext+'</svg>'
   }
   const addPart=()=>{
     let newSVG = props.creator.svg;
@@ -137,7 +141,7 @@ export default function SVG(props){
         <Grid item xs={12} style={{marginLeft:'auto', marginRight: 'auto'}}>
           <Tabs value={tab} onChange={changeTab}  indicatorColor="primary" textColor="primary" style={{marginLeft:'auto', marginRight:'auto'}}>
             <Tab label="Create"/>
-            <Tab label="Test"/>
+            <Tab label="Help"/>
           </Tabs>
         </Grid>
         <Grid item xs={12}>
@@ -154,7 +158,7 @@ export default function SVG(props){
                   <DragDropContext onDragEnd={onDragEnd}>
                     <Droppable droppableId="svgparts">
                       {provided => (
-                        <Grid item xs={12} spacing={4} container direction="column" justifyContent="flex-start" alignItems="strech" ref={provided.innerRef} {...provided.droppableProps}>
+                        <Grid item xs={12} spacing={1} container direction="column" justifyContent="flex-start" alignItems="stretch" ref={provided.innerRef} {...provided.droppableProps}>
                           {props.creator.svg.parts.map((part, index)=>
                             <Part {...props} part={part} index={index} key={part.dragID} />
                           )}

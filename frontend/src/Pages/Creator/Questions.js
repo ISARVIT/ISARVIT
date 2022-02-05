@@ -32,7 +32,7 @@ import Typography from '@material-ui/core/Typography';
 const typeOptions = [
   {label: 'Text', icon: <TextFieldsIcon/>},
   {label: 'Number', icon: <ExposurePlus2Icon/>},
-  {label: 'Date', icon: <EventIcon/>},
+  // {label: 'Date', icon: <EventIcon/>},
   {label: 'Choice', icon: <RadioButtonCheckedIcon/>},
   {label: 'Multiple Choice', icon: <CheckBoxIcon/>},
 ]
@@ -100,14 +100,27 @@ function Question(props) {
                   </Tooltip>
                 </Grid>
               </Grid>
-              <Grid item xs={12} style={{padding:'1rem'}}>
-                <Typography>
-                  Variable Name:
-                </Typography>
-                <TextField value={props.question.variable} onChange={changeVariable} placeholder="Variable Name" />
+              <Grid item xs={12} spacing={1} container direction="row" justifyContent="space-between" alignItems="center" style={{padding:'1rem'}}>
+                <Grid item xs={4}>
+                  <TextField fullWidth value={props.question.variable} onChange={changeVariable} placeholder="Variable Name" helperText="Variable Name" />
+                </Grid>
+                {props.question.type!=='Number'? null:
+                  <React.Fragment>
+                    <Grid item xs={4} />
+                    <Grid item xs={2}>
+                      <TextField fullWidth placeholder="No min" helperText="Min Value" />
+                    </Grid>
+                    <Grid item xs={2}>
+                      <TextField fullWidth placeholder="No max" helperText="Max Value" />
+                    </Grid>
+                  </React.Fragment>
+                }
+              </Grid>
+              <Grid item xs={12} spacing={1} container direction="row" justifyContent="space-between" alignItems="center" style={{padding:'1rem'}}>
+
               </Grid>
               {props.question.type==='Choice'||props.question.type==='Multiple Choice'? 
-                <Grid item xs={12}  style={{padding:'1rem'}}>
+                <Grid item xs={12}  >
                   <TextField fullWidth required label="Options separated by ," variant="outlined" />
                 </Grid>
                 :
@@ -124,7 +137,7 @@ function Question(props) {
 export default function Questions(props){
   const addQuestion=()=>{
     let newQuestions = props.creator.questions
-    let newQuestion = {questionID: newQuestions.length, dragID: newQuestions.length.toString(), type:'Text', variable: 'var_'+newQuestions.length, questionLabel: ''};
+    let newQuestion = {questionID: newQuestions.length, dragID: newQuestions.length.toString(), type:'Text', variable: 'var_'+newQuestions.length, questionLabel: '', min: null, max: null, choices: []};
     newQuestions.push(newQuestion);
     props.setCreator({...props.creator, questions: newQuestions})
   }

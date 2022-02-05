@@ -9,7 +9,7 @@ import QRCode from 'qrcode.react'
 import InlineSVG from 'svg-inline-react';
 import { jsPDF } from 'jspdf';
 import ReactHtmlParser from 'react-html-parser';
-import YAML from 'json-to-pretty-yaml';
+const YAML = require('json-to-pretty-yaml');
 
 export default function Download(props){
   const editor = React.useRef(null)
@@ -17,6 +17,9 @@ export default function Download(props){
   const openEdit = ()=>{setEdit(true)}
   function getOrgans(){
     return props.answers.questions.svg.organs.map(organ=>organ.length!==1?organ[(Math.random()<0.5)|0]:organ[0]).join('')
+  }
+  function generateQRCode(){
+    return YAML.stringify({formID: props.control.formID, user: props.control.user.username, date: new Date().toISOString().slice(0, 10), answers: props.answers.answers})
   }
   function getTemplate(){
     let answers = []
@@ -69,7 +72,7 @@ export default function Download(props){
               <p>ID : {props.answers.answers.identifier} Prénom : {props.answers.answers.patient_first_name} Nom : {props.answers.answers.patient_last_name} Date de naissance : {props.answers.answers.patient_birth}</p>
               <h1 style={{textAlign:'center'}}>URINARY / SCANNER ABDOMINO-PELVIEN</h1>
               <div style={{display: 'flex', justifyContent: 'center'}}>
-                <QRCode value={YAML.stringify(props.answers.answers)}/>
+                <QRCode value={generateQRCode()}/>
                 <InlineSVG src={svgSource}/>
               </div>
               <hr/>

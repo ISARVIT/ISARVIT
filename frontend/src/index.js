@@ -13,6 +13,7 @@ import Login from './Pages/Login/Login.js';
 import User from './Pages/User/User.js';
 import Form from './Pages/Form/Form.js';
 import Creator from './Pages/Creator/Creator.js';
+import ReadQRCode from './Pages/User/ReadQRCode.js';
 
 import { dbExample } from './Source/example.js';
 
@@ -26,7 +27,7 @@ const themeLight = createTheme({
 
 export default function Control(){
   const [alert, setAlert] = React.useState({open: false, text: "", severity: "success"});
-  const [control, setControl] = React.useState({view: 'landing', user: null});
+  const [control, setControl] = React.useState({view: 'landing', formID: null, QRData: {}, user: null});
   const [example, setExample] = React.useState(dbExample());
   function setView(newView){
     setControl({...control, view: newView})
@@ -38,6 +39,7 @@ export default function Control(){
       case 'user':    return <User {...sendControl}/>
       case 'form':   return <Form {...sendControl}/>
       case 'creator': return <Creator {...sendControl}/>
+      case 'readqr': return <ReadQRCode {...sendControl}/>
       default: return <Landing {...sendControl}/>
     }
   }

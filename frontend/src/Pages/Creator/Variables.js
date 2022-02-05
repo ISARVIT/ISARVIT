@@ -191,7 +191,7 @@ export default function Variables(props){
   const saveOutput=(event)=>{
     if(event.keyCode == 13){
       let newOutputs = props.creator.outputs;
-      newOutputs.push({outputID: 0, variable: createOutput.name})
+      newOutputs.push({outputID: newOutputs.length, variable: createOutput.name})
       props.setCreator({...props.creator, outputs: newOutputs})
       setCreateOutput({open: false,variable: ''})
     }

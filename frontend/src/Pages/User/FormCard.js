@@ -37,7 +37,7 @@ export default function FormCard(props){
     setOpen(false);
   };
   const useForms = () => {
-    props.setView('form')
+    props.setControl({...props.control, view: 'form', formID: props.row.id})
   }
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -99,16 +99,18 @@ export default function FormCard(props){
               </Typography>
             </Collapse>
           </CardContent>
-          <DialogActions style={{paddingTop: 0}}>
-            {props.control.user.id!==props.row.creator_id? null:
-              <Button disabled={!props.row.editable} onClick={editForms} color="primary">
-                Edit
+          {props.readingQRCode? null:
+            <DialogActions style={{paddingTop: 0}}>
+              {props.control.user.id!==props.row.creator_id? null:
+                <Button disabled={!props.row.editable} onClick={editForms} color="primary">
+                  Edit
+                </Button>
+              }
+              <Button disabled={props.row.id} onClick={useForms} color="primary">
+                Use
               </Button>
-            }
-            <Button disabled={props.row.id} onClick={useForms} color="primary">
-              Use
-            </Button>
-          </DialogActions>
+            </DialogActions>
+          }
         </Card>
       </Dialog>
     </TableCell>
