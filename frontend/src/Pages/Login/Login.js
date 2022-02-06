@@ -16,8 +16,8 @@ export default function Login(props){
     <Grid container direction="column" justifyContent="center" alignItems="center" style={{marginTop: '10rem'}}>
       <Grid item>
         <Tabs value={card} onChange={change} indicatorColor="primary" textColor="primary">
-          <Tab label="Login"/>
-          <Tab label="Signup"/>
+          <Tab label="Connecter"/>
+          <Tab label="Creer"/>
         </Tabs>
       </Grid>
       <Grid item xs={3} style={{width: '100%'}}>

@@ -40,8 +40,8 @@ export default function UserCard(props){
   }
   function getChipLabel(chip){
     switch(chip.type){
-      case 'favorites': return props.control.user.favorites.length + ' Favorites'
-      case 'created': return props.control.user.created.length + ' Created'
+      case 'favorites': return props.control.user.favorites.length + ' Favoris'
+      case 'created': return props.control.user.created.length + ' Crées'
       default: return chip.label
     }
   }
@@ -71,10 +71,10 @@ export default function UserCard(props){
                 {props.control.user.admin?'Admin':'User'}
               </Typography>
               <Typography variant="caption" component="h1">
-                Joined in {props.control.user.joined.substring(0,4)}
+                Inscrit en {props.control.user.joined.substring(0,4)}
               </Typography>
               <Typography variant="caption" component="h1">
-                Last seen {new Date().toISOString().slice(0, 10)===props.control.user.last_seen?'today':props.control.user.last_seen}
+                Dernier Accès {new Date().toISOString().slice(0, 10)===props.control.user.last_seen?'today':props.control.user.last_seen}
               </Typography>
             </Grid>
           </Grid>

@@ -8,28 +8,28 @@ export function dbExample(){
     return {
         qforms: 3,
         rows: [
-            {editable: false, id: 0, name: 'Urology Report', last_updated: new Date('2021-12-17T03:24:00').toJSON(), field: 'Urology', creator: 'Andreis PURIM', preview: urology_preview, creator_avatar: andreis_avatar, dynamic_image: true, creator_id: 1201, keywords: ['Urology','CR'], questions: 17, uses: 15, description: 'This is a complete urology report made in 2020 for all urology based-scans used by the CHU Lille.', paragraph: 'This is a complete urology report made in 2020 for all urology based-scans used by the CHU Lille.'},
-            {editable: false, id: 1, name: 'Respiratory', last_updated: new Date('2021-12-15T03:24:00').toJSON(), field: 'Respiratory', creator: 'Andreis PURIM', preview: respiratory_preview, creator_avatar: andreis_avatar, dynamic_image: false, creator_id: 1201, keywords: ['Respiratory','CR'], questions: 2, uses: 1, description: 'A public CR created by the CHU Lille for respiratory scans used since 2018. It is release phase'},
-            {editable: false, id: 2, name: 'Dermatology', last_updated: new Date('2021-12-14T03:24:00').toJSON(), field: 'Skin', creator: 'Katia MALTA', preview: dermatology_preview, creator_avatar: katia_avatar, dynamic_image: false, creator_id: 761, keywords: ['Dermatology','Skin'], questions: 3, uses: 12, description: 'This is a standard medical report for all dermatologic scans in Brazil. In the current version it does not have a dynamic image'}
+            {editable: false, id: 0, name: 'Urologie/Lithiase', last_updated: new Date('2021-12-17T03:24:00').toJSON(), field: 'Urologie', creator: 'Andreis PURIM', preview: urology_preview, creator_avatar: andreis_avatar, dynamic_image: true, creator_id: 1201, keywords: ['Urology','CR'], questions: 17, uses: 15, description: 'This is a complete urology report made in 2020 for all urology based-scans used by the CHU Lille.', paragraph: 'This is a complete urology report made in 2020 for all urology based-scans used by the CHU Lille.'},
+            {editable: false, id: 1, name: 'Respiratoire', last_updated: new Date('2021-12-15T03:24:00').toJSON(), field: 'Respiratoire', creator: 'Andreis PURIM', preview: respiratory_preview, creator_avatar: andreis_avatar, dynamic_image: false, creator_id: 1201, keywords: ['Respiratory','CR'], questions: 2, uses: 1, description: 'A public CR created by the CHU Lille for respiratory scans used since 2018. It is release phase'},
+            {editable: false, id: 2, name: 'Dermatologie 2020', last_updated: new Date('2021-12-14T03:24:00').toJSON(), field: 'Dermatologie', creator: 'Katia MALTA', preview: dermatology_preview, creator_avatar: katia_avatar, dynamic_image: false, creator_id: 761, keywords: ['Dermatology','Skin'], questions: 3, uses: 12, description: 'This is a standard medical report for all dermatologic scans in Brazil. In the current version it does not have a dynamic image'}
         ],
         columns: [
-            { id: 'favorite', label: 'Favorite', default: true, minWidth: 0, align: 'center'},
-            { id: 'name', label: 'Name', default: true, minWidth: 170, align: 'left'},
-            { id: 'field', label: 'Field', default: true, minWidth: 100, align: 'right' },
-            { id: 'creator', label: 'Creator', default: true, minWidth: 100, align: 'right' },
-            { id: 'uses', label: 'Uses', default: true, minWidth: 100, align: 'right' },
-            { id: 'last_updated', label: 'Last Updated', default: false, minWidth: 100, align: 'right' },
-            { id: 'keywords', label: 'Keywords', default: false, minWidth: 100, align: 'right' },
+            { id: 'favorite', label: 'Favori', default: true, minWidth: 0, align: 'center'},
+            { id: 'name', label: 'Titre', default: true, minWidth: 170, align: 'left'},
+            { id: 'field', label: 'Domaine', default: true, minWidth: 100, align: 'right' },
+            { id: 'creator', label: 'Créateur', default: true, minWidth: 100, align: 'right' },
+            { id: 'uses', label: 'Usages', default: true, minWidth: 100, align: 'right' },
+            { id: 'last_updated', label: 'Dernière mise à jour', default: false, minWidth: 100, align: 'right' },
+            { id: 'keywords', label: 'Mots Clés', default: false, minWidth: 100, align: 'right' },
         ],
         users: {
             andreis:
-                {   id: 1201, username: 'andreis', password:'123', admin: true, firstname: 'Andreis', lastname: 'PURIM', description: 'Student at Centrale Lille', joined: '2021-02-05', last_seen: '2022-02-05',
+                {   id: 1201, username: 'andreis', password:'123', admin: true, firstname: 'Andreis', lastname: 'PURIM', description: 'Étudiant à Centrale Lille', joined: '2021-02-05', last_seen: '2022-02-05',
                     avatar: andreis_avatar, 
                     chips: [
                         {type: 'work', label: 'CHU Lille'},
                         {type: 'study', label: 'Centrale Lille'},
-                        {type: 'favorites', label: '0 Favorites'},
-                        {type: 'created', label: '0 Created'},
+                        {type: 'favorites', label: '0 Favoris'},
+                        {type: 'created', label: '0 Crées'},
                     ],
                     favorites: [0],
                     recents: {
@@ -56,38 +56,38 @@ export function dbExample(){
                   {
                     "isRequired": true,
                     "name": "identifier",
-                    "title": "Patient identifier",
+                    "title": "ID du Patient",
                     "type": "text"
                   },
                   {
                     "isRequired": true,
                     "name": "patient_first_name",
-                    "title": "First name",
+                    "title": "Prénom",
                     "type": "text"
                   },
                   {
                     "isRequired": true,
                     "name": "patient_name",
-                    "title": "Surname",
+                    "title": "Nom",
                     "type": "text"
                   },
                   {
                     "isRequired": true,
                     "name": "patient_birth",
-                    "title": "Date of birth",
+                    "title": "Date de naissance",
                     "type": "text"
                   },
                   {
                     "choices": ["CT scan", "Ultrasonography", "Radiography AND US"],
                     "name": "exam_type",
-                    "title": "Exam type",
+                    "title": "Type d'Examen",
                     "type": "dropdown"
             
                   },
                   {
                     "choices": ["No", "IV", "IV late phase", "Urinary tract injection", "NA"],
                     "name": "exam_indication",
-                    "title": "Enhanced contrast agent",
+                    "title": "Agent de Contraste Amélioré",
                     "type": "dropdown"
                   },
                   {

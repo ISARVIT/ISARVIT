@@ -52,20 +52,20 @@ export default function Signup(){
         <Card>
             <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
-                    Signup
+                    Créer Compte
                 </Typography>
                     <Grid container direction="row" justifyContent="space-between" spacing={1}>
                         <Grid item xs={5}>
-                            <TextField fullWidth label="First name" value={user.firstname} onChange={changeFirstname}/>
+                            <TextField fullWidth label="Prénom" value={user.firstname} onChange={changeFirstname}/>
                         </Grid>
                         <Grid item xs={7}>
-                            <TextField fullWidth label="Last name" value={user.lastname} onChange={changeLastname} />
+                            <TextField fullWidth label="Nom" value={user.lastname} onChange={changeLastname} />
                         </Grid>
                     </Grid>
                     <TextField fullWidth label="Username" value={user.username} onChange={changeUsername} />
                     <TextField fullWidth label="Mail" value={user.email} onChange={changeEmail} />
                     <FormControl fullWidth>
-                        <InputLabel>Password</InputLabel>
+                        <InputLabel>Mot de Passe</InputLabel>
                         <Input
                             type={user.showPassword ? 'text' : 'password'}
                             value={user.password}
@@ -83,7 +83,7 @@ export default function Signup(){
                         />
                     </FormControl>
                     <FormControl fullWidth /*style={{color:user.checkPassword===user.password&user.checkPassword!==''? "green":null}}*/ error={user.checkPassword!==user.password&user.checkPassword!==''}>
-                        <InputLabel>Check password</InputLabel>
+                        <InputLabel>Repetez Mot de Passe</InputLabel>
                         <Input
                             type={'password'}
                             value={user.checkPassword}
@@ -93,7 +93,7 @@ export default function Signup(){
             </CardContent>
             <CardActions>
                 <Button disabled={user.firstname==='' || user.lastname==='' || user.username==='' || user.email===''|| user.password==='' || user.password!==user.checkPassword} size="small" color="primary" onClick={connect}>
-                  Signup
+                  Créer
                 </Button>
             </CardActions>
         </Card>

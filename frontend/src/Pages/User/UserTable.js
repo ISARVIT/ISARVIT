@@ -56,7 +56,14 @@ export default function UserTable(props){
   }
   const showResetButton=()=>{
     for (var i = 0; i < table.selectedColumns.length; ++i) {
-      if (table.selectedColumns[i] !== table.defaultColumns[i]) return false;
+      if(table.selectedColumns[i] !== table.defaultColumns[i]){
+        // console.log(table.selectedColumns[i],table.defaultColumns[i])
+        // return false
+      }
+      else{
+        // console.log(table.selectedColumns[i],table.defaultColumns[i])
+        // return false
+      }
     }
     return true;
   }
@@ -102,10 +109,10 @@ export default function UserTable(props){
   }
   function textTab(){
     switch(table.tab){
-      case 1: return 'Favorite'
-      case 2: return 'Recent'
-      case 3: return 'My'
-      default: return 'All'
+      case 1: return 'Forms Favoris'
+      case 2: return 'Forms Recents'
+      case 3: return 'Mes Forms'
+      default: return 'Tous Forms'
     }
   }
   function selectRows(){
@@ -144,17 +151,17 @@ export default function UserTable(props){
     <Grid item container direction="column" justifyContent="center" alignItems="center" style={{paddingTop:'2rem'}}>
       <Grid item>
         <Tabs value={table.tab} onChange={changeTab} indicatorColor={table.tab===3?"secondary":"primary"} textColor={table.tab===3?"secondary":"primary"}>
-          <Tab label="All"/>
-          <Tab label={"Favorites ("+props.control.user.favorites.length+")"}/>
-          <Tab label="Recent"/>
-          {!props.control.user.admin? null : <Tab label={"My Forms ("+props.control.user.created.length+")"}/>}
+          <Tab label="Public"/>
+          <Tab label={"Favoris ("+props.control.user.favorites.length+")"}/>
+          <Tab label="Récents"/>
+          {!props.control.user.admin? null : <Tab label={"Mes Forms ("+props.control.user.created.length+")"}/>}
         </Tabs>
       </Grid>
       <Grid item>
         <Paper elevation={3}>
           <Toolbar>
             <Typography variant="h6" id="tableTitle" style={{flex: '1 1 100%'}}>
-              {textTab()} Forms {table.search!==''?'(Searching)':null}
+              {textTab()} {table.search!==''?'(Searching)':null}
             </Typography>
             <Tooltip title="Search">
             <TextField onChange={changeSearch} InputProps={{startAdornment:(<InputAdornment position="start"><SearchIcon /></InputAdornment>)}} placeholder="Search" variant="outlined"/>

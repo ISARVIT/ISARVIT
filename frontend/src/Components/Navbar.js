@@ -56,7 +56,7 @@ export default function TitleToolbar(props) {
                             <DialogContentText id="alert-dialog-description">
                                 ISARVIT est une très belle application Web basée sur l'idée simple de faciliter la génération de rapports médicaux. Cela a commencé comme un projet étudiant sous la direction de M. Slim Hammadi (chercheur au CRIStAL et professeur à Centrale Lille) et du Centre Hospitalier Universitaire de Lille.
                                 L'idée est simple : un Médecin (qui sera désormais référencé comme "Admin") peut créer des formulaires médicaux et un modèle pour le Rapport Médical, un autre utilisateur (qui sera référencé comme "Utilisateur"), tel qu'un autre médecin ou radiologue, peut accéder aux formulaires disponibles, remplir les questions avec les informations de son patient et, en quelques secondes, avoir entre les mains un rapport médical bien formaté.
-                                (<a href="https://github.com/ISARVIT">Documentation</a> | Made with ❤️ by Andreis)
+                                (<a href="https://github.com/ISARVIT">Documentation</a>)
                             </DialogContentText>
                         </DialogContent>
                     </Dialog>

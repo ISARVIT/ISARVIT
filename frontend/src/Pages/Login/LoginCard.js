@@ -46,11 +46,11 @@ export default function Login(props){
     <Card>
       <CardContent>
         <Typography gutterBottom variant="h5" component="h2">
-          Login
+          Connecter
         </Typography>
-        <TextField id="standard-name" fullWidth label="Username" value={user.username} onChange={changeUsername} />
+        <TextField id="standard-name" fullWidth label="Nom d'utilisateur" value={user.username} onChange={changeUsername} />
         <FormControl fullWidth>
-          <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
+          <InputLabel htmlFor="standard-adornment-password">Mot de Passe</InputLabel>
           <Input type={user.show ? 'text' : 'password'} value={user.password} onChange={changePassword}
             endAdornment={
               <InputAdornment position="end">
@@ -64,7 +64,7 @@ export default function Login(props){
       </CardContent>
       <CardActions>
           <Button disabled={user.username === '' || user.password === ''} size="small" color="primary" onClick={connect}>
-            Connect
+            Connecter
           </Button>
       </CardActions>
     </Card>

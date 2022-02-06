@@ -16,13 +16,13 @@ export default function User(props){
       <UserTable {...props}/>
       <Grid item xs={12}>
         <Button variant="contained" color="primary" startIcon={<CropFreeIcon />} onClick={()=>props.setView('readqr')}>
-          Read QRCode
+          Lire QRCode
         </Button>
       </Grid>
       {!props.control.user.admin? null:
         <Grid item={true} xs={12}>
           <Button onClick={goCreate} variant="contained" size="large" color="secondary">
-            Create Form
+            Creer Formulaire
           </Button>
         </Grid>
       }
