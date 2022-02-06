@@ -1,6 +1,6 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import ReactFlow, { ReactFlowProvider, addEdge, removeElements, Controls, Background, Handle} from 'react-flow-renderer';
+import ReactFlow, { ReactFlowProvider, addEdge, isEdge, getConnectedEdges, ControlButton, removeElements, Controls, Background, Handle} from 'react-flow-renderer';
 import Paper from '@material-ui/core/Paper';
 
 import List from '@material-ui/core/List';
@@ -15,6 +15,12 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 
+
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+
+import { FixedSizeList } from 'react-window';
+import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -57,12 +63,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const operations = [
-  {operationID: 0, draggable:true, variable: 'equation', operationLabel: 'Equation'},
-  {operationID: 1, draggable:true, variable: 'conditional', operationLabel: 'If / Else'},
+  {operationID: 0, draggable:true, variable: 'equation_', type:'Number', equation:'', equationVars: {}, operationLabel: 'Equation'},
+  {operationID: 1, draggable:true, variable: 'conditional_', inputType:'Text', type:'Text', operationLabel: 'Conditional', cond: '==', inputVar: null, inputID: null},
 ]
+const conditionals = {
+  Number: ["==",">=",">","<","<=","!="],
+  Text: ["=="],
+}
 const debugOp = {operationID: 100, variable: 'debug_op', operationLabel: 'Debug'}
 
-function OperationNode({ data, isConnectable }){
+function OperationNode(props){
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [equation, setEquation] = React.useState('');
@@ -73,30 +83,40 @@ function OperationNode({ data, isConnectable }){
   const changeWrite=(event)=>{setWrite(event.target.value)}
   return(
     <div className={classes.operationNode}>
-      <Handle
-        position="top"
-        type="target"
-        isConnectable={isConnectable}
-      />
+      <Handle position="top" type="target" isConnectable={props.isConnectable}/>
       <div>
-        {data.variable}
+        {props.data.variable} {props.data.operationLabel==='Conditional'?<span style={{fontSize:'0.4rem'}}>({props.data.inputType+'→'+props.data.type})</span>:null}
         <Dialog onClose={closeDialog} open={open} fullWidth maxWidth='md'> 
-          <DialogTitle>{data.operationLabel}</DialogTitle>
-          {data.variable==='equation'?
+          <DialogTitle>{props.data.operationLabel} {props.data.operationLabel==='Conditional'?<span>({props.data.inputType+'→'+props.data.type})</span>:null}</DialogTitle>
+          {props.data.operationLabel==='Equation'?
             <DialogContent>
+              Available Variables: {Object.keys(props.data.equationVars).join(', ')}
               <TextField value={equation} onChange={changeEquation} fullWidth required label="Equation" />
-              <EquationOptions variables={defaultVariables} functions={defaultFunctions} errorHandler={defaultErrorHandler}>
+              <EquationOptions variables={props.data.equationVars} functions={defaultFunctions} errorHandler={defaultErrorHandler}>
                 <EquationEvaluate value={equation!==''?equation:'0'}/>
               </EquationOptions>
             </DialogContent>
           :
             <DialogContent>
+              {props.data.inputVar?null:'Add input variable!'}
               <Grid container spacing={1} direction="row" justifyContent="flex-start" alignItems="center">
-                <Grid item xs={3}>
-                  <TextField value={equation} onChange={changeEquation} fullWidth required label="If Condition" />
+                <Grid item xs={2}>
+                  <TextField value={props.data.inputVar} fullWidth disabled placeholder="Variable" />
                 </Grid>
-                <Grid item xs={9}>
-                  <TextField value={write} onChange={changeWrite} fullWidth required label="Then Write" />
+                <Grid item xs={1}>
+                  <Select fullWidth value={props.data.cond} >
+                    {conditionals[props.data.inputType].map(cond=>
+                      <MenuItem value={cond} key={cond}>
+                        {cond}
+                      </MenuItem>  
+                    )}
+                  </Select>
+                </Grid>
+                <Grid item xs={1}>
+                  <TextField value={equation} onChange={changeEquation} fullWidth required placeholder="condition" />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField value={write} onChange={changeWrite} fullWidth required placeholder="Write" />
                 </Grid>
                 <Grid item xs={12}>
                   <Button variant="outlined" color="primary" onClick={()=>alert("Not available in the moment")} size="small">
@@ -116,13 +136,13 @@ function OperationNode({ data, isConnectable }){
           </DialogActions>
         </Dialog>
         <IconButton onClick={openDialog} size="small">
-          <EditIcon/>
+          <EditIcon style={{fontSize:'1rem'}}/>
         </IconButton>
       </div>
       <Handle
         position="bottom"
         type="source"
-        isConnectable={isConnectable}
+        isConnectable={props.isConnectable}
       />
     </div>
   )
@@ -141,15 +161,51 @@ export default function Variables(props){
     let sourceIndex = newNodes.indexOf(source)
     let target = newNodes.filter(function(node){return params.target===node.id})[0]
     let targetIndex = newNodes.indexOf(target)
-    if(target.type==='default'){
-      if(target.data.variable==='sum'){
-        // newNodes[targetIndex].data.label = '1+1'
+    let valid = null;
+    // console.log(source.data.type,target.data.variable)
+    if(target.data.operationLabel==='Equation'){
+      if(source.data.type==='Number'||source.data.operationLabel==='Equation'){
+        valid = {...params, animated: true};
+        newNodes[targetIndex].data.equationVars[source.data.variable] = { type: 'number'};  
+      }
+      else{
+        props.setAlert({open: true, text: "Equation must receive number", severity: "error"})
       }
     }
-    newNodes = addEdge({...params, animated: true}, newNodes)
-    props.setCreator({...props.creator, nodes: newNodes});
+    else if(target.data.operationLabel==='Conditional'){
+      if(source.data.type==='Number'||source.data.operationLabel==='Equation'){
+        valid = {...params, animated: true};
+        newNodes[targetIndex].data.inputType='Number';
+        newNodes[targetIndex].data.inputVar=source.data.variable;
+        newNodes[targetIndex].data.inputID=source.data.questionID;
+      }
+    }
+
+    // if(source.data.variable==='equation'){
+    //   valid = {...params, animated: true};
+    //   newNodes[sourceIndex].data.equationVars[target.data.variable] = { type: 'number'}
+    // }
+    if(valid){
+      newNodes = addEdge(valid, newNodes)
+      props.setCreator({...props.creator, nodes: newNodes});
+    }
+    else{
+      
+    }
   }
-  // const onElementsRemove = (elementsToRemove) => setElements((els) => removeElements(elementsToRemove, els));
+  // const onElementsRemove = (elementsToRemove) => {
+  //   props.setCreator({...props.creator, nodes: removeElements(elementsToRemove, props.creator.nodes)});
+  // }
+  // const onClickElement = React.useCallback((event, element) => {
+  //   props.setCreator({...props.creator, selnode: [element]});
+  // }, [])
+  // const onNodeDragStop = (event, node) => console.log('drag stop', node);
+  // const onClickElement = (event, element) => console.log('click', element);
+  // const onClickElementDelete = React.useCallback(() => {
+  //   const edges = props.creator.nodes.filter((element) => isEdge(element))
+  //   const edgesToRemove = getConnectedEdges(props.creator.selnode, edges)
+  //   onElementsRemove([...props.creator.selnode, ...edgesToRemove])
+  // }, [props.creator.nodes, onElementsRemove, props.creator.selnode]);
   const onLoad = (_reactFlowInstance) => setReactFlowInstance(_reactFlowInstance);
   const onDragOver = (event) => { event.preventDefault(); event.dataTransfer.dropEffect = 'move';};
 
@@ -160,20 +216,23 @@ export default function Variables(props){
       x: event.clientX - reactFlowBounds.left,
       y: event.clientY - reactFlowBounds.top,
     });
-    const varInfo = JSON.parse(event.dataTransfer.getData('application/reactflow'));
+    let varInfo = JSON.parse(event.dataTransfer.getData('application/reactflow'));
     const type = varInfo.nodeType;
-    let label = varInfo.variable;
-    const newNode = {id: props.creator.nodes.length.toString(), type, position, data: { label, ...varInfo },};
-    let newNodes = props.creator.nodes 
-    newNodes = newNodes.concat(newNode)
-    props.setCreator({...props.creator, nodes: newNodes});
+    if(type==='operation'){
+      varInfo.variable += props.creator.qnodes
+    }
+    let label = varInfo.variable + ' ('+varInfo.type+')';
+    const newNode = {id: props.creator.qnodes.toString(), type, position, data: { label, ...varInfo },};
+    let newNodes = props.creator.nodes;
+    newNodes = newNodes.concat(newNode);
+    props.setCreator({...props.creator, nodesUsedIDs: props.creator.nodesUsedIDs.add(varInfo.questionID), qnodes: props.creator.qnodes+1,  nodes: newNodes});
   };
   const onDragStart = (event, varInfo, nodeType) => {
     event.dataTransfer.setData('application/reactflow', JSON.stringify({nodeType, ...varInfo}));
     event.dataTransfer.effectAllowed = 'move';
   };
   const clearAll=()=>{
-    props.setCreator({...props.creator, nodes: [], outputs: []})
+    props.setCreator({...props.creator, qnodes:0, nodesUsedIDs: new Set(), nodes: [], outputs: []})
   }
   const openCreate=()=>{
     setCreateOutput({open: true,variable: ''})
@@ -211,10 +270,11 @@ export default function Variables(props){
                 </AccordionSummary>
                 <AccordionDetails>
                   <List style={{width: '100%'}} spacing={1}>
-                    {props.creator.questions.map(question => 
-                      <ListItem key={question.id} className={classes.node} style={{borderColor: '#0041d0'}} button onDragStart={(event) => onDragStart(event, question, 'input')} draggable>
-                        {question.variable} ({question.type})
-                      </ListItem>
+                    {props.creator.questions.map(question =>
+                      props.creator.nodesUsedIDs.has(question.questionID)?null:
+                        <ListItem key={question.id} className={classes.node} style={{borderColor: '#0041d0'}} button onDragStart={(event) => onDragStart(event, question, 'input')} draggable>
+                          {question.variable} ({question.type})
+                        </ListItem>
                     )}
                   </List>
                 </AccordionDetails>
@@ -225,15 +285,15 @@ export default function Variables(props){
                   <Typography className={classes.secondaryHeading}>Change input into text</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <List style={{width: '100%'}}>
+                  <List style={{width: '100%', maxHeight: 300}}>
                     {operations.map(operation => 
                       <ListItem key={operation.id} className={classes.node} button onDragStart={(event) => onDragStart(event, operation, 'operation')} draggable>
                         {operation.operationLabel}
                       </ListItem>
                     )}
-                      <ListItem className={classes.node} button onDragStart={(event) => onDragStart(event, debugOp, 'default')} draggable>
+                      {/* <ListItem className={classes.node} button onDragStart={(event) => onDragStart(event, debugOp, 'default')} draggable>
                         {debugOp.operationLabel}
-                      </ListItem>
+                      </ListItem> */}
                   </List>
                 </AccordionDetails>
               </Accordion>
@@ -270,11 +330,18 @@ export default function Variables(props){
                 onConnect={onConnect}
                 onLoad={onLoad}
                 onDrop={onDrop}
+                // onElementClick={onClickElement}
+                // onNodeDragStop={onNodeDragStop}
                 nodeTypes={{operation: OperationNode}}
                 defaultZoom={1.5}
+                // onElementClick={onClickElement}
                 onDragOver={onDragOver}
               >
-                <Controls />
+                <Controls showInteractive={false}>
+                  {/* <ControlButton onClick={onClickElementDelete}>
+                    <DeleteIcon />
+                  </ControlButton> */}
+                </Controls>
                 <Background color="#aaa" gap={16} />
               </ReactFlow>
             </ReactFlowProvider>

@@ -27,10 +27,10 @@ const themeLight = createTheme({
 
 export default function Control(){
   const [alert, setAlert] = React.useState({open: false, text: "", severity: "success"});
-  const [control, setControl] = React.useState({view: 'landing', formID: null, QRData: {}, user: null});
+  const [control, setControl] = React.useState({view: 'landing', formID: null, tempData: {}, user: null});
   const [example, setExample] = React.useState(dbExample());
   function setView(newView){
-    setControl({...control, view: newView})
+    setControl({...control, formID: null, tempData: {}, view: newView})
   }
   function returnView(){
     switch(control.view){

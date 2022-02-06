@@ -37,14 +37,13 @@ export default function FormCard(props){
     setOpen(false);
   };
   const useForms = () => {
-    props.setControl({...props.control, view: 'form', formID: props.row.id})
+    props.setControl({...props.control, view: 'form', tempData:{}, formID: props.row.id})
   }
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  function editForms(row){
-    alert("Available on next release")
-    return null
+  const editForms=()=>{
+    props.setControl({...props.control, view: 'creator', tempData: props.example.forms[props.row.id], formID: props.row.id });
   }
   return (
     <TableCell>

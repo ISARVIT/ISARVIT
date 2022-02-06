@@ -8,7 +8,7 @@ import UserCard from './UserCard.js'
 
 export default function User(props){
   const goCreate=()=>{
-    props.setControl({...props.control, view:'creator'})
+    props.setControl({...props.control, tempData: {}, formID: null, view:'creator'})
   }
   return (
     <Grid container direction="column" justifyContent="center" alignItems="center" xs={12} spacing={2} style={{marginTop: '2rem', }}>

@@ -31,7 +31,7 @@ export default function ReadQRCode(props){
   const retry=()=>{setData(null)};
   const back=()=>{props.setView('user')};
   const use=()=>{
-    props.setControl({...props.control, QRData: data.answers.answers, view:'form'})
+    props.setControl({...props.control, formID: data.answers.formID, tempData: data.answers.answers, view:'form'})
   }
   return (
     <Grid container xs={12} spacing={1} direction="column" justifyContent="center" alignItems="center" style={{marginTop: '2rem' }}>

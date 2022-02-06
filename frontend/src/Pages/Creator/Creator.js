@@ -21,19 +21,23 @@ function ErrorCard(){
 }
 
 export default function Creator(props){
-  const [creator, setCreator] = React.useState({
-    card: 0,
-    questions: [],
-    qlength: 0,
-    outputs: [],
-    nodes: [],
-    template: '',
-    svg: {
-      base: '',
-      parts: [],
-      used_variables: [],
+  const getCreator=()=>{
+    if(props.control.tempData&&(props.control.formID===props.control.tempData.id)){
+      let editData = props.control.tempData;
+      editData.card = 0;
+      return  editData;
     }
-  });
+    else{
+      return {
+        id: props.example.qforms, card: 0,
+        questions: [],qlength: 0,
+        outputs: [], nodes: [], qnodes: 0, nodesUsedIDs: new Set(), selnode: null,
+        template: '',
+        svg: {base: '',parts: [],used_variables: []}
+      }
+    }
+  };
+  const [creator, setCreator] = React.useState(getCreator());
   const back=()=>{
     if(creator.card){
       setCreator({...creator, card: creator.card-1})

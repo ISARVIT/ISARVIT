@@ -13,8 +13,8 @@ const YAML = require('json-to-pretty-yaml');
 
 export default function Download(props){
   const editor = React.useRef(null)
-  const [edit,setEdit]=React.useState(false)
-  const openEdit = ()=>{setEdit(true)}
+  const config = {height: "100%", toolbarAdaptive: false, readonly: false}
+  const [edit,setEdit]=React.useState(0)
   function getOrgans(){
     return props.answers.questions.svg.organs.map(organ=>organ.length!==1?organ[(Math.random()<0.5)|0]:organ[0]).join('')
   }
@@ -43,6 +43,9 @@ export default function Download(props){
       }
     }).join("")
   }
+  const handleChange=(newContent)=>{
+    props.setCreator({...props.creator, template: newContent})
+  }
   const svgSource = props.answers.questions.svg.begin + getOrgans() + props.answers.questions.svg.end
   function download(text){
     const input = document.getElementById('divToPrint')
@@ -50,22 +53,26 @@ export default function Download(props){
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF();
       pdf.addImage(imgData, 'JPEG', 0, 0);
-      pdf.save("urinary_andreis.pdf");
+      let filename = "FormID_"+props.control.formID+"_by_"+props.control.user.username+"_"+new Date().getTime();
+      pdf.save(filename);
     });
   }
   return(
     <Grid container direction="column" justifyContent="center" alignItems="center" xs={12} spacing={2}>
       <Grid item>
         <ButtonGroup size="large" color="primary">
-          <Button value={edit} onClick={openEdit} disabled={edit}>Edit Result</Button>
+          <Button value={edit} onClick={()=>setEdit(1)} disabled={edit}>Edit Result</Button>
           <Button onClick={download}>Download</Button>
+          <Button onClick={()=>setEdit(2)} disabled={edit}>QRCode Only</Button>
         </ButtonGroup>
       </Grid>
       <Grid item>
-        {edit?
-          <Paper elevation={3} style={{width: '210mm', height: '297mm',}}>
-            <JoditEditor ref={editor} value={getTemplate()} tabIndex={1} />
+        {edit==1?
+          <Paper elevation={3} style={{width: '210mm', height: '297mm'}}>
+            <JoditEditor ref={editor} value={getTemplate()} config={config} tabIndex={1} />
           </Paper>
+        :edit==2?
+          <QRCode value={generateQRCode()} size={750}/>
         :
           <Paper elevation={5}>
             <div id='divToPrint' style={{backgroundColor: '#FFF', width: '210mm', minHeight: '297mm', marginLeft: 'auto', marginRight: 'auto', padding:'2rem'}}>

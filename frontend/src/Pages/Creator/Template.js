@@ -6,7 +6,6 @@ import Paper from '@material-ui/core/Paper';
 
 export default function Template(props){
 	const editor = React.useRef(null)
-
 	const config = {
         height: "100%",
         toolbarAdaptive: false,
@@ -67,7 +66,7 @@ export default function Template(props){
   }
   return (
     <Grid item>
-      <Paper elevation={3} style={{width: '210mm', height: '297mm',}}>
+      <Paper elevation={3} style={{width: '210mm', height: '297mm'}}>
         <JoditEditor ref={editor} value={props.creator.template} config={config} tabIndex={1} onBlur={handleChange} />
       </Paper>
     </Grid>

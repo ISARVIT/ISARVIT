@@ -25,41 +25,63 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Publish(props){
   const classes = useStyles();
-  const [publish, setPublish] = React.useState({
-    editable: false,
-    id: -1,
-    name: '',
-    last_updated: new Date().toJSON(),
-    field: '',
-    creator: props.control.user.firstname + ' ' + props.control.user.lastname ,
-    preview: '',
-    creator_avatar: props.control.user.avatar,
-    dynamic_image: false,
-    creator_id: props.control.user.id,
-    keywords: '',
-    questions: props.creator.questions.length,
-    uses: 0,
-    description: '',
-    read_more: '',
-  })
+  const getPublish=()=>{
+    if(props.control.tempData&&(props.control.formID===props.control.tempData.id)){
+      let publishData = props.example.rows.find(row=>row.id===props.control.formID)
+      publishData.last_updated = new Date().toJSON();
+      if(Array.isArray(publishData.keywords)){
+        publishData.keywords = publishData.keywords.join(',');
+      }
+      return publishData;
+    }
+    else{
+      return {
+        id: props.creator.formID,
+        editable: true,
+        name: '',
+        last_updated: new Date().toJSON(),
+        field: '',
+        creator: props.control.user.firstname + ' ' + props.control.user.lastname ,
+        preview: '',
+        creator_avatar: props.control.user.avatar,
+        dynamic_image: false,
+        creator_id: props.control.user.id,
+        keywords: '',
+        questions: props.creator.questions.length,
+        uses: 0,
+        description: '',
+        paragraph: '',
+      }
+    }
+  }
+  const [publish, setPublish] = React.useState(getPublish())
   const changeTitle=(event)=>{setPublish({...publish, name: event.target.value})};
   const changeField=(event)=>{setPublish({...publish, field: event.target.value})};
   const changeDescription=(event)=>{setPublish({...publish, description: event.target.value})};
   const changePreview=(event)=>{setPublish({...publish, preview: event.target.value})};
   const changeKeywords=(event)=>{setPublish({...publish, keywords: event.target.value})};
-  const changeMore=(event)=>{setPublish({...publish, read_more: event.target.value})};
+  const changeMore=(event)=>{setPublish({...publish, paragraph: event.target.value})};
   const savePublish=()=>{
     let newRows = props.example.rows;
     let newRow = publish;
-    newRow.id = newRows.length;
-    alert([...new Set(newRow.keywords.split(',').map(keyword=>keyword.trim()))].join(', '))
-    newRow.keywords = [...new Set(newRow.keywords.split(',').map(keyword=>keyword.trim()))];
-    newRows.push(newRow);
+    if(!Array.isArray(newRow.keywords)){
+      newRow.keywords = [...new Set(newRow.keywords.split(',').map(keyword=>keyword.trim()))];
+    }
+    let currentRow = newRows.find(rows=>rows.id===props.creator.id)
+    newRow.id = props.creator.id;
+    if(currentRow){
+      newRows[newRows.indexOf(currentRow)] = newRow;
+    }
+    else{
+      newRows.push(newRow);
+      let newUsers = props.example.users
+      newUsers[props.control.user.username].created.push(newRow.id)
+    }
     props.example.forms[newRow.id] = props.creator;
-    let newUsers = props.example.users
-    newUsers[props.control.user.username].created.push(newRow.id)
-    props.setExample({...props.example, rows: newRows})
-    props.setControl({...props.control, view: 'user'})
+    let newForms = props.example.forms
+    newForms[newRow.id] = props.creator;
+    props.setExample({...props.example, qforms: props.example.qforms+1, forms: newForms, rows: newRows})
+    props.setControl({...props.control, formID: null, setData: {}, view: 'user'})
   }
   return(
     <Grid item xs={4}>
@@ -68,7 +90,7 @@ export default function Publish(props){
             avatar={<Avatar src={publish.creator_avatar} />}
             action={<Tooltip title="Options"><IconButton><MoreVertIcon /></IconButton></Tooltip>}
             title={'Created by '+publish.creator}
-            subheader={'Last update: '+new Date().toISOString().slice(0, 10)}
+            subheader={'FormID '+props.creator.id+'.Last update: '+new Date().toISOString().slice(0, 10)}
           />
           <CardMedia
             className={classes.media}
@@ -78,7 +100,7 @@ export default function Publish(props){
           <CardContent>
             <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
               <Grid item xs={12}>
-                <TextField value={publish.title} onChange={changeTitle} fullWidth required label="Title" />
+                <TextField value={publish.name} onChange={changeTitle} fullWidth required label="Title" />
               </Grid>
               <Grid item xs={12}>
                 <TextField value={publish.field} onChange={changeField} fullWidth required label="Field" variant="outlined" />

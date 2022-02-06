@@ -9,9 +9,10 @@ import Survey from "material-survey/components/Survey"
 import Download from './Download.js';
 
 export default function Form(props){
+  console.log(props.control.tempData)
   const [answers, setAnswers] = React.useState({
     step: 0,
-    answers: {...props.control.QRData},
+    answers: {...props.control.tempData},
     questions: props.example.forms[props.control.formID],
   });
   const saveAnswers=(newAnswers)=>{
