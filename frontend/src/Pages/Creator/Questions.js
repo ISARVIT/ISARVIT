@@ -1,4 +1,5 @@
 
+import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 
 import Grid from '@material-ui/core/Grid';
@@ -40,6 +41,8 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import LoopIcon from '@material-ui/icons/Loop';
+import PostAddIcon from '@material-ui/icons/PostAdd';
 
 import ClearIcon from '@material-ui/icons/Clear';
 import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
@@ -51,9 +54,14 @@ const typeOptions = [
   {label: 'Choice', icon: <RadioButtonCheckedIcon/>},
   {label: 'Multiple Choice', icon: <CheckBoxIcon/>},
 ]
+const otherOptions = [
+  {label: 'Page', icon: <PostAddIcon/>},
+  {label: 'Loop', icon: <LoopIcon/>},
+]
 
-function Option(props){
-
+const otherOptionsSet = new Set(otherOptions.map(option=>option.label))
+function checkOther(type){
+  return otherOptionsSet.has(type)
 }
 
 function Question(props) {
@@ -78,7 +86,12 @@ function Question(props) {
   }
   const changeType=(event)=>{
     let newQuestions = props.creator.questions
-    newQuestions[props.creator.questions.indexOf(props.question)].type = event.target.value
+    // Resets information except if its choice <-> multiple choice, then conserves choice vector.
+    let newChoices = []
+    if(props.question.type==='Choice'||props.question.type==='Multiple Choice'){
+      newChoices = newQuestions[props.creator.questions.indexOf(props.question)].choices
+    }
+    newQuestions[props.creator.questions.indexOf(props.question)] = {...newQuestions[props.creator.questions.indexOf(props.question)], type:event.target.value, loopvar: false,  default: null, min: null, max: null, others: false, qchoices: 0, choices: newChoices};
     props.setCreator({...props.creator, questions: newQuestions})
   }
   const changeRequired=(event)=>{
@@ -91,9 +104,50 @@ function Question(props) {
     newQuestions[props.creator.questions.indexOf(props.question)].others = true
     props.setCreator({...props.creator, questions: newQuestions})
   }
+  const changeDefault=(event,type,choiceID)=>{
+    let newQuestions = props.creator.questions
+    if(event.target.value!==''){
+      if(type==='Number'){
+        if(!isNaN(Number(event.target.value))){
+          newQuestions[props.creator.questions.indexOf(props.question)].default = Number(event.target.value);
+        }
+      }
+      else if(type==='Choice'){
+        if(newQuestions[props.creator.questions.indexOf(props.question)].default === Number(choiceID)){
+          newQuestions[props.creator.questions.indexOf(props.question)].default = null;
+        }
+        else{
+          newQuestions[props.creator.questions.indexOf(props.question)].default = Number(choiceID);
+        }
+      }
+      else if(type==='Multiple Choice'){
+        if(newQuestions[props.creator.questions.indexOf(props.question)].default === null){
+          newQuestions[props.creator.questions.indexOf(props.question)].default = (new Set()).add(choiceID)
+        }
+        else if(newQuestions[props.creator.questions.indexOf(props.question)].default.has(choiceID)){
+          newQuestions[props.creator.questions.indexOf(props.question)].default.delete(choiceID)
+        }
+        else{
+          newQuestions[props.creator.questions.indexOf(props.question)].default.add(choiceID)
+        }
+      }
+      else if(type==='Text'){
+        newQuestions[props.creator.questions.indexOf(props.question)].default = event.target.value;
+      }
+    }
+    else{
+      newQuestions[props.creator.questions.indexOf(props.question)].default = null;
+    }
+    props.setCreator({...props.creator, questions: newQuestions})
+  }
   const removeOthers=()=>{
     let newQuestions = props.creator.questions
     newQuestions[props.creator.questions.indexOf(props.question)].others = false
+    props.setCreator({...props.creator, questions: newQuestions})
+  }
+  const changeLoopvar=(event)=>{
+    let newQuestions = props.creator.questions
+    newQuestions[props.creator.questions.indexOf(props.question)].loopvar = event.target.value;
     props.setCreator({...props.creator, questions: newQuestions})
   }
   const changeMinMax=(event)=>{
@@ -139,14 +193,14 @@ function Question(props) {
     <Draggable draggableId={props.question.dragID} index={props.index}>
       {provided => (
         <Grid item xs={12} ref={provided.innerRef} {...provided.draggableProps}>
-          <Paper elevation={3} style={{minWidth: '100%'}}>
+          <Paper elevation={checkOther(props.question.type)?0:3} style={checkOther(props.question.type)?{backgroundColor:'transparent'}:null}>
             <Grid xs={12} container direction="column" justifyContent="flex-start" alignItems="stretch"  style={{padding:'0 2rem 0 2rem'}}>
               <Grid item {...provided.dragHandleProps} style={{marginLeft:'auto',marginRight:'auto',minHeight:'2rem'}}>
                 <DragHandleIcon />
               </Grid>
               <Grid item xs={12} container direction="row" justifyContent="space-between" alignItems="center">
                 <Grid item xs={9} style={{paddingRight:'3rem'}}>
-                  <TextField fullWidth placeholder="Question" value={props.question.questionLabel} onChange={changeQuestion} variant="outlined" />
+                  <TextField fullWidth placeholder={props.question.type==="Page"?"Page Title":props.question.type==="Loop"?"Loop Title":"Question"} value={props.question.questionLabel} onChange={changeQuestion} variant="outlined" />
                 </Grid>
                 <Grid item xs={3}>
                   <FormControl variant="outlined" fullWidth>
@@ -162,15 +216,42 @@ function Question(props) {
                           <ListItemText primary={type.label}/>
                         </MenuItem>
                       )}
-                      <MenuItem value="" disabled>
+                      <MenuItem value="others" disabled>
                         Others
                       </MenuItem>
+                      {otherOptions.map(type=>
+                        <MenuItem key={type.label} value={type.label}>
+                          <ListItemIcon>
+                            {type.icon}
+                          </ListItemIcon>
+                          <ListItemText primary={type.label}/>
+                        </MenuItem>
+                      )}
                     </Select>
                   </FormControl>
                 </Grid>
               </Grid>
               <Grid item xs={12} spacing={1} container direction="row" justifyContent="flex-start" alignItems="center" style={{padding:'1rem 0 1rem 0'}}>
-                {props.question.type==='Number'?
+                {props.question.type==='Loop'?
+                  <React.Fragment>
+                    <Grid item xs={3}>
+                      <FormControlLabel value="start" control={<Switch color="primary" value={props.question.required} onChange={changeRequired} />} label={props.question.required?"Variable":"Range"} labelPlacement="end"/>
+                    </Grid>
+                    <Grid item xs={3}>
+                      {props.question.required?
+                        <Select fullWidth value={props.question.loopvar} onChange={changeLoopvar}>
+                          {props.creator.questions.slice(0,props.creator.questions.indexOf(props.question)).map(question=>
+                            <MenuItem key={question.questionID} value={question.questionID}>
+                              <ListItemText primary={question.variable}/>
+                            </MenuItem>
+                          )}
+                        </Select>
+                      :
+                        <Input fullWidth value={props.question.max} name="max" onChange={changeMinMax} type="number" placeholder="Number of times"/>
+                      }
+                    </Grid>
+                  </React.Fragment>
+                :props.question.type==='Number'?
                   <React.Fragment>
                     <Grid item xs={3}>
                       <Input fullWidth value={props.question.min} name="min" onChange={changeMinMax} type="number" placeholder="No min"/>
@@ -178,11 +259,15 @@ function Question(props) {
                     <Grid item xs={3}>
                       <Input fullWidth value={props.question.max} name="max" onChange={changeMinMax} type="number" placeholder="No max"/>
                     </Grid>
-                    <Grid item xs={3}/>
-                    <Grid item xs={3}>
-                      <FormControlLabel control={<Checkbox color="primary" />} label="Integer" labelPlacement="end"/>
+                    <Grid item xs={6}/>
+                    <Grid item xs={6}>
+                      <Input fullWidth value={props.question.default} onChange={(event)=>changeDefault(event,props.question.type,-1)} type="number" placeholder="Default"/>
                     </Grid>
                   </React.Fragment>
+                :props.question.type==='Text'?
+                  <Grid item xs={6}>
+                    <TextField fullWidth value={props.question.default} onChange={(event)=>changeDefault(event,props.question.type,-1)} placeholder="Default"/>
+                  </Grid>
                 :props.question.type==='Choice'||props.question.type==='Multiple Choice'?
                   <DragDropContext onDragEnd={onDragEnd}>
                     <Droppable droppableId={"choices_0"}>
@@ -199,7 +284,15 @@ function Question(props) {
                                     <IconButton size="small" onClick={(event)=>deleteChoice(event,choice)}>
                                       <ClearIcon />
                                     </IconButton>
-                                    {props.question.type==='Choice'?<IconButton size="small"><RadioButtonUncheckedIcon/></IconButton>:<IconButton size="small"><CheckBoxOutlineBlankIcon/></IconButton>}
+                                    {props.question.type==='Choice'?
+                                      <IconButton size="small" onClick={(event)=>changeDefault(event,props.question.type,choice.choiceID)}>
+                                        {props.question.default===choice.choiceID?<RadioButtonCheckedIcon/>:<RadioButtonUncheckedIcon/>}  
+                                      </IconButton>
+                                    :
+                                      <IconButton size="small" onClick={(event)=>changeDefault(event,props.question.type,choice.choiceID)}>
+                                        {props.question.default&&props.question.default.has(choice.choiceID)?<CheckBoxIcon />:<CheckBoxOutlineBlankIcon/>}
+                                      </IconButton>
+                                    }
                                   </ListItemIcon>
                                   <ListItemText primary={"Inbox"+choice.dragID} />
                                 </ListItem>
@@ -208,11 +301,19 @@ function Question(props) {
                           )}
                           {provided.placeholder}
                           {!props.question.others? null:
-                            <ListItem ContainerComponent="li" disabled>
+                            <ListItem ContainerComponent="li" >
                               <ListItemIcon>
-                                <TextFieldsIcon />
+                                  <IconButton size="small" disabled>
+                                    <DragIndicatorIcon />
+                                  </IconButton>
+                                  <IconButton size="small" onClick={removeOthers}>
+                                    <ClearIcon />
+                                  </IconButton>
+                                  <IconButton size="small" disabled>
+                                    {props.question.type==='Choice'?<RadioButtonUncheckedIcon/>:<CheckBoxOutlineBlankIcon/>}
+                                  </IconButton>
                               </ListItemIcon>
-                              <ListItemText primary="Others"/>
+                              <ListItemText primary={<Box color="text.disabled">Others</Box>}/>
                             </ListItem>
                           }
                           <ListItem>
@@ -229,10 +330,10 @@ function Question(props) {
             <Divider />
             <Grid item xs={12} container direction="row" justifyContent="flex-start" alignItems="center" style={{paddingLeft:'2rem'}}>
               <Grid item xs={4}>
-                <TextField fullWidth value={props.question.variable} onChange={changeVariable} placeholder="Variable Name" helperText="Variable Name" />
+                {checkOther(props.question.type)?null:<TextField fullWidth value={props.question.variable} onChange={changeVariable} placeholder="Variable Name" helperText="Variable Name" />}
               </Grid>
               <FormGroup row style={{marginLeft:'auto',padding:'0.3rem'}}>
-                <FormControlLabel value="start" control={<Switch color="primary" value={props.question.required} onChange={changeRequired} />} label={(props.question.required?"":"Not ")+ "Required"} labelPlacement="start"/>
+                {checkOther(props.question.type)?null:<FormControlLabel value="start" control={<Switch color="primary" value={props.question.required} onChange={changeRequired} />} label={(props.question.required?"":"Not ")+ "Required"} labelPlacement="start"/>}
                 <Tooltip title="Delete Question">
                   <IconButton onClick={deleteQuestion}>
                     <DeleteIcon />
@@ -250,7 +351,7 @@ function Question(props) {
 export default function Questions(props){
   const addQuestion=()=>{
     let newQuestions = props.creator.questions
-    let newQuestion = {questionID: props.creator.qlength, dragID: props.creator.qlength.toString(), type:'Text', variable: 'var_'+props.creator.qlength, questionLabel: '', min: null, max: null, others: false, qchoices: 0, choices: []};
+    let newQuestion = {questionID: props.creator.qlength, dragID: props.creator.qlength.toString(), type:'Text', variable: 'var_'+props.creator.qlength, questionLabel: '', default: null, min: null, max: null, loopvar: false, others: false, qchoices: 0, choices: []};
     newQuestions.push(newQuestion);
     props.setCreator({...props.creator, qlength: props.creator.qlength+1, questions: newQuestions})
   }
@@ -264,6 +365,7 @@ export default function Questions(props){
     if(!result.destination){return}
     if(result.destination.index === result.source.index){return}
     const newQuestions = reorder(props.creator.questions,result.source.index,result.destination.index);
+    newQuestions[result.destination.index].loopvar = null;
     props.setCreator({...props.creator, questions: newQuestions});
   }
   return (

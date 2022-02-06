@@ -34,7 +34,7 @@ export default function ReadQRCode(props){
     props.setControl({...props.control, QRData: data.answers.answers, view:'form'})
   }
   return (
-    <Grid container xs={12} spacing={1} direction="column" justifyContent="center" alignItems="center" xs={12} spacing={2} style={{marginTop: '2rem' }}>
+    <Grid container xs={12} spacing={1} direction="column" justifyContent="center" alignItems="center" style={{marginTop: '2rem' }}>
       <Grid item xs={12}>
         <Button variant="outlined" color="primary" onClick={back} startIcon={<ChevronLeftIcon />}>
           Return
@@ -42,7 +42,7 @@ export default function ReadQRCode(props){
       </Grid> 
       <Grid item xs={12}>
         <Paper elevation={3}>
-          <Grid xs={12} container direction="column" justifyContent="center" alignItems="center" xs={12} spacing={1} style={{paddingBottom:'1rem'}}>
+          <Grid xs={12} container direction="column" justifyContent="center" alignItems="center" style={{paddingBottom:'1rem'}}>
             {/* <Grid item xs={12}>
               <Avatar><CropFreeIcon/></Avatar>
             </Grid> */}
