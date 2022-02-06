@@ -29,14 +29,14 @@ export default function TitleToolbar(props) {
     const logout=()=>{props.setControl({view: 'landing', formID: null, tempData: {}, user: null})}
     function loginButton(){
         if(!props.control.user)
-            return <Button variant="outlined" onClick={()=>props.setView('login')}>Login</Button>
+            return <Button variant="outlined" onClick={()=>props.setView('login')}>Connecter</Button>
         else
             return (
                 <React.Fragment>
                     <Button variant="outlined" startIcon={<AccountCircleIcon />} onClick={openMenu}>{props.control.user.username}</Button>
                     <Menu open={Boolean(menuAnchor)} onClose={closeMenu} anchorEl={menuAnchor} anchorOrigin={{vertical: 'top', horizontal: 'right'}} keepMounted transformOrigin={{vertical: 'top', horizontal: 'right'}}>
-                        <MenuItem onClick={goProfile}>Profile</MenuItem>
-                        <MenuItem onClick={logout}>Logout</MenuItem>
+                        <MenuItem onClick={goProfile}>Profil</MenuItem>
+                        <MenuItem onClick={logout}>Déconnecter</MenuItem>
                     </Menu>
                 </React.Fragment>
             )
@@ -49,13 +49,14 @@ export default function TitleToolbar(props) {
         <Toolbar className={classes.toolbar}>
             <Grid container direction="row" justifyContent="space-between" alignItems="center" spacing={1}>
                 <Grid item>
-                    <Button size="small" onClick={() => {setOpenHelp(true)}}>About | Help</Button>
+                    <Button size="small" onClick={() => {setOpenHelp(true)}}>Pour ISARVIT</Button>
                     <Dialog open={openHelp} onClose={() => {setOpenHelp(false)}}>
                         <DialogTitle>ISARVIT</DialogTitle>
                         <DialogContent>
                             <DialogContentText id="alert-dialog-description">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus maximus quam dapibus massa viverra, sed convallis dolor bibendum. Morbi ornare eros vel orci porttitor, sit amet molestie nisl varius. Curabitur velit dolor, egestas quis ex eu, commodo mattis eros. In tortor magna, vulputate maximus convallis sit amet, suscipit in mauris. Praesent tempor eleifend enim ut convallis. Nam vehicula est vitae turpis fringilla vestibulum a lacinia sem. Fusce varius vulputate metus, malesuada sollicitudin arcu pulvinar id. Nam eleifend ornare erat, eu lacinia nibh iaculis ac. Donec sollicitudin risus in orci lacinia accumsan. Proin vulputate dictum viverra.
-                                Made with ❤️ by Andreis.
+                                ISARVIT est une très belle application Web basée sur l'idée simple de faciliter la génération de rapports médicaux. Cela a commencé comme un projet étudiant sous la direction de M. Slim Hammadi (chercheur au CRIStAL et professeur à Centrale Lille) et du Centre Hospitalier Universitaire de Lille.
+                                L'idée est simple : un Médecin (qui sera désormais référencé comme "Admin") peut créer des formulaires médicaux et un modèle pour le Rapport Médical, un autre utilisateur (qui sera référencé comme "Utilisateur"), tel qu'un autre médecin ou radiologue, peut accéder aux formulaires disponibles, remplir les questions avec les informations de son patient et, en quelques secondes, avoir entre les mains un rapport médical bien formaté.
+                                (<a href="https://github.com/ISARVIT">Documentation</a> | Made with ❤️ by Andreis)
                             </DialogContentText>
                         </DialogContent>
                     </Dialog>

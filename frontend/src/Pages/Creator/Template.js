@@ -43,7 +43,7 @@ export default function Template(props){
               name: 'Add QR Code',
               iconURL: 'http://xdsoft.net/jodit/logo.png',
               exec: function(editor, t, {control}) {
-                editor.s.insertHTML('<img width="200" height="200" src=\'https://scontent-cdg2-1.xx.fbcdn.net/v/t39.30808-6/p526x296/270598535_1904906983029605_9132175722949960179_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=730e14&_nc_ohc=4ysgNI_7ZiwAX_8n-lf&_nc_ht=scontent-cdg2-1.xx&oh=00_AT-WfiQ7mFQ0uxI5G6Tl4825WOyMkpgWiqfycldmWF0hfg&oe=61D7D725\'/>')
+                editor.s.insertHTML('<img width="200" height="200" src=\'https://andreispurim.github.io/Imagem1.png\'/>')
               },
               template: (editor, key, value) => {
                   return '<span>'+value+'</span>';
@@ -53,7 +53,7 @@ export default function Template(props){
               name: 'Add SVG',
               iconURL: 'http://xdsoft.net/jodit/logo.png',
               exec: function(editor, t, {control}) {
-                editor.s.insertHTML('<img width="200" src=\'https://scontent.xx.fbcdn.net/v/t39.30808-6/p75x225/271189657_1904907079696262_5002708418190393764_n.jpg?_nc_cat=108&ccb=1-5&_nc_sid=dbeb18&_nc_ohc=viBmhyFiUdEAX-5qRLz&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=00_AT_UlqV694lE6IEX4YCyhCRcMHLi-jGgK3WZSyQjKtq4DQ&oe=61D6F2A6\'/>')
+                editor.s.insertHTML('<img width="200" src=\'https://andreispurim.github.io/svg_template.png\'/>')
               },
               template: (editor, key, value) => {
                   return '<span>'+value+'</span>';

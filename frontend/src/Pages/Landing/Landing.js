@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.grey[800],
     color: theme.palette.common.white,
     marginBottom: theme.spacing(4),
-    backgroundImage: 'url(https://images.pexels.com/photos/998641/pexels-photo-998641.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940)',
+    backgroundImage: 'url(https://www.chu-lille.fr/wp-content/uploads/2019/03/JDF4.jpg)',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
@@ -106,7 +106,7 @@ export default function LangingPage(props) {
             <br></br>
           <Paper className={classes.mainFeaturedPost} >
             {/* Increase the priority of the hero background image */}
-            {<img style={{ display: 'none' }} src="https://images.pexels.com/photos/998641/pexels-photo-998641.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="gg" />}
+            {<img style={{ display: 'none' }} src="https://www.chu-lille.fr/wp-content/uploads/2019/03/JDF4.jpg" alt="gg" />}
             <div className={classes.overlay} />
             <Grid container>
               <Grid item md={6}>
@@ -115,12 +115,12 @@ export default function LangingPage(props) {
                     ISARVIT
                   </Typography>
                   <Typography variant="h5" color="inherit" paragraph>
-                    Create forms for medical CRs
+                    Creer des Compte-Rendus Automatisées
                   </Typography>
                   <div className={classes.buttons}>
                     {props.control.user? null:
                       <Button variant="contained" color="primary" className={classes.buttongg} onClick={()=>props.setControl({...props.control, view: 'login'})}>
-                        Login
+                        Connecter
                       </Button>
                     }
                   </div>
@@ -144,19 +144,19 @@ export default function LangingPage(props) {
                     <div className={classes.cardDetails}>
                       <CardContent>
                         <Typography component="h2" variant="h5">
-                        How to use
+                          CRIStAL
                         </Typography>
                         <Typography variant="subtitle1"  style={{color: 'teal'}}>
-                          to create your automate CRs
+                          Partenaire
                         </Typography>
                         <Typography variant="subtitle1" paragraph>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et suscipit ligula. Vestibulum rutrum leo justo, a interdum ex imperdiet finibus. Maecenas hendrerit magna magna, eget pharetra lacus suscipit eget. Integer ut maximus augue, consectetur consectetur lacus. Donec viverra nec orci at scelerisque. Maecenas ut nibh turpis. In egestas sagittis imperdiet. Phasellus venenatis congue sem eu tempus. Phasellus finibus consectetur nisi et pulvinar. Aenean vitae luctus sapien. Donec iaculis id tellus ut facilisis. Vestibulum sapien sem, sagittis sed euismod eget, consectetur nec urna. Ut posuere velit at ligula lobortis accumsan. Vestibulum volutpat arcu sit amet sapien viverra, sit amet malesuada eros gravida. Morbi dapibus quam quam, quis luctus dolor hendrerit nec. Nullam fermentum ipsum vitae consequat porttitor.
+                          CRIStAL est né le 1er janvier 2015 sous la tutelle du CNRS, de l’Université Lille 1 et de Centrale Lille en partenariat avec l’Université Lille 3, Inria et l’Institut Mines Telecom. CRIStAL est membre de l’institut de recherches interdisciplinaires IRCICA – USR CNRS 3380 (https://ircica.univ-lille.fr/fr/linstitut). Depuis janvier 2018, les universités lilloises ont fusionné. Les tutelles principales de CRIStAL sont l’Université de Lille, le CNRS et Centrale Lille Institut. Ses tutelles secondaires sont Inria Lille Nord Europe et l’IMT Lille-Douai. L’unité est composée de plus de 470 membres (230 permanents et près de 240 non permanents).
                         </Typography>
                        
                       </CardContent>
                     </div>
                     <Hidden xsDown>
-                      <CardMedia className={classes.cardMedia} image="https://images.pexels.com/photos/4823233/pexels-photo-4823233.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" title="" />
+                      <CardMedia className={classes.cardMedia} image="https://www.cristal.univ-lille.fr/logos/logoCRIStAL.svg" title="" />
                     </Hidden>
                   </Card>
                 </CardActionArea>
@@ -167,19 +167,18 @@ export default function LangingPage(props) {
                     <div className={classes.cardDetails}>
                       <CardContent>
                         <Typography component="h2" variant="h5">
-                         
-                          Creating new formats
+                          CERIM
                         </Typography>
                         <Typography variant="subtitle1"  style={{color: 'teal'}}>
-                        become an admin
+                          Partenaire
                         </Typography>
                         <Typography variant="subtitle1" paragraph>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et suscipit ligula. Vestibulum rutrum leo justo, a interdum ex imperdiet finibus. Maecenas hendrerit magna magna, eget pharetra lacus suscipit eget. Integer ut maximus augue, consectetur consectetur lacus. Donec viverra nec orci at scelerisque. Maecenas ut nibh turpis. In egestas sagittis imperdiet. Phasellus venenatis congue sem eu tempus. Phasellus finibus consectetur nisi et pulvinar. Aenean vitae luctus sapien. Donec iaculis id tellus ut facilisis. Vestibulum sapien sem, sagittis sed euismod eget, consectetur nec urna. Ut posuere velit at ligula lobortis accumsan. Vestibulum volutpat arcu sit amet sapien viverra, sit amet malesuada eros gravida. Morbi dapibus quam quam, quis luctus dolor hendrerit nec. Nullam fermentum ipsum vitae consequat porttitor.                        </Typography>
-                       
+                          Le CERIM est une Unité de la Faculté de Médecine Henri Warembourg de l’Université de Lille. Le CERIM est situé au 2ème étage aile Est du Pôle Recherche (voir le plan ). Historiquement, le CERIM est un laboratoire de recherche de la Faculté de Médecine, et a mis en place le réseau et les services informatiques de la Faculté de Médecine et du secteur Droit et Santé de l’Université de Lille (voir l’histoire du CERIM). Le CERIM a été fondé en 1984 par le Pr Régis Beuscart qui l’a dirigé jusqu’en 2018. Depuis, le CERIM est dirigé dans la continuité par le Pr Emmanuel Chazard. Le secrétariat du CERIM est tenu par Mme Mélanie Steffe.
+                        </Typography>
                       </CardContent>
                     </div>
                     <Hidden xsDown>
-                      <CardMedia className={classes.cardMedia} image="https://images.pexels.com/photos/4823233/pexels-photo-4823233.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" title="" />
+                      <CardMedia className={classes.cardMedia} image="https://cerim.univ-lille.fr/fileadmin/_processed_/4/3/csm_CERIM_logo_2020_0d8c1c9217.png" title="" />
                     </Hidden>
                   </Card>
                 </CardActionArea>

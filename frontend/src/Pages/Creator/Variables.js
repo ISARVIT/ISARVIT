@@ -19,7 +19,6 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import { FixedSizeList } from 'react-window';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Dialog from '@material-ui/core/Dialog';
@@ -166,7 +165,7 @@ export default function Variables(props){
     if(target.data.operationLabel==='Equation'){
       if(source.data.type==='Number'||source.data.operationLabel==='Equation'){
         valid = {...params, animated: true};
-        newNodes[targetIndex].data.equationVars[source.data.variable] = { type: 'number'};  
+        newNodes[targetIndex].data.equationVars[source.data.variable] = { type: 'number', value: 1 };  
       }
       else{
         props.setAlert({open: true, text: "Equation must receive number", severity: "error"})
@@ -179,6 +178,9 @@ export default function Variables(props){
         newNodes[targetIndex].data.inputVar=source.data.variable;
         newNodes[targetIndex].data.inputID=source.data.questionID;
       }
+    }
+    else if(target.type==='output'){
+      valid = {...params, animated: true};
     }
 
     // if(source.data.variable==='equation'){
@@ -249,7 +251,7 @@ export default function Variables(props){
   const saveOutput=(event)=>{
     if(event.keyCode == 13){
       let newOutputs = props.creator.outputs;
-      newOutputs.push({outputID: newOutputs.length, variable: createOutput.name})
+      newOutputs.push({outputID: newOutputs.length, variable: createOutput.name, type:'Out'})
       props.setCreator({...props.creator, outputs: newOutputs})
       setCreateOutput({open: false,variable: ''})
     }
