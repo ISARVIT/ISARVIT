@@ -53,9 +53,8 @@ export default function Download(props){
       }).join("")
     }
     // console.log(props.answers.questions)
-    let temp = props.answers.questions.template.split("<med-var");
-    console.log(props.answers.answers)
-    return temp.map(part=>{
+    console.log(props.example)
+    let variableschanged = props.answers.questions.template.split("<med-var").map(part=>{
       if(part.includes('</med-var>')){
         let varpart = part.split('</med-var>')
         let vari = (varpart[0].substring(varpart[0].indexOf('">')+2))
@@ -65,6 +64,16 @@ export default function Download(props){
         return part
       }
     }).join("")
+    return variableschanged.split("<img").map(part=>{
+      if(part.includes('qrcode')){
+        let varpart = part.split('">')
+        console.log(varpart)
+        return varpart[1]
+      }
+      else{
+        return part
+      }
+    }).join("");
   }
   const handleChange=(newContent)=>{
     props.setCreator({...props.creator, template: newContent})
