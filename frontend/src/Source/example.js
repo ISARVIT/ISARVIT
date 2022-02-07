@@ -23,7 +23,7 @@ export function dbExample(){
         ],
         users: {
             andreis:
-                {   id: 1201, username: 'andreis', password:'123', admin: true, firstname: 'Andreis', lastname: 'PURIM', description: 'Étudiant à Centrale Lille', joined: '2021-02-05', last_seen: '2022-02-05',
+                {   id: 1201, username: 'andreis', password:'qwert', admin: true, firstname: 'Andreis', lastname: 'PURIM', description: 'Étudiant à Centrale Lille', joined: '2021-02-05', last_seen: '2022-02-05',
                     avatar: andreis_avatar, 
                     chips: [
                         {type: 'work', label: 'CHU Lille'},
@@ -38,7 +38,7 @@ export function dbExample(){
                     created: [0,1]
                 },
             joel:
-                {   id: 999, username: 'joel', password:'123456', admin: false, firstname: 'Joel', lastname: 'KALIL', description: 'Student at Centrale Lille and backend developer', joined: '2021-03-05', last_seen: '2022-02-05',
+                {   id: 999, username: 'joel', password:'qwert', admin: false, firstname: 'Joel', lastname: 'KALIL', description: 'Student at Centrale Lille and backend developer', joined: '2021-03-05', last_seen: '2022-02-05',
                     avatar: joel_avatar, 
                     chips: [
                         {type: 'study', label: 'Centrale Lille'},
