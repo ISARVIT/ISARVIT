@@ -106,7 +106,7 @@ export default function FormCard(props){
                   Edit
                 </Button>
               }
-              <Button disabled={props.row.id} onClick={useForms} color="primary">
+              <Button onClick={useForms} color="primary">
                 Use
               </Button>
             </DialogActions>

@@ -13,7 +13,7 @@ export default function Form(props){
   const [answers, setAnswers] = React.useState({
     step: 0,
     answers: {...props.control.tempData},
-    questions: props.example.forms[props.control.formID],
+    questions: props.example.forms[props.control.formID].formatted,
   });
   const saveAnswers=(newAnswers)=>{
     setAnswers({...answers, step:1, answers: newAnswers})

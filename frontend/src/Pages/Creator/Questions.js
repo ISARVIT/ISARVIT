@@ -364,7 +364,7 @@ function Question(props) {
 export default function Questions(props){
   const addQuestion=()=>{
     let newQuestions = props.creator.questions
-    let newQuestion = {questionID: props.creator.qlength, dragID: props.creator.qlength.toString(), type:'Text', variable: 'var_'+props.creator.qlength, questionLabel: '', default: null, min: null, max: null, loopvar: false, others: false, qchoices: 0, choices: []};
+    let newQuestion = {questionID: props.creator.qlength, dragID: props.creator.qlength.toString(), type:'Text', variable: 'var_'+props.creator.qlength, questionLabel: '', required: false, default: null, min: null, max: null, loopvar: false, others: false, qchoices: 0, choices: []};
     newQuestions.push(newQuestion);
     props.setCreator({...props.creator, qlength: props.creator.qlength+1, questions: newQuestions})
   }

@@ -43,8 +43,11 @@ export default function Download(props){
           return '<p>'+this_template[answer[1]]+'</p>'
         } 
       }
-      else{
+      else if(props.control.formID===0){
         return Math.random()<0.5?'<p>User has chosen '+answer[1]+' in the variable '+answer[0]+'</p>':'<p>The answer to '+answer[0]+' was '+answer[1]+'</p>'
+      }
+      else{
+        return '<p>Answer to '+answer[1]+' is '+answer[0]+'</p>'
       }
     }).join("")
   }
@@ -76,7 +79,7 @@ export default function Download(props){
         {edit===0?
           <Paper elevation={5}>
           <div id='divToPrint' style={{backgroundColor: '#FFF', width: '210mm', minHeight: '297mm', marginLeft: 'auto', marginRight: 'auto', padding:'2rem'}}>
-            <p>ID : {props.answers.answers.identifier} Prénom : {props.answers.answers.patient_first_name} Nom : {props.answers.answers.patient_last_name} Date de naissance : {props.answers.answers.patient_birth}</p>
+            {/* <p>ID : {props.answers.answers.identifier} Prénom : {props.answers.answers.patient_first_name} Nom : {props.answers.answers.patient_last_name} Date de naissance : {props.answers.answers.patient_birth}</p> */}
             <h1 style={{textAlign:'center'}}>URINARY / SCANNER ABDOMINO-PELVIEN</h1>
             <div style={{display: 'flex', justifyContent: 'center'}}>
               <QRCode value={generateQRCode()}/>
@@ -84,7 +87,7 @@ export default function Download(props){
             </div>
             <hr/>
             {/* {ReactHtmlParser(getTemplate())} */}
-            <p> Examen : Radiography Réalisé le : {new Date().toLocaleDateString('fr-FR')} </p> 
+            {/* <p> Examen : Radiography Réalisé le : {new Date().toLocaleDateString('fr-FR')} </p>  */}
             { ReactHtmlParser(getTemplate()) }
             </div>
           </Paper>

@@ -80,6 +80,38 @@ export default function Publish(props){
     props.example.forms[newRow.id] = props.creator;
     let newForms = props.example.forms
     newForms[newRow.id] = props.creator;
+    function formatQuestions(question){
+      if(question.type==='Text'){
+        return {
+          isRequired: question.required,
+          type: question.type.toLowerCase(),
+          name: question.variable,
+          title: question.questionLabel,
+          defaultAnswer: question.default,
+        }
+      }
+      else if(question.type==='Number'){
+        return {
+          isRequired: question.required,
+          // minValue: question.min,
+          // maxValue: question.max,
+          type: "text",
+          name: question.variable,
+          title: question.questionLabel,
+          // defaultAnswer: question.default,
+        }
+      }
+    }
+    newForms[newRow.id].formatted = {
+      questions: props.creator.questions.map(question=>formatQuestions(question)),
+      template: {},
+      svg: {
+        name: "svg",
+        begin: props.creator.svg.base,
+        end: "</svg>",
+        organs: props.creator.svg.parts.map(part=>part.valueTrue),
+      }
+    }
     props.setExample({...props.example, qforms: props.example.qforms+1, forms: newForms, rows: newRows})
     props.setControl({...props.control, formID: null, setData: {}, view: 'user'})
   }
