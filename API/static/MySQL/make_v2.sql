@@ -43,7 +43,10 @@ CREATE TABLE `users`(
     description VARCHAR(5000),
     joined INT NOT NULL,
     avatar VARCHAR(500),
-    chips VARCHAR(15000),
+    chips VARCHAR(2000),
+    favorites VARCHAR(500),
+    recents VARCHAR(500),
+    created VARCHAR(500),
     admin BOOLEAN NOT NULL DEFAULT 0,
 
     PRIMARY KEY(id)
@@ -77,6 +80,8 @@ CREATE TABLE `templates`(
 
 CREATE TABLE `images`(
     imageName VARCHAR(255) NOT NULL,
+    begin VARCHAR(500),
+    end VARCHAR(255),
     image VARCHAR(21000) NOT NULL,
     formID INT NOT NULL,
 
