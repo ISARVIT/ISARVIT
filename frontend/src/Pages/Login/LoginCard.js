@@ -38,8 +38,13 @@ export default function Login(props){
     // .catch(function (error){
     //   props.setAlert({open: true, text: "Error in login", severity: "error"})
     // });
-    if(user.username in props.example.users && props.example.users[user.username].password === user.password)
+    if(user.username in props.example.users && props.example.users[user.username].password === user.password){
       props.setControl({...props.control, user: props.example.users[user.username], view: 'user'})
+      props.setAlert({open: true, text: "Connecté", severity: "success"})
+    }
+    else{
+      props.setAlert({open: true, text: "Login incorrecte", severity: "error"})
+    }  
 }
 
   return (

@@ -28,20 +28,20 @@ export default function Form(props){
   }
   const sendExtraProps = {...props, answers, setAnswers}
   return (
-    <Grid container direction="column" justifyContent="center" alignItems="center" xs={12} spacing={2} style={{marginTop: '2rem', }}>
-      <Grid item xs={3} style={{width: '100%'}}>
+    <Grid container direction="column" justifyContent="center" alignItems="stretch" xs={12} spacing={2} style={{marginTop: '2rem', }}>
+      <Grid item xs={3} style={{width: '100%', marginLeft:'auto',marginRight:'auto'}}>
         <Stepper activeStep={answers.step} alternativeLabel style={{ backgroundColor: "transparent" }}>
           <Step><StepLabel>Answer Forms</StepLabel></Step>
           <Step><StepLabel>Verify and Download</StepLabel></Step>
         </Stepper>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={2} style={{marginLeft:'auto',marginRight:'auto'}}>
         <Button variant="contained" color="primary" size="small" onClick={back}>{answers.step?'Back':'Cancel'}</Button>
       </Grid>
       {answers.step?
         <Download {...sendExtraProps} />
       :
-        <Grid item xs={12}>
+        <Grid item xs={12} style={{minWidth: '50rem', marginLeft:'auto',marginRight:'auto'}}>
           <Survey form={answers.questions} defaultAnswers={answers.answers} autocompleteRequest={function noRefCheck() {}} onFinish={saveAnswers}/>
         </Grid>
       }

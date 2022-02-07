@@ -101,10 +101,30 @@ export default function Publish(props){
           // defaultAnswer: question.default,
         }
       }
+      else if(question.type==='Choice'){
+        return {
+          isRequired: question.required,
+          type: "radiogroup",
+          name: question.variable,
+          title: question.questionLabel,
+          choices: question.choices.map(choice=>choice.text),
+          hasOther: question.others
+        }
+      }
+      else if(question.type==='Multiple Choice'){
+        return {
+          isRequired: question.required,
+          type: "checkbox",
+          name: question.variable,
+          title: question.questionLabel,
+          choices: question.choices.map(choice=>choice.text),
+          hasOther: question.others
+        } 
+      }
     }
     newForms[newRow.id].formatted = {
       questions: props.creator.questions.map(question=>formatQuestions(question)),
-      template: {},
+      template: props.creator.template,
       svg: {
         name: "svg",
         begin: props.creator.svg.base,

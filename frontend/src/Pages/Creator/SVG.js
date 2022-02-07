@@ -129,19 +129,19 @@ export default function SVG(props){
   }
   return(
     <React.Fragment>
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <input accept="image/*" type="file" id='inputSVG' style={{display:'none'}}/>
         <label htmlFor='inputSVG'>
           <Button variant="outlined" color="primary" component="span" startIcon={<PublishIcon />}>
             Upload Base SVG
           </Button>
         </label>
-      </Grid>
+      </Grid> */}
       <Grid item xs={6} container direction="column" justifyContent="center" alignItems="stretch">
         <Grid item xs={12} style={{marginLeft:'auto', marginRight: 'auto'}}>
           <Tabs value={tab} onChange={changeTab}  indicatorColor="primary" textColor="primary" style={{marginLeft:'auto', marginRight:'auto'}}>
             <Tab label="Create"/>
-            <Tab label="Help"/>
+            {/* <Tab label="Help"/> */}
           </Tabs>
         </Grid>
         <Grid item xs={12}>
@@ -174,13 +174,14 @@ export default function SVG(props){
                   </DragDropContext>
                 </React.Fragment>
               :
-                props.creator.svg.parts.map(part=>
-                  part.outputID===-1? null:
-                    <Grid item xs={12}>
-                      {props.creator.outputs.find(output => part.outputID === output.outputID).variable} 
-                      <Switch checked={part.debug} onChange={(event)=>changeSwitch(part,event)}/>
-                    </Grid>
-                )
+              null
+                // props.creator.svg.parts.map(part=>
+                //   part.outputID===-1? null:
+                //     <Grid item xs={12}>
+                //       {props.creator.outputs.find(output => part.outputID === output.outputID).variable} 
+                //       <Switch checked={part.debug} onChange={(event)=>changeSwitch(part,event)}/>
+                //     </Grid>
+                // )
               }
             </Grid>
           </Paper>

@@ -118,9 +118,6 @@ function OperationNode(props){
                   <TextField value={write} onChange={changeWrite} fullWidth required placeholder="Write" />
                 </Grid>
                 <Grid item xs={12}>
-                  <Button variant="outlined" color="primary" onClick={()=>alert("Not available in the moment")} size="small">
-                    New if
-                  </Button>
                 </Grid>
               </Grid>
             </DialogContent>
@@ -175,6 +172,12 @@ export default function Variables(props){
       if(source.data.type==='Number'||source.data.operationLabel==='Equation'){
         valid = {...params, animated: true};
         newNodes[targetIndex].data.inputType='Number';
+        newNodes[targetIndex].data.inputVar=source.data.variable;
+        newNodes[targetIndex].data.inputID=source.data.questionID;
+      }
+      if(source.data.type==='Text'){
+        valid = {...params, animated: true};
+        newNodes[targetIndex].data.inputType='Text';
         newNodes[targetIndex].data.inputVar=source.data.variable;
         newNodes[targetIndex].data.inputID=source.data.questionID;
       }

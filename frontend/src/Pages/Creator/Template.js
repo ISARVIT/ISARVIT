@@ -17,8 +17,9 @@ export default function Template(props){
                 list: props.creator.outputs.map(x => x.variable),
                 exec: function(editor, t, {control}) {
                   if(control.args){
-                    let key = control.args[0];
-                    editor.s.insertHTML('<span style="color: red; border: thin solid red; border-radius: 5px; padding: 2px; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;">'+key+'</span>')
+                    const key = control.args[0];
+                    const id = props.creator.outputs.find(x => key===x.variable).id;
+                    editor.s.insertHTML('<med-var class="'+key+'" style="color: red; border: thin solid red; border-radius: 5px; padding: 2px; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;">'+key+'</med-var>')
                   }
                 },
                 template: (editor, key, value) => {
@@ -32,7 +33,7 @@ export default function Template(props){
               exec: function(editor, t, {control}) {
                 if(control.args){
                   let key = control.args[0];
-                  editor.s.insertHTML('<span style="color: blue; border: thin solid blue; border-radius: 5px; padding: 2px; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;">'+key+'</span>')
+                  editor.s.insertHTML('<med-var class="'+key+'" style="color: blue; border: thin solid blue; border-radius: 5px; padding: 2px; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;">'+key+'</med-var>')
                 }
               },
               template: (editor, key, value) => {
@@ -43,7 +44,7 @@ export default function Template(props){
               name: 'Add QR Code',
               iconURL: 'http://xdsoft.net/jodit/logo.png',
               exec: function(editor, t, {control}) {
-                editor.s.insertHTML('<img width="200" height="200" src=\'https://andreispurim.github.io/Imagem1.png\'/>')
+                editor.s.insertHTML('<img class="qrcode" width="200" height="200" src=\'https://andreispurim.github.io/Imagem1.png\'/>')
               },
               template: (editor, key, value) => {
                   return '<span>'+value+'</span>';
@@ -53,7 +54,7 @@ export default function Template(props){
               name: 'Add SVG',
               iconURL: 'http://xdsoft.net/jodit/logo.png',
               exec: function(editor, t, {control}) {
-                editor.s.insertHTML('<img width="200" src=\'https://andreispurim.github.io/svg_template.png\'/>')
+                editor.s.insertHTML('<img class="svg" width="200" src=\'https://andreispurim.github.io/svg_template.png\'/>')
               },
               template: (editor, key, value) => {
                   return '<span>'+value+'</span>';

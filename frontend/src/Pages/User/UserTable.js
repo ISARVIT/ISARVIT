@@ -138,7 +138,7 @@ export default function UserTable(props){
     if(table.search!==''){
       rows = rows.filter(function(row){
         for(let i=0;i<table.columns.length;i++){
-          if(table.selectedColumns[i] && row[table.columns[i].id].toString().toLowerCase().includes(table.search.toLowerCase())){
+          if(table.selectedColumns[i] && table.columns[i].id!=='favorite' && row[table.columns[i].id].toString().toLowerCase().includes(table.search.toLowerCase())){
             return true
           }
         }

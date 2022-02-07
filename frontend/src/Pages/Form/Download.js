@@ -33,21 +33,36 @@ export default function Download(props){
       }
     }
     // return HTMLTemp;
-    return answers.map(answer=>{
-      if(answer[0] in props.answers.questions.template){
-        let this_template = props.answers.questions.template[answer[0]]
-        if(this_template.complete){
-          return '<p>'+this_template.begin+answer[0]+this_template.end+'</p>'
+    if(props.control.formID===0){
+      return answers.map(answer=>{
+        if(answer[0] in props.answers.questions.template){
+          let this_template = props.answers.questions.template[answer[0]]
+          if(this_template.complete){
+            return '<p>'+this_template.begin+answer[0]+this_template.end+'</p>'
+          }
+          else{
+            return '<p>'+this_template[answer[1]]+'</p>'
+          } 
+        }
+        else if(props.control.formID===0){
+          return Math.random()<0.5?'<p>User has chosen '+answer[1]+' in the variable '+answer[0]+'</p>':'<p>The answer to '+answer[0]+' was '+answer[1]+'</p>'
         }
         else{
-          return '<p>'+this_template[answer[1]]+'</p>'
-        } 
-      }
-      else if(props.control.formID===0){
-        return Math.random()<0.5?'<p>User has chosen '+answer[1]+' in the variable '+answer[0]+'</p>':'<p>The answer to '+answer[0]+' was '+answer[1]+'</p>'
+          return '<p>Answer to '+answer[1]+' is '+answer[0]+'</p>'
+        }
+      }).join("")
+    }
+    // console.log(props.answers.questions)
+    let temp = props.answers.questions.template.split("<med-var");
+    console.log(props.answers.answers)
+    return temp.map(part=>{
+      if(part.includes('</med-var>')){
+        let varpart = part.split('</med-var>')
+        let vari = (varpart[0].substring(varpart[0].indexOf('">')+2))
+        return props.answers.answers[vari]+varpart[1]
       }
       else{
-        return '<p>Answer to '+answer[1]+' is '+answer[0]+'</p>'
+        return part
       }
     }).join("")
   }
@@ -80,12 +95,12 @@ export default function Download(props){
           <Paper elevation={5}>
           <div id='divToPrint' style={{backgroundColor: '#FFF', width: '210mm', minHeight: '297mm', marginLeft: 'auto', marginRight: 'auto', padding:'2rem'}}>
             {/* <p>ID : {props.answers.answers.identifier} Prénom : {props.answers.answers.patient_first_name} Nom : {props.answers.answers.patient_last_name} Date de naissance : {props.answers.answers.patient_birth}</p> */}
-            <h1 style={{textAlign:'center'}}>URINARY / SCANNER ABDOMINO-PELVIEN</h1>
-            <div style={{display: 'flex', justifyContent: 'center'}}>
+            {/* <h1 style={{textAlign:'center'}}>URINARY / SCANNER ABDOMINO-PELVIEN</h1>
+            <div style={{display: 'flex', justifyContent: 'center'}}> */}
               <QRCode value={generateQRCode()}/>
               <InlineSVG src={svgSource}/>
-            </div>
-            <hr/>
+            {/* </div>
+            <hr/> */}
             {/* {ReactHtmlParser(getTemplate())} */}
             {/* <p> Examen : Radiography Réalisé le : {new Date().toLocaleDateString('fr-FR')} </p>  */}
             { ReactHtmlParser(getTemplate()) }

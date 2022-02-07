@@ -14,7 +14,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 
-export default function Signup(){
+export default function Signup(props){
     const [user, setUser] = React.useState({
         firstname: '',
         lastname: '',
@@ -46,7 +46,23 @@ export default function Signup(){
         setUser({...user, showPassword: state});
     };
     const connect = () => {
-        alert("Connected!")
+        let newUsers = props.example.users;
+        if(user.username in newUsers){
+            props.setAlert({open: true, text: "Username déjà utilisé", severity: "error"})
+        }
+        else{
+            newUsers[user.username] = {   id: Object.keys(newUsers).length, username: user.username, password:user.password, admin: false, firstname: user.firstname, lastname: user.lastname, description: '', joined: '2022-03-05', last_seen: '2022-02-07',avatar: '', 
+            chips: [],
+            favorites: [],
+            recents: [],
+            created: [],
+            };
+            props.setExample({...props.example, user: newUsers})
+            props.setAlert({open: true, text: "Crée. Vous pouvez connecter!", severity: "success"})
+        }
+        
+        
+
     }
     return (
         <Card>

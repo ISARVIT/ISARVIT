@@ -88,9 +88,11 @@ function Question(props) {
     let newQuestions = props.creator.questions
     // Resets information except if its choice <-> multiple choice, then conserves choice vector.
     let newChoices = []
+    let newQChoices = 0;
     let varName = props.question.variable
     if(props.question.type==='Choice'||props.question.type==='Multiple Choice'){
       newChoices = newQuestions[props.creator.questions.indexOf(props.question)].choices
+      newQChoices = newQuestions[props.creator.questions.indexOf(props.question)].qchoices
     }
     if(event.target.value==='Loop'){
       varName = 'loopID_'+props.question.questionID
@@ -98,7 +100,7 @@ function Question(props) {
     else if(event.target.value==='Page'){
       varName = 'pageID_'+props.question.questionID
     }
-    newQuestions[props.creator.questions.indexOf(props.question)] = {...newQuestions[props.creator.questions.indexOf(props.question)], type:event.target.value, variable: varName, loopvar: false,  default: null, min: null, max: null, others: false, qchoices: 0, choices: newChoices};
+    newQuestions[props.creator.questions.indexOf(props.question)] = {...newQuestions[props.creator.questions.indexOf(props.question)], type:event.target.value, variable: varName, loopvar: false,  default: null, min: null, max: null, others: false, qchoices: newQChoices, choices: newChoices};
     props.setCreator({...props.creator, questions: newQuestions})
   }
   const changeRequired=(event)=>{
@@ -254,9 +256,10 @@ function Question(props) {
                       {props.question.required?
                         <Select fullWidth value={props.question.loopvar} onChange={changeLoopvar}>
                           {props.creator.questions.slice(0,props.creator.questions.indexOf(props.question)).map(question=>
-                            <MenuItem key={question.questionID} value={question.questionID}>
-                              <ListItemText primary={question.variable}/>
-                            </MenuItem>
+                            question.type!=='Number'? null:
+                              <MenuItem key={question.questionID} value={question.questionID}>
+                                <ListItemText primary={question.variable}/>
+                              </MenuItem>
                           )}
                         </Select>
                       :
